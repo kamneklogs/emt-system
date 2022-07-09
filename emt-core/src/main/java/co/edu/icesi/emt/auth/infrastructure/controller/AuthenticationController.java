@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.icesi.emt.auth.infrastructure.dto.login.LoginRequestDTO;
 
 @RestController
-@RequestMapping("/api/authentication")
+@RequestMapping("/public/authentication")
 public class AuthenticationController {
 
     @PostMapping
