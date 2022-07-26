@@ -37,4 +37,9 @@ public class User {
     public void setLastLogin(Instant lastLogin) {
         this.lastLogin = lastLogin;
     }
+
+    @Override
+    public String toString() {
+        return "User [lastLogin=" + lastLogin + ", password=" + password + ", username=" + username + "]";
+    }
 }
