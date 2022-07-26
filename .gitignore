@@ -1,0 +1,6 @@
+## Root EMT .gitignore ##
+
+### Visual Paradigm ###
+*.lck
+
+*.bak_*
