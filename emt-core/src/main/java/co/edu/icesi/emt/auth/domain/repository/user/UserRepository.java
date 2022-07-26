@@ -1,0 +1,15 @@
+package co.edu.icesi.emt.auth.domain.repository.user;
+
+import java.util.List;
+
+import co.edu.icesi.emt.auth.domain.model.user.User;
+
+public interface UserRepository {
+    void save(String username, String password);
+
+    User findByUsername(String username);
+
+    List<User> findAll();
+
+    void deleteByUsername(String username);
+}
