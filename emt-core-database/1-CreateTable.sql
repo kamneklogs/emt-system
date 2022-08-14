@@ -2,13 +2,13 @@ CREATE DATABASE IF NOT EXISTS emt;
 
 USE emt;
 
-CREATE TABLE Role IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS Role(
     id int NOT NULL AUTO_INCREMENT,
     name varchar(45) NOT NULL,
     PRIMARY KEY (id)
 ) AUTO_INCREMENT = 1;
 
-CREATE TABLE User IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS User(
     username varchar(256) NOT NULL,
     password varchar(256) NOT NULL,
     role_id int NOT NULL,
