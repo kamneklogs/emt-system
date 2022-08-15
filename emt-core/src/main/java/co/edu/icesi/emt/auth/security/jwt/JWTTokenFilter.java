@@ -21,9 +21,6 @@ public class JWTTokenFilter extends OncePerRequestFilter {// Run in each request
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    /**
-     *
-     */
     private static final String BEARER_TEXT = "Bearer ";
 
     @Autowired
@@ -57,11 +54,9 @@ public class JWTTokenFilter extends OncePerRequestFilter {// Run in each request
         String headerCleaned = request.getHeader("Authorization");
 
         if (headerCleaned != null && headerCleaned.startsWith(BEARER_TEXT)) {
-            log.info(headerCleaned);
 
             String substring = headerCleaned.substring(BEARER_TEXT.length());
 
-            log.info(substring);
             return substring;
         }
         return null;
