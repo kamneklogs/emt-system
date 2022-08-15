@@ -29,7 +29,6 @@ public class JWTProvider { // Generate a JWT and validate if the tokes is formed
     private int expiration;
 
     public String generateJWT(Authentication authentication) {
-
         MainUser mainUser = (MainUser) authentication.getPrincipal();
 
         return Jwts.builder()

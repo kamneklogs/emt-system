@@ -64,7 +64,6 @@ public class JWTTokenFilter extends OncePerRequestFilter {// Run in each request
             log.info(substring);
             return substring;
         }
-
         return null;
     }
 }

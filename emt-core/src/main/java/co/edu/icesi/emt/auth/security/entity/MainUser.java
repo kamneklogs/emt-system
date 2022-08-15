@@ -54,4 +54,8 @@ public class MainUser extends User implements UserDetails {
 
         return new MainUser(user.getUsername(), user.getPassword(), user.getLastLogin(), authorities);
     }
+
+    public static MainUser build(User user) {
+        return new MainUser(user.getUsername(), user.getPassword(), user.getLastLogin(), null);
+    }
 }

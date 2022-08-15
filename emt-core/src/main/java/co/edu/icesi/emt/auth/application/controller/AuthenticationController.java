@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.icesi.emt.auth.application.dto.login.LoginRequestDTO;
+import co.edu.icesi.emt.auth.application.dto.login.LoginResponseDTO;
 import co.edu.icesi.emt.auth.application.dto.signup.SignupRequestDTO;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.security.jwt.JWTProvider;
@@ -34,17 +39,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody final SignupRequestDTO signUpRequestDTO /*
-                                                                                               * We need a
-                                                                                               * FullLoginRequestDTO
-                                                                                               * with
-                                                                                               * [roles] and
-                                                                                               * all user information
-                                                                                               * like
-                                                                                               * name, username,
-                                                                                               * address,
-                                                                                               * etc
-                                                                                               */) {
+    public ResponseEntity<String> signUp(@RequestBody final SignupRequestDTO signUpRequestDTO) {
 
         userService.save(signUpRequestDTO.getUsername(), passwordEncoder.encode(signUpRequestDTO.getPassword()));
 
@@ -54,7 +49,16 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody final LoginRequestDTO loginRequestDTO) {
-        return new ResponseEntity<String>("User logged: " + loginRequestDTO.toString(), HttpStatus.OK);
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody final LoginRequestDTO loginRequestDTO) {
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(), loginRequestDTO.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtProvider.generateJWT(authentication);
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        return new ResponseEntity<LoginResponseDTO>(
+                new LoginResponseDTO(loginRequestDTO.getUsername(), jwt, userDetails.getAuthorities()), HttpStatus.OK);
     }
 }
