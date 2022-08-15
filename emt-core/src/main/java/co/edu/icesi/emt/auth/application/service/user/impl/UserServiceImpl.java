@@ -50,9 +50,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Set<Role> findUserRolesByUsername(String username) {
-
-        Set<Role> roles = this.userRoleService.findUserRoleIdsByUsername(username).stream().collect(Collectors.toSet());
-
-        return roles;
+        return this.userRoleService.findUserRoleIdsByUsername(username).stream().collect(Collectors.toSet());
     }
 }

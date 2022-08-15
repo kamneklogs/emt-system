@@ -1,5 +1,6 @@
 package co.edu.icesi.emt.auth.application.service.userrole.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
 import co.edu.icesi.emt.auth.domain.model.role.Role;
 import co.edu.icesi.emt.auth.domain.model.user.User;
+import co.edu.icesi.emt.auth.domain.repository.role.RoleRepository;
 import co.edu.icesi.emt.auth.domain.repository.userrole.UserRoleRepository;
 import co.edu.icesi.emt.auth.domain.repository.userrole.impl.UserRoleRepositoryImpl;
 
@@ -15,10 +17,12 @@ import co.edu.icesi.emt.auth.domain.repository.userrole.impl.UserRoleRepositoryI
 public class UserRoleServiceImpl implements UserRoleService {// TODO: To implements
 
     private final UserRoleRepository userRoleRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserRoleServiceImpl(UserRoleRepositoryImpl userRoleRepository) {
+    public UserRoleServiceImpl(UserRoleRepositoryImpl userRoleRepository, RoleRepository roleRepository) {
         this.userRoleRepository = userRoleRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -35,14 +39,17 @@ public class UserRoleServiceImpl implements UserRoleService {// TODO: To impleme
 
     @Override
     public List<Role> findUserRoleIdsByUsername(String username) {
-        // TODO Auto-generated method stub
-        return null;
+        List<Role> roles = new ArrayList<Role>();
+
+        for (Integer roleId : userRoleRepository.findUserRoleIdsByUsername(username)) {
+            roles.add(roleRepository.findById(roleId));
+        }
+
+        return roles;
     }
 
     @Override
     public void deleteUserRoleByUsernameAndRoleId(User user, Role role) {
         // TODO Auto-generated method stub
-
     }
-
 }
