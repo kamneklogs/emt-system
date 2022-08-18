@@ -23,7 +23,7 @@ import co.edu.icesi.emt.auth.security.jwt.JWTProvider;
 
 @RestController
 @RequestMapping("/public/auth")
-@CrossOrigin(origins = { "localhost:8081", "localhost:3000" })
+@CrossOrigin(origins = "*")
 public class AuthenticationController {
 
     private PasswordEncoder passwordEncoder;
