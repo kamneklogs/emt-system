@@ -1,24 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import Sidebar from "./components/Sidebar";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Overview from "./pages/Overview";
+import { Reports, ReportsOne, ReportsTwo, ReportsThree } from "./pages/Reports";
+import Login from "./pages/Login";
+import ProtectedRoutes from "./components/ProtectedRoutes";
+import PublicRoutes from "./components/PublicRoutes";
+import Product from "./pages/Product";
+import Register from "./pages/Register";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Sidebar />
+      <Routes>
+        <Route path="/" element={<ProtectedRoutes />}>
+          <Route path="/overview" element={<Overview />}>
+            <Route path="/overview/users" element={<Register />}></Route>
+          </Route>
+          <Route path="/reports" element={<Reports />}></Route>
+          <Route path="/reports/reports1" element={<ReportsOne />}></Route>
+          <Route path="/reports/reports2" element={<ReportsTwo />}></Route>
+          <Route path="/reports/reports3" element={<ReportsThree />}></Route>
+          <Route path="/products" element={<Product />}></Route>
+          <Route path="/logout"></Route>
+        </Route>
+        <Route path="login" element={<PublicRoutes />}>
+          <Route path="/login" element={<Login />}></Route>
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
