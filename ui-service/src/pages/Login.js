@@ -111,11 +111,20 @@ const Login = (props) => {
           </Card>
         </Col>
       </Row>
-      {message && (
+      {/*message && (
         <div className="form-group mt-3">
           <div className="alert alert-danger" role="alert">
             {message}
           </div>
+        </div>
+      )*/}
+      {message && (
+        <div className="alert">
+          <Row>
+            <Col lg="5" md="10" sm="10" className="mx-auto">
+              <Alert variant="danger">{message}</Alert>
+            </Col>
+          </Row>
         </div>
       )}
     </Container>

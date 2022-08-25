@@ -8,6 +8,7 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import PublicRoutes from "./components/PublicRoutes";
 import Product from "./pages/Product";
 import Register from "./pages/Register";
+import RegisterPersonalInfo from "./pages/RegisterPersonalInfo";
 function App() {
   return (
     <Router>
@@ -15,7 +16,10 @@ function App() {
       <Routes>
         <Route path="/" element={<ProtectedRoutes />}>
           <Route path="/overview" element={<Overview />}>
-            <Route path="/overview/users" element={<Register />}></Route>
+            <Route
+              path="/overview/users"
+              element={<RegisterPersonalInfo />}
+            ></Route>
           </Route>
           <Route path="/reports" element={<Reports />}></Route>
           <Route path="/reports/reports1" element={<ReportsOne />}></Route>
