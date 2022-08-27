@@ -55,12 +55,12 @@ export const SidebarData = [
       },
     ],
   },
-  {
-    title: "Products",
-    path: "/products",
-    icon: <FaIcons.FaCartPlus />,
-    roles: ["DOCTOR_ROLE"],
-  },
+  // {
+  //   title: "Products",
+  //   path: "/products",
+  //   icon: <FaIcons.FaCartPlus />,
+  //   roles: ["DOCTOR_ROLE"],
+  // },
   {
     title: "Team",
     path: "/team",
