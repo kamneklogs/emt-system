@@ -27,8 +27,7 @@ public class UserRoleServiceImpl implements UserRoleService {// TODO: To impleme
 
     @Override
     public void save(User user, Role role) {
-        // TODO Auto-generated method stub
-
+        userRoleRepository.save(user, role);
     }
 
     @Override
@@ -41,7 +40,7 @@ public class UserRoleServiceImpl implements UserRoleService {// TODO: To impleme
     public List<Role> findUserRoleIdsByUsername(String username) {
         List<Role> roles = new ArrayList<Role>();
 
-        for (Integer roleId : userRoleRepository.findUserRoleIdsByUsername(username)) {
+        for (String roleId : userRoleRepository.findUserRoleIdsByUsername(username)) {
             roles.add(roleRepository.findById(roleId));
         }
 

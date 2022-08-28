@@ -7,7 +7,7 @@ import co.edu.icesi.emt.auth.domain.model.role.Role;
 public interface RoleService {
     void save(String name, String description);
 
-    Role findById(int id);
+    Role findById(String name);
 
     List<Role> findAll();
 

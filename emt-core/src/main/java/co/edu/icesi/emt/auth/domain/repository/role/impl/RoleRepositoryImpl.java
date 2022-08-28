@@ -20,21 +20,20 @@ public class RoleRepositoryImpl implements RoleRepository {
     private static final String ROLE_TABLE = "role";
     private static final String ROLE_FULL_TABLE_NAME = SCHEMA + "." + ROLE_TABLE;
 
-    private static final String ID = "id";
     private static final String NAME = "name";
     private static final String DESCRIPTION = "description";
 
-    private static final String SELECT_ROLE_TABLE_COLUMNS = ID + ", " + NAME + ", " + DESCRIPTION;
+    private static final String SELECT_ROLE_TABLE_COLUMNS = NAME + ", " + DESCRIPTION;
     private static final String INSERT_ROLE_TABLE_COLUMNS = NAME + ", " + DESCRIPTION;
 
     private static final String SELECT_FROM_ROLE = "SELECT " + SELECT_ROLE_TABLE_COLUMNS + " FROM "
             + ROLE_FULL_TABLE_NAME;
-    private static final String SELECT_FROM_ROLE_WHERE_ID = SELECT_FROM_ROLE + " WHERE " + ID + " = ?";
+    private static final String SELECT_FROM_ROLE_WHERE_NAME = SELECT_FROM_ROLE + " WHERE " + NAME + " = ?";
 
     private static final String INSERT_INTO_ROLE = "INSERT INTO " + ROLE_FULL_TABLE_NAME + " ("
             + INSERT_ROLE_TABLE_COLUMNS + ") VALUES ( ?, ?)";
 
-    private static final String DELETE_FROM_ROLE_WHERE_ID = "DELETE FROM " + ROLE_FULL_TABLE_NAME + " WHERE " + ID
+    private static final String DELETE_FROM_ROLE_WHERE_ID = "DELETE FROM " + ROLE_FULL_TABLE_NAME + " WHERE " + NAME
             + " = ?";
 
     private final JdbcTemplate jdbcTemplate;
@@ -50,9 +49,9 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
-    public Role findById(int id) {
+    public Role findById(String id) {
         try {
-            return jdbcTemplate.queryForObject(SELECT_FROM_ROLE_WHERE_ID,
+            return jdbcTemplate.queryForObject(SELECT_FROM_ROLE_WHERE_NAME,
                     this::parse, new Object[] { id });
         } catch (EmptyResultDataAccessException e) {
             return null;
@@ -70,15 +69,14 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(String id) {
         jdbcTemplate.update(DELETE_FROM_ROLE_WHERE_ID, new Object[] { id });
     }
 
     private Role parse(final ResultSet rs, final int rowNum) throws SQLException {
-        int id = rs.getInt(ID);
         String name = rs.getString(NAME);
         String description = rs.getString(DESCRIPTION);
 
-        return new Role(id, name, description);
+        return new Role(name, description);
     }
 }

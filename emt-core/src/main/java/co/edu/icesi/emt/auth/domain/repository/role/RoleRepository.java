@@ -8,9 +8,9 @@ public interface RoleRepository {
 
     void save(String name, String description);
 
-    Role findById(int id);
+    Role findById(String id);
 
     List<Role> findAll();
 
-    void deleteById(int id);
+    void deleteById(String id);
 }
