@@ -2,22 +2,12 @@ package co.edu.icesi.emt.auth.domain.model.role;
 
 public class Role {
 
-    private int id;
     private String name;
     private String description;
 
-    public Role(int id, String name, String description) {
-        this.id = id;
+    public Role(String name, String description) {
         this.name = name;
         this.description = description;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -35,5 +25,4 @@ public class Role {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

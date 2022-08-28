@@ -21,7 +21,7 @@ public class UserRoleRepositoryImplTest {
         assertEquals(false,
                 userrole.userHasRole(
                         new User("username", null, null),
-                        new Role(1, null, null)));
+                        new Role(null, null)));
     }
 
     @Test

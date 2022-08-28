@@ -21,22 +21,22 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String USER_TABLE = "user";
     private static final String USER_FULL_TABLE_NAME = SCHEMA + "." + USER_TABLE;
 
-    private static final String USERNAME = "username";
+    private static final String ID = "id";
     private static final String PASSWORD = "password";
     private static final String LAST_LOGIN = "last_login";
 
-    private static final String SELECT_USER_TABLE_COLUMNS = USERNAME + ", " + PASSWORD + ", " + LAST_LOGIN;
-    private static final String INSERT_USER_TABLE_COLUMNS = USERNAME + ", " + PASSWORD;
+    private static final String SELECT_USER_TABLE_COLUMNS = ID + ", " + PASSWORD + ", " + LAST_LOGIN;
+    private static final String INSERT_USER_TABLE_COLUMNS = ID + ", " + PASSWORD;
 
     private static final String SELECT_FROM_USER = "SELECT " + SELECT_USER_TABLE_COLUMNS + " FROM "
             + USER_FULL_TABLE_NAME;
-    private static final String SELECT_FROM_USER_WHERE_USERNAME = SELECT_FROM_USER + " WHERE " + USERNAME + " = ?";
+    private static final String SELECT_FROM_USER_WHERE_USERNAME = SELECT_FROM_USER + " WHERE " + ID + " = ?";
 
     private static final String INSERT_INTO_USER = "INSERT INTO " + USER_FULL_TABLE_NAME + " ("
             + INSERT_USER_TABLE_COLUMNS + ") VALUES ( ?, ?)";
 
     private static final String DELETE_FROM_USER_WHERE_USERNAME = "DELETE FROM " + USER_FULL_TABLE_NAME + " WHERE "
-            + USERNAME
+            + ID
             + " = ?";
 
     private final JdbcTemplate jdbcTemplate;
@@ -77,7 +77,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private User parse(final ResultSet rs, final int rowNum) throws SQLException {
-        String username = rs.getString(USERNAME);
+        String username = rs.getString(ID);
         String password = rs.getString(PASSWORD);
         Instant lastLogin = rs.getTimestamp(LAST_LOGIN).toInstant();
 

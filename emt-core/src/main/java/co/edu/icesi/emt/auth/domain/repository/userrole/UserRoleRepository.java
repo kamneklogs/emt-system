@@ -10,7 +10,7 @@ public interface UserRoleRepository {
 
     boolean userHasRole(User user, Role role);
 
-    List<Integer> findUserRoleIdsByUsername(String username);
+    List<String> findUserRoleIdsByUsername(String username);
 
     void deleteUserRoleByUsernameAndRoleId(User user, Role role);
 }
