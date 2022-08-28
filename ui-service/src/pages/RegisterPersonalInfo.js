@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 const Register = () => {
   const navigate = useNavigate();
   const [successful, setSuccessful] = useState(false);
+  const { message } = useSelector((state) => state.message);
+
   const dispatch = useDispatch();
   const initialValues = {
     firstName: "",
@@ -23,16 +25,18 @@ const Register = () => {
     email: "",
     dob: "",
     genre: {
-      value: "Otro",
+      value: "",
     },
     civilStatus: {
-      value: "Otro",
+      value: "",
     },
     phone: "",
+    idUser: "",
+    password: "",
   };
 
   const handleRegister = (formValue) => {
-    /* const { firstName, email, password } = formValue;
+    const { firstName, email, password } = formValue;
     setSuccessful(false);
     dispatch(register({ firstName, email, password }))
       .unwrap()
@@ -41,10 +45,9 @@ const Register = () => {
       })
       .catch((error) => {
         setSuccessful(false);
-      });*/
-    console.log(formik.values);
-    console.log(formik.errors);
-    console.log(successful);
+      });
+    // console.log(formik.values);
+    // console.log(formik.errors);
   };
 
   const validationSchema = Yup.object({
@@ -65,6 +68,8 @@ const Register = () => {
       .email("Invalid email format")
       .required("Este campo es requerido"),
     phone: Yup.number().required("Este campo es requerido"),
+    idUser: Yup.string().required("Este campo es requerido"),
+    password: Yup.string().required("Este campo es requerido"),
   });
   const formik = useFormik({
     initialValues,
@@ -79,8 +84,9 @@ const Register = () => {
           <Col lg="8" md="10" sm="10" className="mx-auto">
             <Card className="mt-5 mb-5 shadow-lg p-1">
               <Card.Body>
-                <h4>Crear cuenta para un usuario</h4>
+                <h3>Crear cuenta para un usuario</h3>
                 <hr />
+                <h4 className="font-weight-bold">Información básica</h4>
                 <Form onSubmit={formik.handleSubmit}>
                   <Row className="py-2">
                     <Col lg={6} md={12} sm={12}>
@@ -209,8 +215,59 @@ const Register = () => {
                       </Form.Group>
                     </Col>
                   </Row>
+                  <hr></hr>
+                  <h4>Información de usuario</h4>
+                  <Row className="py-2">
+                    <Col lg={6} md={12} sm={12}>
+                      <Form.Group className="mb-3" controlId="idUser">
+                        <Form.Label>Número de identificación</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={formik.values.idUser}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          isInvalid={
+                            formik.errors.idUser && formik.touched.idUser
+                          }
+                        ></Form.Control>
+                        {formik.errors.idUser && formik.touched.idUser ? (
+                          <Alert className="mt-3" variant="danger">
+                            {formik.errors.idUser}
+                          </Alert>
+                        ) : null}
+                      </Form.Group>
+                    </Col>
 
-                  <Button type="submit">Siguiente</Button>
+                    <Col lg={6} md={12} sm={12}>
+                      <Form.Group className="mb-3" controlId="password">
+                        <Form.Label>Contraseña</Form.Label>
+                        <Form.Control
+                          type="password"
+                          placheholder="********"
+                          value={formik.values.password}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          isInvalid={
+                            formik.errors.password && formik.touched.password
+                          }
+                        ></Form.Control>
+                        {formik.errors.password && formik.touched.password ? (
+                          <Alert className="mt-3" variant="danger">
+                            {formik.errors.password}
+                          </Alert>
+                        ) : null}
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+                  {Object.keys(formik.errors).length === 0 &&
+                    formik.values.firstName && (
+                      <div className="d-flex flex-row-reverse">
+                        <Button variant="outline-primary" type="submit">
+                          Siguiente
+                        </Button>
+                      </div>
+                    )}
                 </Form>
               </Card.Body>
             </Card>
@@ -224,9 +281,16 @@ const Register = () => {
         <div className="alert">
           <Row>
             <Col lg="5" md="10" sm="10" className="mx-auto">
-              <Button variant="outline-primary" onClick={() => navigate(-1)}>
-                Siguiente
-              </Button>
+              <Alert variant="success">Usuario creado exitosamente!</Alert>
+            </Col>
+          </Row>
+        </div>
+      )}
+      {message && (
+        <div className="alert">
+          <Row>
+            <Col lg="8" md="10" sm="10" className="mx-auto">
+              <Alert variant="danger">{message}</Alert>
             </Col>
           </Row>
         </div>

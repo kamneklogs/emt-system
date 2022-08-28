@@ -8,7 +8,7 @@ export const SidebarData = [
   {
     title: "Login",
     path: "/login",
-    roles: [],
+    roles: ["ADMIN", "MEDICO"],
   },
   {
     title: "Overview",

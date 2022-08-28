@@ -20,6 +20,7 @@ function App() {
               path="/overview/users"
               element={<RegisterPersonalInfo />}
             ></Route>
+            <Route path="/overview/userRegister" element={<Register />}></Route>
           </Route>
           <Route path="/reports" element={<Reports />}></Route>
           <Route path="/reports/reports1" element={<ReportsOne />}></Route>
