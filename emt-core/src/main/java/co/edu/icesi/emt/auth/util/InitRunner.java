@@ -1,4 +1,4 @@
-package co.edu.icesi.emt.auth.util;
+/* package co.edu.icesi.emt.auth.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,4 +31,4 @@ public class InitRunner implements CommandLineRunner {
         userService.save("admin", passwordEncoder.encode("testpassword"));
         userRoleService.save(userService.findByUsername("admin"), roleService.findById("ADMIN"));
     }
-}
+} */
