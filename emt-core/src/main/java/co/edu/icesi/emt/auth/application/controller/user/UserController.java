@@ -1,5 +1,7 @@
 package co.edu.icesi.emt.auth.application.controller.user;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.icesi.emt.auth.application.dto.signup.SignupRequestDTO;
+import co.edu.icesi.emt.auth.application.dto.user.UserDTO;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
-import co.edu.icesi.emt.auth.security.jwt.JWTProvider;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
 import co.edu.icesi.emt.auth.util.validators.exceptions.UserIsNotAdminException;
 
@@ -36,11 +38,11 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<>> getAllUsers() {
-        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        return new ResponseEntity<List<UserDTO>>(UserDTO.from(userService.findAll()), HttpStatus.OK);
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<String> signUp(@RequestBody final SignupRequestDTO signUpRequestDTO,
             final HttpServletRequest httpRequest) throws UserIsNotAdminException {
 
