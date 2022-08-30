@@ -58,7 +58,7 @@ public class SecutiryConfig {
 
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/public/auth/**").permitAll()
+                .antMatchers("/public/auth/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
