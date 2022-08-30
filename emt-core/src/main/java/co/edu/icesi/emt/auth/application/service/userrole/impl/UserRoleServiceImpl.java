@@ -27,13 +27,25 @@ public class UserRoleServiceImpl implements UserRoleService {// TODO: To impleme
 
     @Override
     public void save(User user, Role role) {
+        if (user == null) {
+            throw new IllegalArgumentException("User was not found");
+        }
+        if (role == null) {
+            throw new IllegalArgumentException("Role was not found");
+        }
+
         userRoleRepository.save(user, role);
     }
 
     @Override
     public boolean userHasRole(User user, Role role) {
-        // TODO Auto-generated method stub
-        return false;
+        if (user == null) {
+            throw new IllegalArgumentException("User was not found");
+        }
+        if (role == null) {
+            throw new IllegalArgumentException("Role was not found");
+        }
+        return userRoleRepository.userHasRole(user, role);
     }
 
     @Override

@@ -1,6 +1,6 @@
-package co.edu.icesi.emt.auth.application.controller;
+package co.edu.icesi.emt.auth.application.controller.authentication;
 
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,12 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.icesi.emt.auth.application.dto.login.LoginRequestDTO;
 import co.edu.icesi.emt.auth.application.dto.login.LoginResponseDTO;
-import co.edu.icesi.emt.auth.application.dto.role.RoleDTO;
 import co.edu.icesi.emt.auth.application.dto.signup.SignupRequestDTO;
-import co.edu.icesi.emt.auth.application.service.role.RoleService;
-import co.edu.icesi.emt.auth.application.service.role.impl.RoleServiceImpl;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.security.jwt.JWTProvider;
+import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
+import co.edu.icesi.emt.auth.util.validators.exceptions.UserIsNotAdminException;
 
 @RestController
 @RequestMapping("/public/auth")
@@ -36,20 +34,24 @@ public class AuthenticationController {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final JWTProvider jwtProvider;
-    private final RoleService roleService;
+
+    private final UserAdminValidator userAdminValidator;
 
     @Autowired
     public AuthenticationController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager,
-            UserService userService, JWTProvider jwtProvider, RoleServiceImpl roleService) {
+            UserService userService, JWTProvider jwtProvider, UserAdminValidator userAdminValidator) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.jwtProvider = jwtProvider;
-        this.roleService = roleService;
+        this.userAdminValidator = userAdminValidator;
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody final SignupRequestDTO signUpRequestDTO) {
+    public ResponseEntity<String> signUp(@RequestBody final SignupRequestDTO signUpRequestDTO,
+            final HttpServletRequest httpRequest) throws UserIsNotAdminException {
+
+        userAdminValidator.validate(httpRequest);
 
         userService.save(signUpRequestDTO.getUsername(), passwordEncoder.encode(signUpRequestDTO.getPassword()));
 
@@ -72,8 +74,4 @@ public class AuthenticationController {
                 new LoginResponseDTO(loginRequestDTO.getUsername(), jwt, userDetails.getAuthorities()), HttpStatus.OK);
     }
 
-    @GetMapping("role")
-    public ResponseEntity<List<RoleDTO>> getRoles() {
-        return new ResponseEntity<List<RoleDTO>>(RoleDTO.from(roleService.findAll()), HttpStatus.OK);
-    }
 }
