@@ -48,7 +48,7 @@ public class RoleController {
     }
 
     @PostMapping("{roleName}/user/{id}")
-    public ResponseEntity<String> getRoles(@PathVariable("roleName") final String roleName,
+    public ResponseEntity<String> addUserRole(@PathVariable("roleName") final String roleName,
             @PathVariable("id") final String id, final HttpServletRequest request) throws UserIsNotAdminException {
 
         userAdminValidator.validate(request);
