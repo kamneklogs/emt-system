@@ -61,6 +61,6 @@ public class UserRoleServiceImpl implements UserRoleService {// TODO: To impleme
 
     @Override
     public void deleteUserRoleByUsernameAndRoleId(User user, Role role) {
-        // TODO Auto-generated method stub
+        userRoleRepository.deleteUserRoleByUsernameAndRoleId(user, role);
     }
 }
