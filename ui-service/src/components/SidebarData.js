@@ -24,8 +24,18 @@ export const SidebarData = [
         icon: <IoIcons.IoIosPaper />,
       },
       {
+        title: "User register",
+        path: "/overview/userRegister",
+        icon: <IoIcons.IoIosPaper />,
+      },
+      {
         title: "Pacients",
         path: "/overview/revenue",
+        icon: <IoIcons.IoIosPaper />,
+      },
+      {
+        title: "Emt Users",
+        path: "/overview/emtUsers",
         icon: <IoIcons.IoIosPaper />,
       },
     ],
