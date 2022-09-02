@@ -1,9 +1,15 @@
 import axios from "axios";
+import authHeader from "./auth-header";
 
 const API_URL = "http://localhost:8080/public/auth/";
 
-const register = (username, email, password) => {
-  return axios.post(API_URL + "signup", { username, email, password });
+const register = (username, password) => {
+  console.log(username, password);
+  return axios.post(
+    API_URL + "signup",
+    { username, password },
+    { headers: authHeader() }
+  );
 };
 const login = (username, password) => {
   return axios

@@ -1,1 +1,17 @@
 @import "~bootstrap/scss/bootstrap";
+
+.users-table{
+    .users-table-controls{
+        font-size:16px;
+        color: $blue;
+        text-align: center;
+        span {
+            cursor: pointer;
+            margin: 0 6px;
+        }
+
+    }
+}
+.alert{
+    vertical-align: 6000px
+}

@@ -9,6 +9,7 @@ import PublicRoutes from "./components/PublicRoutes";
 import Product from "./pages/Product";
 import Register from "./pages/Register";
 import RegisterPersonalInfo from "./pages/RegisterPersonalInfo";
+import UserView from "./pages/UserView";
 function App() {
   return (
     <Router>
@@ -21,6 +22,7 @@ function App() {
               element={<RegisterPersonalInfo />}
             ></Route>
             <Route path="/overview/userRegister" element={<Register />}></Route>
+            <Route path="/overview/emtUsers" element={<UserView />}></Route>
           </Route>
           <Route path="/reports" element={<Reports />}></Route>
           <Route path="/reports/reports1" element={<ReportsOne />}></Route>

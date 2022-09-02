@@ -36,9 +36,10 @@ const Register = () => {
   };
 
   const handleRegister = (formValue) => {
-    const { firstName, email, password } = formValue;
+    const { idUser, password } = formValue;
+    console.log(formValue.idUser, formValue.password);
     setSuccessful(false);
-    dispatch(register({ firstName, email, password }))
+    dispatch(register("idUser", "password"))
       .unwrap()
       .then(() => {
         setSuccessful(true);
@@ -46,7 +47,7 @@ const Register = () => {
       .catch((error) => {
         setSuccessful(false);
       });
-    // console.log(formik.values);
+    console.log(formik.values);
     // console.log(formik.errors);
   };
 
