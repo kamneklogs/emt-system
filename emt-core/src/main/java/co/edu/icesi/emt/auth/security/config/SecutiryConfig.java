@@ -76,7 +76,7 @@ public class SecutiryConfig {
     }
 
     @Bean
-    public WebMvcConfigurer corsConfigurer(@Value("${ui-servcie}") String uiServiceSocket) {
+    public WebMvcConfigurer corsConfigurer(@Value("${ui-service}") String uiServiceSocket) {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
