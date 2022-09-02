@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,5 +56,16 @@ public class RoleController {
 
         userRoleService.save(userService.findByUsername(id), roleService.findById(roleName));
         return new ResponseEntity<String>("Role added to user with id " + id, HttpStatus.OK);
+    }
+
+    @DeleteMapping("{roleName}/user/{id}")
+    public ResponseEntity<String> deleteUserRole(@PathVariable("roleName") final String roleName,
+            @PathVariable("id") final String id, final HttpServletRequest request) throws UserIsNotAdminException {
+
+        userAdminValidator.validate(request);
+
+        userRoleService.deleteUserRoleByUsernameAndRoleId(userService.findByUsername(id),
+                roleService.findById(roleName));
+        return new ResponseEntity<String>("Role removed from the user with id " + id, HttpStatus.OK);
     }
 }
