@@ -22,7 +22,6 @@ const Register = () => {
   useEffect(() => {
     UserService.getAllRoles().then((response) => {
       setRoles(response.data);
-      console.log(response.data);
     });
   }, [setRoles]);
   const dispatch = useDispatch();
@@ -40,7 +39,7 @@ const Register = () => {
       value: "",
     },
     phone: "",
-    roles: [],
+    userRoles: [],
   };
 
   const handleRegister = (formValue) => {
@@ -278,13 +277,13 @@ const Register = () => {
                       <strong>Rol del usuario:</strong>
                     </div>
                     {roles.map((role) => (
-                      <Col>
+                      <Col lg={12} sm={12} md={12} key={role.name}>
                         <Form.Check
                           type="checkbox"
                           className="mx-2"
-                          name="userRole"
+                          name="userRoles"
                           value={role.name}
-                          label={role.name}
+                          label={`${role.name}: ${role.description} `}
                           onChange={formik.handleChange}
                         />
                       </Col>
