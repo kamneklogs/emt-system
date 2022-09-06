@@ -40,6 +40,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [lastLogin=" + lastLogin + ", password=" + password + ", username=" + username + "]";
+        return "User [lastLogin=" + lastLogin + ", username=" + username + "]";
     }
 }

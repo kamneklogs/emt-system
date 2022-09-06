@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import co.edu.icesi.emt.auth.application.service.user.UserService;
@@ -51,5 +52,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<Role> findUserRolesByUsername(String username) {
         return this.userRoleService.findUserRoleIdsByUsername(username).stream().collect(Collectors.toSet());
+    }
+
+    @Override
+    public void changePassword(String username, String password) {
+        this.userRepository.changePassword(username, password);
     }
 }
