@@ -12,4 +12,6 @@ public interface UserRepository {
     List<User> findAll();
 
     void deleteByUsername(String username);
+
+    void changePassword(String username, String password);
 }

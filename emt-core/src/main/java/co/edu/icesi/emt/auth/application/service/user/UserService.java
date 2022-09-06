@@ -16,4 +16,6 @@ public interface UserService {
     void deleteByUsername(String username);
 
     Set<Role> findUserRolesByUsername(String username);
+
+    void changePassword(String username, String password);
 }

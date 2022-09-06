@@ -39,6 +39,9 @@ public class UserRepositoryImpl implements UserRepository {
             + ID
             + " = ?";
 
+    private static final String UPDATE_USER_PASSWORD = "UPDATE " + USER_FULL_TABLE_NAME + " SET " + PASSWORD
+            + " = ? WHERE " + ID + " = ?";
+
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -82,5 +85,10 @@ public class UserRepositoryImpl implements UserRepository {
         Instant lastLogin = rs.getTimestamp(LAST_LOGIN).toInstant();
 
         return new User(username, password, lastLogin);
+    }
+
+    @Override
+    public void changePassword(String username, String password) {
+        jdbcTemplate.update(UPDATE_USER_PASSWORD, new Object[] { password, username });
     }
 }
