@@ -17,11 +17,20 @@ const getAdminBoard = () => {
 };
 
 const getAllUsers = () => {
-  return axios.get(API_URL + "user", { headers: authHeader() });
+  return axios
+    .get(API_URL + "user", { headers: authHeader() })
+    .then((response) => {
+      //console.log(response); en response.data están todos los users
+      return response.data;
+    });
 };
 
 const getAllRoles = () => {
-  return axios.get(API_URL + "role", { headers: authHeader() });
+  return axios
+    .get(API_URL + "role", { headers: authHeader() })
+    .then((response) => {
+      return response.data;
+    });
 };
 const userService = {
   getPublicContent,
