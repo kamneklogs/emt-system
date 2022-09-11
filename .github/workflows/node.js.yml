@@ -6,8 +6,12 @@ name: Node.js CI
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'ui-service/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'ui-service/**'
 
 jobs:
   build:
