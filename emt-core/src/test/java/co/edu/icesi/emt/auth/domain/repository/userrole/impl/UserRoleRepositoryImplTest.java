@@ -13,29 +13,4 @@ import co.edu.icesi.emt.auth.domain.repository.userrole.UserRoleRepository;
 @SpringBootTest
 public class UserRoleRepositoryImplTest {
 
-    @Autowired
-    private UserRoleRepository userrole;
-
-    @Test
-    void testUserHasRole() {
-        assertEquals(false,
-                userrole.userHasRole(
-                        new User("username", null, null),
-                        new Role(null, null)));
-    }
-
-    @Test
-    void testDeleteUserRoleByUsername() {
-
-    }
-
-    @Test
-    void testFindUserRoleIdsByUsername() {
-
-    }
-
-    @Test
-    void testSave() {
-
-    }
 }

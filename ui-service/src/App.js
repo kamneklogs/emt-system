@@ -1,8 +1,8 @@
 import "./App.css";
 import Sidebar from "./components/Sidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import UserManagment from "./pages/UserManagment";
-import RoleManagment from "./pages/RoleManagment";
+import Overview from "./pages/Overview";
+import { Reports, ReportsOne, ReportsTwo, ReportsThree } from "./pages/Reports";
 import Login from "./pages/Login";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import PublicRoutes from "./components/PublicRoutes";
@@ -16,11 +16,18 @@ function App() {
       <Sidebar />
       <Routes>
         <Route path="/" element={<ProtectedRoutes />}>
-          <Route path="/users" element={<UserManagment />}>
-            <Route path="/users/userRegister" element={<Register />}></Route>
-            <Route path="/users/emtUsers" element={<UserView />}></Route>
+          <Route path="/overview" element={<Overview />}>
+            <Route
+              path="/overview/users"
+              element={<RegisterPersonalInfo />}
+            ></Route>
+            <Route path="/overview/userRegister" element={<Register />}></Route>
+            <Route path="/overview/emtUsers" element={<UserView />}></Route>
           </Route>
-          <Route path="/roles" element={<RoleManagment />}></Route>
+          <Route path="/reports" element={<Reports />}></Route>
+          <Route path="/reports/reports1" element={<ReportsOne />}></Route>
+          <Route path="/reports/reports2" element={<ReportsTwo />}></Route>
+          <Route path="/reports/reports3" element={<ReportsThree />}></Route>
           <Route path="/products" element={<Product />}></Route>
           <Route path="/logout"></Route>
         </Route>
