@@ -14,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
 
     defaults:
-      use:
-        working-directory: ui-service
       run:
         working-directory: ui-service
 
