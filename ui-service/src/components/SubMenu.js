@@ -99,7 +99,9 @@ const SubMenu = ({ item }) => {
           </div>
         </SidebarLink>
       ) : null*/}
-      {currentUser && item.title !== "Login" && item.title !== "Logout" ? (
+      {currentUser &&
+      item.title !== "Iniciar Sesión" &&
+      item.title !== "Logout" ? (
         <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
           <div>
             {item.icon}
@@ -114,7 +116,7 @@ const SubMenu = ({ item }) => {
           </div>
         </SidebarLink>
       ) : null}
-      {!currentUser && item.title === "Login" ? (
+      {!currentUser && item.title === "Iniciar Sesión" ? (
         <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
           <div>
             {item.icon}
