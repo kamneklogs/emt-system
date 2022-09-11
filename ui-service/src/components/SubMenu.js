@@ -54,7 +54,7 @@ const SubMenu = ({ item }) => {
     console.log("logout");
     navigate("/login");
     dispatch(logout());
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
   useEffect(() => {
     if (currentUser) {
@@ -67,6 +67,8 @@ const SubMenu = ({ item }) => {
           rolAdmin = true;
         }
       }
+      console.log(showModeratorBoard);
+      console.log(showAdminMoard);
       setShowModeratorBoard(rolModerator);
       setShowAdminMoard(rolAdmin);
     }
@@ -76,7 +78,7 @@ const SubMenu = ({ item }) => {
     return () => {
       EventBus.remove("logout");
     };
-  }, [currentUser, logOut]);
+  }, [currentUser, logOut, showModeratorBoard, showAdminMoard]);
 
   const [subnav, setSubnav] = useState(false);
   const showSubnav = () => setSubnav(!subnav);
@@ -99,7 +101,9 @@ const SubMenu = ({ item }) => {
           </div>
         </SidebarLink>
       ) : null*/}
-      {currentUser && item.title !== "Login" && item.title !== "Logout" ? (
+      {currentUser &&
+      item.title !== "Iniciar Sesión" &&
+      item.title !== "Logout" ? (
         <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
           <div>
             {item.icon}
@@ -114,7 +118,7 @@ const SubMenu = ({ item }) => {
           </div>
         </SidebarLink>
       ) : null}
-      {!currentUser && item.title === "Login" ? (
+      {!currentUser && item.title === "Iniciar Sesión" ? (
         <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
           <div>
             {item.icon}

@@ -1,84 +1,70 @@
 import React from "react";
 import * as FaIcons from "react-icons/fa";
-import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
 import * as RiIcons from "react-icons/ri";
+import * as HiIcons from "react-icons/hi";
+import * as ImIcons from "react-icons/im";
 
 export const SidebarData = [
   {
-    title: "Login",
+    title: "Iniciar Sesión",
     path: "/login",
     roles: ["ADMIN", "MEDICO"],
   },
   {
-    title: "Overview",
-    path: "/overview",
-    icon: <AiIcons.AiFillHome />,
+    title: "Gestión de Usuarios",
+    path: "/users",
+    icon: <FaIcons.FaUsers />,
     roles: ["ADMIN_ROLE"],
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
     subNav: [
       {
-        title: "Users",
-        path: "/overview/users",
-        icon: <IoIcons.IoIosPaper />,
+        title: "Registro de Usuarios",
+        path: "/users/userRegister",
+        icon: <HiIcons.HiUserAdd />,
       },
+
       {
-        title: "User register",
-        path: "/overview/userRegister",
-        icon: <IoIcons.IoIosPaper />,
-      },
-      {
-        title: "Pacients",
-        path: "/overview/revenue",
-        icon: <IoIcons.IoIosPaper />,
-      },
-      {
-        title: "Emt Users",
-        path: "/overview/emtUsers",
-        icon: <IoIcons.IoIosPaper />,
+        title: "Usuarios del EMT",
+        path: "/users/emtUsers",
+        icon: <HiIcons.HiUsers />,
       },
     ],
   },
   {
-    title: "Reports",
-    path: "/reports",
-    icon: <AiIcons.AiFillHome />,
+    title: "Gestión de Roles",
+    path: "/roles",
+    icon: <FaIcons.FaUserLock />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
     roles: ["ADMIN_ROLE"],
     subNav: [
       {
-        title: "Reports",
-        path: "/reports/reports1",
-        icon: <IoIcons.IoIosPaper />,
+        title: "Registro de Roles",
+        path: "/roles/reports1",
+        icon: <ImIcons.ImUserPlus />,
       },
       {
-        title: "Reports 2",
-        path: "/reports/reports2",
+        title: "Roles del EMT",
+        path: "/roles/reports2",
         icon: <IoIcons.IoIosPaper />,
       },
       {
         title: "Reports 3",
-        path: "/reports/reports3",
+        path: "/roles/reports3",
         icon: <IoIcons.IoIosPaper />,
       },
     ],
   },
-  // {
-  //   title: "Products",
-  //   path: "/products",
-  //   icon: <FaIcons.FaCartPlus />,
-  //   roles: ["DOCTOR_ROLE"],
-  // },
   {
-    title: "Team",
+    title: "Gestion de Pacientes",
     path: "/team",
     icon: <IoIcons.IoMdPeople />,
     roles: ["DOCTOR_ROLE"],
   },
   {
-    title: "Messages",
+    title: "Gestión de Historias Clínicas",
     path: "/messages",
     icon: <FaIcons.FaEnvelopeOpenText />,
     roles: ["DOCTOR_ROLE"],
@@ -88,19 +74,19 @@ export const SidebarData = [
 
     subNav: [
       {
-        title: "Message 1",
+        title: "Formatos de historias clínicas",
         path: "/messages/message1",
         icon: <IoIcons.IoIosPaper />,
       },
       {
-        title: "Message 2",
+        title: "Historias clínicas del sistema",
         path: "/messages/message2",
         icon: <IoIcons.IoIosPaper />,
       },
     ],
   },
   {
-    title: "Support",
+    title: "Soporte",
     path: "/support",
     icon: <IoIcons.IoMdHelpCircle />,
     roles: ["DOCTOR_ROLE"],

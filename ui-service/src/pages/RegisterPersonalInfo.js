@@ -10,7 +10,7 @@ import { useFormik } from "formik";
 import { Alert } from "react-bootstrap";
 import { register } from "../slices/auth";
 import * as Yup from "yup";
-import { parse, isDate } from "date-fns";
+import { parse } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -36,7 +36,6 @@ const Register = () => {
   };
 
   const handleRegister = (formValue) => {
-    const { idUser, password } = formValue;
     console.log(formValue.idUser, formValue.password);
     setSuccessful(false);
     dispatch(register("idUser", "password"))

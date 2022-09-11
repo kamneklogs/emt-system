@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import * as FaIcons from "react-icons/fa";
-import * as AiIcons from "react-icons/ai";
 import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
 import { IconContext } from "react-icons";
@@ -29,7 +28,7 @@ const NavIcon = styled(Link)`
 `;
 const SidebarNav = styled.nav`
   background: #0077b6;
-  width: 250px;
+  width: 300px;
   height: 150vh;
   justify-content: center;
   float: left;
@@ -51,7 +50,7 @@ const Sidebar = () => {
     console.log("logout");
     navigate("/login");
     dispatch(logout());
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
   useEffect(() => {
     EventBus.on("logout", () => {
@@ -87,7 +86,7 @@ const Sidebar = () => {
                 size="sm"
                 onClick={logOut}
               >
-                Logout
+                Cerrar Sesión
               </Button>
             </div>
           )}
