@@ -18,4 +18,8 @@ public interface UserService {
     Set<Role> findUserRolesByUsername(String username);
 
     void changePassword(String username, String password);
+
+    void setUserStatus(String username, boolean status);
+
+    boolean isAccountEnabled(String username);
 }

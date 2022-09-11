@@ -7,11 +7,13 @@ public class User {
     private String username;
     private String password;
     private Instant lastLogin;
+    private boolean enabled;
 
-    public User(String username, String password, Instant lastLogin) {
+    public User(String username, String password, Instant lastLogin, boolean enabled) {
         this.username = username;
         this.password = password;
         this.lastLogin = lastLogin;
+        this.enabled = enabled;
     }
 
     public String getUsername() {
@@ -36,6 +38,14 @@ public class User {
 
     public void setLastLogin(Instant lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     @Override
