@@ -17,9 +17,9 @@ public class MainUser extends User implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public MainUser(String username, String password, Instant lastLogin,
+    public MainUser(String username, String password, Instant lastLogin, boolean enabled,
             Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, lastLogin);
+        super(username, password, lastLogin, enabled);
         this.authorities = authorities;
     }
 
@@ -52,10 +52,10 @@ public class MainUser extends User implements UserDetails {
         List<GrantedAuthority> authorities = roles.stream().map(rol -> new SimpleGrantedAuthority(rol
                 .getName())).collect(Collectors.toList()); // To convert enum Role in GrantedAuthorities
 
-        return new MainUser(user.getUsername(), user.getPassword(), user.getLastLogin(), authorities);
+        return new MainUser(user.getUsername(), user.getPassword(), user.getLastLogin(), user.isEnabled(), authorities);
     }
 
     public static MainUser build(User user) {
-        return new MainUser(user.getUsername(), user.getPassword(), user.getLastLogin(), null);
+        return new MainUser(user.getUsername(), user.getPassword(), user.getLastLogin(), user.isEnabled(), null);
     }
 }

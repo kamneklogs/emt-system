@@ -23,7 +23,9 @@ import co.edu.icesi.emt.auth.application.dto.resetpassword.ResetPasswordRequestD
 import co.edu.icesi.emt.auth.application.dto.signup.SignupRequestDTO;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.security.jwt.JWTProvider;
+import co.edu.icesi.emt.auth.util.validators.UserAccountEnabledValidator;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
+import co.edu.icesi.emt.auth.util.validators.exceptions.UserAccountDisabledException;
 import co.edu.icesi.emt.auth.util.validators.exceptions.UserIsNotAdminException;
 
 @RestController
@@ -36,15 +38,18 @@ public class AuthenticationController {
     private final JWTProvider jwtProvider;
 
     private final UserAdminValidator userAdminValidator;
+    private final UserAccountEnabledValidator userAccountEnabledValidator;
 
     @Autowired
     public AuthenticationController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager,
-            UserService userService, JWTProvider jwtProvider, UserAdminValidator userAdminValidator) {
+            UserService userService, JWTProvider jwtProvider, UserAdminValidator userAdminValidator,
+            UserAccountEnabledValidator userAccountEnabledValidator) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.jwtProvider = jwtProvider;
         this.userAdminValidator = userAdminValidator;
+        this.userAccountEnabledValidator = userAccountEnabledValidator;
     }
 
     @PostMapping("/signup")
@@ -61,7 +66,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody final LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody final LoginRequestDTO loginRequestDTO)
+            throws UserAccountDisabledException {
+
+        userAccountEnabledValidator.validate(loginRequestDTO.getUsername());
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(), loginRequestDTO.getPassword()));
@@ -84,7 +92,8 @@ public class AuthenticationController {
                 passwordEncoder.encode(resetPasswordRequestDTO.getPassword()));
 
         return new ResponseEntity<String>(
-                "User password changed: " + userService.findByUsername(resetPasswordRequestDTO.getUsername()).toString(),
+                "User password changed: "
+                        + userService.findByUsername(resetPasswordRequestDTO.getUsername()).toString(),
                 HttpStatus.OK);
     }
 }

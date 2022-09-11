@@ -24,8 +24,10 @@ public class UserRepositoryImpl implements UserRepository {
     private static final String ID = "id";
     private static final String PASSWORD = "password";
     private static final String LAST_LOGIN = "last_login";
+    private static final String IS_ENABLED = "is_enabled";
 
-    private static final String SELECT_USER_TABLE_COLUMNS = ID + ", " + PASSWORD + ", " + LAST_LOGIN;
+    private static final String SELECT_USER_TABLE_COLUMNS = ID + ", " + PASSWORD + ", " + LAST_LOGIN + ", "
+            + IS_ENABLED;
     private static final String INSERT_USER_TABLE_COLUMNS = ID + ", " + PASSWORD;
 
     private static final String SELECT_FROM_USER = "SELECT " + SELECT_USER_TABLE_COLUMNS + " FROM "
@@ -41,6 +43,12 @@ public class UserRepositoryImpl implements UserRepository {
 
     private static final String UPDATE_USER_PASSWORD = "UPDATE " + USER_FULL_TABLE_NAME + " SET " + PASSWORD
             + " = ? WHERE " + ID + " = ?";
+
+    private static final String UPDATE_USER_IS_ENABLED = "UPDATE " + USER_FULL_TABLE_NAME + " SET " + IS_ENABLED
+            + " = ? WHERE " + ID + " = ?";
+
+    private static final String SELECT_USER_IS_ENABLED = "SELECT " + IS_ENABLED + " FROM " + USER_FULL_TABLE_NAME
+            + " WHERE " + ID + " = ?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -83,12 +91,23 @@ public class UserRepositoryImpl implements UserRepository {
         String username = rs.getString(ID);
         String password = rs.getString(PASSWORD);
         Instant lastLogin = rs.getTimestamp(LAST_LOGIN).toInstant();
+        boolean isEnabled = rs.getBoolean(IS_ENABLED);
 
-        return new User(username, password, lastLogin);
+        return new User(username, password, lastLogin, isEnabled);
     }
 
     @Override
     public void changePassword(String username, String password) {
         jdbcTemplate.update(UPDATE_USER_PASSWORD, new Object[] { password, username });
+    }
+
+    @Override
+    public void setUserStatus(String username, boolean status) {
+        jdbcTemplate.update(UPDATE_USER_IS_ENABLED, new Object[] { status, username });
+    }
+
+    @Override
+    public boolean getUserAccountStatus(String username) {
+        return jdbcTemplate.queryForObject(SELECT_USER_IS_ENABLED, Boolean.class);
     }
 }
