@@ -10,8 +10,12 @@ name: Java CI with Gradle
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'emt-core/**'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - 'emt-core/**'
 
 permissions:
   contents: read
