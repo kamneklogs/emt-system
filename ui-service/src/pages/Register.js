@@ -20,8 +20,8 @@ const Register = () => {
   const { message } = useSelector((state) => state.message);
 
   useEffect(() => {
-    UserService.getAllRoles().then((data) => {
-      setRoles(data);
+    UserService.getAllRoles().then((response) => {
+      setRoles(response.data);
     });
   }, [setRoles]);
   const dispatch = useDispatch();
