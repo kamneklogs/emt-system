@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import * as FaIcons from "react-icons/fa";
-import * as AiIcons from "react-icons/ai";
 import { SidebarData } from "./SidebarData";
 import SubMenu from "./SubMenu";
 import { IconContext } from "react-icons";
@@ -51,7 +50,7 @@ const Sidebar = () => {
     console.log("logout");
     navigate("/login");
     dispatch(logout());
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
   useEffect(() => {
     EventBus.on("logout", () => {

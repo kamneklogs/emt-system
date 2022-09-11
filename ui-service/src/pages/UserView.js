@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Col, Container, Row, Table } from "react-bootstrap";
-import UserService from "../services/user.service";
-import { List, Share, Trash } from "react-bootstrap-icons";
+import { Col, Container, Row } from "react-bootstrap";
+import { Trash } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllUsers } from "../slices/user";
 import { clearMessage } from "../slices/message";
@@ -30,6 +29,7 @@ const UserView = () => {
   const handleClose = () => {
     setShow(false);
     console.log(userId);
+    console.log(loading);
   };
   const handleShow = (username) => {
     setShow(true);

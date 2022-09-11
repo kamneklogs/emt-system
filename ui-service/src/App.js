@@ -8,7 +8,6 @@ import ProtectedRoutes from "./components/ProtectedRoutes";
 import PublicRoutes from "./components/PublicRoutes";
 import Product from "./pages/Product";
 import Register from "./pages/Register";
-import RegisterPersonalInfo from "./pages/RegisterPersonalInfo";
 import UserView from "./pages/UserView";
 function App() {
   return (
