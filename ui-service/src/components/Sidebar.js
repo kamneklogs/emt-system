@@ -29,7 +29,7 @@ const NavIcon = styled(Link)`
 `;
 const SidebarNav = styled.nav`
   background: #0077b6;
-  width: 300px;
+  width: 250px;
   height: 150vh;
   justify-content: center;
   float: left;
@@ -87,7 +87,7 @@ const Sidebar = () => {
                 size="sm"
                 onClick={logOut}
               >
-                Cerrar Sesión
+                Logout
               </Button>
             </div>
           )}
