@@ -12,6 +12,8 @@ on:
 jobs:
   build:
 
+    working-directory: ./ui-service
+
     runs-on: ubuntu-latest
 
     strategy:
@@ -26,7 +28,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - working-directory: ./ui-service
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
