@@ -300,7 +300,7 @@ const Register = () => {
             </Card>
             <Button
               variant="outline-primary"
-              onClick={() => navigate("/overview/emtUsers")}
+              onClick={() => navigate("/users/userRegister")}
             >
               Go back
             </Button>
@@ -314,7 +314,7 @@ const Register = () => {
               <Alert variant="success">Usuario creado exitosamente!</Alert>
               <Button
                 variant="outline-primary"
-                onClick={() => navigate("/overview/emtUsers")}
+                onClick={() => navigate("/users/emtUsers")}
               >
                 Go back
               </Button>
