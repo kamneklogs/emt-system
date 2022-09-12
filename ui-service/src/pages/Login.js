@@ -39,7 +39,7 @@ const Login = (props) => {
       .unwrap()
       .then(() => {
         changeToProfile();
-        props.history.push("/overview");
+        props.history.push("/login");
         window.location.reload();
       })
       .catch(() => {
@@ -55,7 +55,7 @@ const Login = (props) => {
   const changeToProfile = () => {
     if (isLoggedIn) {
       //return <Redirect to="/profile" />;
-      return navigate("/overview");
+      return navigate("/login");
     }
   };
 

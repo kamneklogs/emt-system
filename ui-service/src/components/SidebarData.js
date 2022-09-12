@@ -59,13 +59,13 @@ export const SidebarData = [
   },
   {
     title: "Gestion de Pacientes",
-    path: "/team",
+    path: "/pacients",
     icon: <IoIcons.IoMdPeople />,
     roles: ["DOCTOR_ROLE"],
   },
   {
     title: "Gestión de Historias Clínicas",
-    path: "/messages",
+    path: "/clinicHistory",
     icon: <FaIcons.FaEnvelopeOpenText />,
     roles: ["DOCTOR_ROLE"],
 
@@ -75,12 +75,12 @@ export const SidebarData = [
     subNav: [
       {
         title: "Formatos de historias clínicas",
-        path: "/messages/message1",
+        path: "/clinicHistory/models",
         icon: <IoIcons.IoIosPaper />,
       },
       {
         title: "Historias clínicas del sistema",
-        path: "/messages/message2",
+        path: "/clinicHistory/pacients",
         icon: <IoIcons.IoIosPaper />,
       },
     ],
