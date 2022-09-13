@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
@@ -25,10 +26,11 @@ public class UserServiceImpl implements UserService {
         this.userRoleService = userRoleService;
     }
 
+    @Transactional
     @Override
-    public void save(String username, String password) {
-        // TODO: Add other validations
+    public void save(String username, String password, String[] roles) {
         this.userRepository.save(username, password);
+        this.userRoleService.save(userRepository.findByUsername(username), roles);
     }
 
     @Override

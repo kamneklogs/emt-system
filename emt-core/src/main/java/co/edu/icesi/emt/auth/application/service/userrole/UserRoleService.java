@@ -8,6 +8,8 @@ import co.edu.icesi.emt.auth.domain.model.user.User;
 public interface UserRoleService {
     void save(User user, Role role);
 
+    void save(User user, String[] roles);
+
     boolean userHasRole(User user, Role role);
 
     List<Role> findUserRoleIdsByUsername(String username);

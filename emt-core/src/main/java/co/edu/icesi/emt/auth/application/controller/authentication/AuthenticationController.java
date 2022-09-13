@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.icesi.emt.auth.application.dto.login.LoginRequestDTO;
 import co.edu.icesi.emt.auth.application.dto.login.LoginResponseDTO;
 import co.edu.icesi.emt.auth.application.dto.resetpassword.ResetPasswordRequestDTO;
-import co.edu.icesi.emt.auth.application.dto.signup.SignupRequestDTO;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.security.jwt.JWTProvider;
 import co.edu.icesi.emt.auth.util.validators.UserAccountEnabledValidator;
@@ -50,19 +49,6 @@ public class AuthenticationController {
         this.jwtProvider = jwtProvider;
         this.userAdminValidator = userAdminValidator;
         this.userAccountEnabledValidator = userAccountEnabledValidator;
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody final SignupRequestDTO signUpRequestDTO,
-            final HttpServletRequest httpRequest) throws UserIsNotAdminException {
-
-        userAdminValidator.validate(httpRequest);
-
-        userService.save(signUpRequestDTO.getUsername(), passwordEncoder.encode(signUpRequestDTO.getPassword()));
-
-        return new ResponseEntity<String>(
-                "User created: " + userService.findByUsername(signUpRequestDTO.getUsername()).toString(),
-                HttpStatus.OK);
     }
 
     @PostMapping("/login")
