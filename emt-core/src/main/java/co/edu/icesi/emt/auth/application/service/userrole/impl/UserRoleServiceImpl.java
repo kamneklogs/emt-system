@@ -38,6 +38,13 @@ public class UserRoleServiceImpl implements UserRoleService {// TODO: To impleme
     }
 
     @Override
+    public void save(User user, String[] roles) {
+        for (String roleId : roles) {
+            this.save(user, roleRepository.findById(roleId));
+        }
+    }
+
+    @Override
     public boolean userHasRole(User user, Role role) {
         if (user == null) {
             throw new IllegalArgumentException("User was not found");

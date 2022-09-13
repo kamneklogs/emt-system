@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useFormik } from "formik";
 import { Alert } from "react-bootstrap";
-import { register } from "../slices/auth";
+import { register } from "../slices/user";
 import * as Yup from "yup";
 import UserService from "../services/user.service";
 import { useNavigate } from "react-router-dom";
@@ -300,7 +300,7 @@ const Register = () => {
             </Card>
             <Button
               variant="outline-primary"
-              onClick={() => navigate("/overview/emtUsers")}
+              onClick={() => navigate("/users/userRegister")}
             >
               Go back
             </Button>
@@ -314,7 +314,7 @@ const Register = () => {
               <Alert variant="success">Usuario creado exitosamente!</Alert>
               <Button
                 variant="outline-primary"
-                onClick={() => navigate("/overview/emtUsers")}
+                onClick={() => navigate("/users/emtUsers")}
               >
                 Go back
               </Button>

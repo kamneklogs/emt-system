@@ -7,7 +7,7 @@ import co.edu.icesi.emt.auth.domain.model.role.Role;
 import co.edu.icesi.emt.auth.domain.model.user.User;
 
 public interface UserService {
-    void save(String username, String password);
+    void save(String username, String password, String[] roles);
 
     User findByUsername(String username);
 
@@ -18,4 +18,8 @@ public interface UserService {
     Set<Role> findUserRolesByUsername(String username);
 
     void changePassword(String username, String password);
+
+    void setUserStatus(String username, boolean status);
+
+    boolean isAccountEnabled(String username);
 }

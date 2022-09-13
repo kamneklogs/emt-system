@@ -14,4 +14,8 @@ public interface UserRepository {
     void deleteByUsername(String username);
 
     void changePassword(String username, String password);
+
+    void setUserStatus(String username, boolean status);
+
+    boolean getUserAccountStatus(String username);
 }

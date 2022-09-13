@@ -20,10 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.icesi.emt.auth.application.dto.login.LoginRequestDTO;
 import co.edu.icesi.emt.auth.application.dto.login.LoginResponseDTO;
 import co.edu.icesi.emt.auth.application.dto.resetpassword.ResetPasswordRequestDTO;
-import co.edu.icesi.emt.auth.application.dto.signup.SignupRequestDTO;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.security.jwt.JWTProvider;
+import co.edu.icesi.emt.auth.util.validators.UserAccountEnabledValidator;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
+import co.edu.icesi.emt.auth.util.validators.exceptions.UserAccountDisabledException;
 import co.edu.icesi.emt.auth.util.validators.exceptions.UserIsNotAdminException;
 
 @RestController
@@ -36,32 +37,25 @@ public class AuthenticationController {
     private final JWTProvider jwtProvider;
 
     private final UserAdminValidator userAdminValidator;
+    private final UserAccountEnabledValidator userAccountEnabledValidator;
 
     @Autowired
     public AuthenticationController(PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager,
-            UserService userService, JWTProvider jwtProvider, UserAdminValidator userAdminValidator) {
+            UserService userService, JWTProvider jwtProvider, UserAdminValidator userAdminValidator,
+            UserAccountEnabledValidator userAccountEnabledValidator) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.jwtProvider = jwtProvider;
         this.userAdminValidator = userAdminValidator;
-    }
-
-    @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody final SignupRequestDTO signUpRequestDTO,
-            final HttpServletRequest httpRequest) throws UserIsNotAdminException {
-
-        userAdminValidator.validate(httpRequest);
-
-        userService.save(signUpRequestDTO.getUsername(), passwordEncoder.encode(signUpRequestDTO.getPassword()));
-
-        return new ResponseEntity<String>(
-                "User created: " + userService.findByUsername(signUpRequestDTO.getUsername()).toString(),
-                HttpStatus.OK);
+        this.userAccountEnabledValidator = userAccountEnabledValidator;
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody final LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody final LoginRequestDTO loginRequestDTO)
+            throws UserAccountDisabledException {
+
+        userAccountEnabledValidator.validate(loginRequestDTO.getUsername());
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(), loginRequestDTO.getPassword()));
@@ -84,7 +78,8 @@ public class AuthenticationController {
                 passwordEncoder.encode(resetPasswordRequestDTO.getPassword()));
 
         return new ResponseEntity<String>(
-                "User password changed: " + userService.findByUsername(resetPasswordRequestDTO.getUsername()).toString(),
+                "User password changed: "
+                        + userService.findByUsername(resetPasswordRequestDTO.getUsername()).toString(),
                 HttpStatus.OK);
     }
 }
