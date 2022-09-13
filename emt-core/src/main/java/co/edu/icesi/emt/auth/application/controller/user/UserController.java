@@ -40,7 +40,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
+    public ResponseEntity<List<UserDTO>> getAllUsers(final HttpServletRequest request) throws UserIsNotAdminException {
+        userAdminValidator.validate(request);
         return new ResponseEntity<List<UserDTO>>(UserDTO.from(userService.findAll()), HttpStatus.OK);
     }
 
