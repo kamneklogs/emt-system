@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.icesi.emt.auth.application.dto.signup.UserCreationDTO;
 import co.edu.icesi.emt.auth.application.dto.user.UserBasicRetrievalDTO;
+import co.edu.icesi.emt.auth.application.dto.user.UserDetailedRetrievalDTO;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
+import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
+import co.edu.icesi.emt.auth.domain.model.user.User;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
 import co.edu.icesi.emt.auth.util.validators.exceptions.UserIsNotAdminException;
 
@@ -27,21 +30,26 @@ import co.edu.icesi.emt.auth.util.validators.exceptions.UserIsNotAdminException;
 public class UserController {
 
     private UserService userService;
+    private UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
 
     private final UserAdminValidator userAdminValidator;
 
     @Autowired
-    public UserController(UserAdminValidator userAdminValidator, UserService userService,
+    public UserController(UserAdminValidator userAdminValidator,
+            UserRoleService userRoleService,
+            UserService userService,
             PasswordEncoder passwordEncoder) {
         this.userAdminValidator = userAdminValidator;
         this.userService = userService;
+        this.userRoleService = userRoleService;
         this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
     public ResponseEntity<List<UserBasicRetrievalDTO>> getAllUsers() {
-        return new ResponseEntity<List<UserBasicRetrievalDTO>>(UserBasicRetrievalDTO.from(userService.findAll()), HttpStatus.OK);
+        return new ResponseEntity<List<UserBasicRetrievalDTO>>(UserBasicRetrievalDTO.from(userService.findAll()),
+                HttpStatus.OK);
     }
 
     @PostMapping
@@ -69,7 +77,11 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserBasicRetrievalDTO> getUser(@PathVariable("id") String id) {
-        return new ResponseEntity<UserBasicRetrievalDTO>(UserBasicRetrievalDTO.from(userService.findByUsername(id)), HttpStatus.OK);
+    public ResponseEntity<UserDetailedRetrievalDTO> findUserById(@PathVariable("id") String id) {
+        User user = userService.findByUsername(id);
+        return new ResponseEntity<UserDetailedRetrievalDTO>(
+                UserDetailedRetrievalDTO.from(user.getUsername(), user.getLastLogin(),
+                        userRoleService.findUserRoleIdsByUsername(user.getUsername())),
+                HttpStatus.OK);
     }
 }
