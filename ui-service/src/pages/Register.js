@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useFormik } from "formik";
 import { Alert } from "react-bootstrap";
-import { register } from "../slices/auth";
+import { register } from "../slices/user";
 import * as Yup from "yup";
 import UserService from "../services/user.service";
 import { useNavigate } from "react-router-dom";
