@@ -8,14 +8,14 @@ public class SignupRequestDTO {
     private final String username;
     private final String password;
 
-    private final String[] roles;
+    private final String[] rolesIds;
 
     @JsonCreator
     public SignupRequestDTO(@JsonProperty("username") String username,
-            @JsonProperty("password") String password, @JsonProperty("roles") String[] roles) {
+            @JsonProperty("password") String password, @JsonProperty("rolesIds") String[] roles) {
         this.username = username;
         this.password = password;
-        this.roles = roles;
+        this.rolesIds = roles;
     }
 
     public String getUsername() {
@@ -26,12 +26,12 @@ public class SignupRequestDTO {
         return password;
     }
 
-    public String[] getRoles() {
-        return roles;
+    public String[] getRolesIds() {
+        return rolesIds;
     }
 
     @Override
     public String toString() {
-        return "SignupRequestDTO [password=" + password + ", roles=" + roles + ", username=" + username + "]";
+        return "SignupRequestDTO [password=" + password + ", roles=" + rolesIds + ", username=" + username + "]";
     }
 }
