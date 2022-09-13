@@ -12,7 +12,7 @@ public class UserCreationDTO {
 
     @JsonCreator
     public UserCreationDTO(@JsonProperty("username") String username,
-            @JsonProperty("password") String password, @JsonProperty("roles") String[] roles) {
+            @JsonProperty("password") String password, @JsonProperty("rolesIds") String[] roles) {
         this.username = username;
         this.password = password;
         this.roles = roles;
