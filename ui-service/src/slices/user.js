@@ -32,10 +32,10 @@ export const getAllUsers = createAsyncThunk(
 
 export const register = createAsyncThunk(
   "user/register",
-  async ({ username, password }, thunkAPI) => {
+  async ({ username, password, rolesIds }, thunkAPI) => {
     try {
       console.log(username, password);
-      const response = await UserService.register(username, password);
+      const response = await UserService.register(username, password, rolesIds);
       thunkAPI.dispatch(setMessage(response.data.message));
       return response.data;
     } catch (error) {

@@ -39,13 +39,14 @@ const Register = () => {
       value: "",
     },
     phone: "",
-    userRoles: [],
+    rolesIds: [],
   };
 
   const handleRegister = (formValue) => {
-    const { username, password } = formValue;
+    const { username, password, rolesIds } = formValue;
+    console.log(username, password, rolesIds);
     setSuccessful(false);
-    dispatch(register({ username, password }))
+    dispatch(register({ username, password, rolesIds }))
       .unwrap()
       .then(() => {
         setSuccessful(true);
@@ -281,7 +282,7 @@ const Register = () => {
                         <Form.Check
                           type="checkbox"
                           className="mx-2"
-                          name="userRoles"
+                          name="rolesIds"
                           value={role.name}
                           label={`${role.name}: ${role.description} `}
                           onChange={formik.handleChange}
