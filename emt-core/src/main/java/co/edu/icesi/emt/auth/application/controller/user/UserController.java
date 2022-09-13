@@ -52,7 +52,7 @@ public class UserController {
         userAdminValidator.validate(httpRequest);
 
         userService.save(signUpRequestDTO.getUsername(), passwordEncoder.encode(signUpRequestDTO.getPassword()),
-                signUpRequestDTO.getRoles());
+                signUpRequestDTO.getRolesIds());
 
         return new ResponseEntity<String>(
                 "User created: " + userService.findByUsername(signUpRequestDTO.getUsername()).toString(),
