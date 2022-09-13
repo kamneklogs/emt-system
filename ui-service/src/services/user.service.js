@@ -33,11 +33,11 @@ const getAllRoles = () => {
     });
 };
 
-const register = (username, password) => {
-  console.log(username, password);
+const register = (username, password, rolesIds) => {
+  console.log(username, password, rolesIds);
   return axios.post(
     API_URL + "user",
-    { username, password },
+    { username, password, rolesIds },
     { headers: authHeader() }
   );
 };
