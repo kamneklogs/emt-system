@@ -83,7 +83,7 @@ public class UserController {
         User user = userService.findByUsername(id);
         return new ResponseEntity<UserDetailedRetrievalDTO>(
                 UserDetailedRetrievalDTO.from(user.getUsername(), user.getLastLogin(),
-                        userRoleService.findUserRoleIdsByUsername(user.getUsername())),
+                        userRoleService.findUserRoleIdsByUsername(user.getUsername()), user.isEnabled()),
                 HttpStatus.OK);
     }
 }

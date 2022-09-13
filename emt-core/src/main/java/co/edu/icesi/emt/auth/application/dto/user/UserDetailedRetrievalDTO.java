@@ -13,10 +13,13 @@ public class UserDetailedRetrievalDTO { // To be expanded
 
     private final List<RoleDTO> roles;
 
-    public UserDetailedRetrievalDTO(String username, Instant last_login, List<RoleDTO> roles) {
+    private final boolean accountStatus;
+
+    public UserDetailedRetrievalDTO(String username, Instant last_login, List<RoleDTO> roles, boolean accountStatus) {
         this.username = username;
         this.last_login = last_login;
         this.roles = roles;
+        this.accountStatus = accountStatus;
     }
 
     public String getUsername() {
@@ -31,7 +34,12 @@ public class UserDetailedRetrievalDTO { // To be expanded
         return roles;
     }
 
-    public static UserDetailedRetrievalDTO from(String username, Instant last_login, List<Role> roles) {
-        return new UserDetailedRetrievalDTO(username, last_login, RoleDTO.from(roles));
+    public boolean isAccountStatus() {
+        return accountStatus;
+    }
+
+    public static UserDetailedRetrievalDTO from(String username, Instant last_login, List<Role> roles,
+            boolean accountStatus) {
+        return new UserDetailedRetrievalDTO(username, last_login, RoleDTO.from(roles), accountStatus);
     }
 }
