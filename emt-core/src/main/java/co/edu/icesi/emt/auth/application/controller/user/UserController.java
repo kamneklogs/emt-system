@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.icesi.emt.auth.application.dto.signup.SignupRequestDTO;
@@ -51,7 +50,8 @@ public class UserController {
 
         userAdminValidator.validate(httpRequest);
 
-        userService.save(signUpRequestDTO.getUsername(), passwordEncoder.encode(signUpRequestDTO.getPassword()));
+        userService.save(signUpRequestDTO.getUsername(), passwordEncoder.encode(signUpRequestDTO.getPassword()),
+                signUpRequestDTO.getRoles());
 
         return new ResponseEntity<String>(
                 "User created: " + userService.findByUsername(signUpRequestDTO.getUsername()).toString(),

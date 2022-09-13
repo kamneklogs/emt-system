@@ -7,7 +7,7 @@ import co.edu.icesi.emt.auth.domain.model.role.Role;
 import co.edu.icesi.emt.auth.domain.model.user.User;
 
 public interface UserService {
-    void save(String username, String password);
+    void save(String username, String password, String[] roles);
 
     User findByUsername(String username);
 
