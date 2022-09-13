@@ -32,11 +32,21 @@ const getAllRoles = () => {
       return response.data;
     });
 };
+
+const register = (username, password) => {
+  console.log(username, password);
+  return axios.post(
+    API_URL + "user",
+    { username, password },
+    { headers: authHeader() }
+  );
+};
 const userService = {
   getPublicContent,
   getUserBoard,
   getModeratorBoard,
   getAdminBoard,
+  register,
   getAllUsers,
   getAllRoles,
 };
