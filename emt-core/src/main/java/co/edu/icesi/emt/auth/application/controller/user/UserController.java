@@ -47,9 +47,9 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserBasicRetrievalDTO>> getAllUsers() {
-        return new ResponseEntity<List<UserBasicRetrievalDTO>>(UserBasicRetrievalDTO.from(userService.findAll()),
-                HttpStatus.OK);
+    public ResponseEntity<List<UserDTO>> getAllUsers(final HttpServletRequest request) throws UserIsNotAdminException {
+        userAdminValidator.validate(request);
+        return new ResponseEntity<List<UserDTO>>(UserDTO.from(userService.findAll()), HttpStatus.OK);
     }
 
     @PostMapping
@@ -58,8 +58,8 @@ public class UserController {
 
         userAdminValidator.validate(httpRequest);
 
-        userService.save(userCreationDTO.getUsername(), passwordEncoder.encode(userCreationDTO.getPassword()),
-                userCreationDTO.getRoles());
+        userService.save(signUpRequestDTO.getUsername(), passwordEncoder.encode(signUpRequestDTO.getPassword()),
+                signUpRequestDTO.getRolesIds());
 
         return new ResponseEntity<String>(
                 "User created: " + userService.findByUsername(userCreationDTO.getUsername()).toString(),

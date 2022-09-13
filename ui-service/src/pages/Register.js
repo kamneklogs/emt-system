@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useFormik } from "formik";
 import { Alert } from "react-bootstrap";
-import { register } from "../slices/auth";
+import { register } from "../slices/user";
 import * as Yup from "yup";
 import UserService from "../services/user.service";
 import { useNavigate } from "react-router-dom";
@@ -39,13 +39,14 @@ const Register = () => {
       value: "",
     },
     phone: "",
-    userRoles: [],
+    rolesIds: [],
   };
 
   const handleRegister = (formValue) => {
-    const { username, password } = formValue;
+    const { username, password, rolesIds } = formValue;
+    console.log(username, password, rolesIds);
     setSuccessful(false);
-    dispatch(register({ username, password }))
+    dispatch(register({ username, password, rolesIds }))
       .unwrap()
       .then(() => {
         setSuccessful(true);
@@ -281,7 +282,7 @@ const Register = () => {
                         <Form.Check
                           type="checkbox"
                           className="mx-2"
-                          name="userRoles"
+                          name="rolesIds"
                           value={role.name}
                           label={`${role.name}: ${role.description} `}
                           onChange={formik.handleChange}

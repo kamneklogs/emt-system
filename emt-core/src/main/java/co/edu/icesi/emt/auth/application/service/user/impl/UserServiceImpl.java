@@ -30,7 +30,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(String username, String password, String[] roles) {
         this.userRepository.save(username, password);
-        this.userRoleService.save(userRepository.findByUsername(username), roles);
+        if (roles != null && roles.length > 0) {
+            this.userRoleService.save(userRepository.findByUsername(username), roles);
+        }
     }
 
     @Override
