@@ -3,19 +3,19 @@ package co.edu.icesi.emt.auth.application.dto.signup;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class SignupRequestDTO {
+public class UserCreationDTO {
 
     private final String username;
     private final String password;
 
-    private final String[] rolesIds;
+    private final String[] roles;
 
     @JsonCreator
-    public SignupRequestDTO(@JsonProperty("username") String username,
+    public UserCreationDTO(@JsonProperty("username") String username,
             @JsonProperty("password") String password, @JsonProperty("rolesIds") String[] roles) {
         this.username = username;
         this.password = password;
-        this.rolesIds = roles;
+        this.roles = roles;
     }
 
     public String getUsername() {
@@ -26,12 +26,12 @@ public class SignupRequestDTO {
         return password;
     }
 
-    public String[] getRolesIds() {
-        return rolesIds;
+    public String[] getRoles() {
+        return roles;
     }
 
     @Override
     public String toString() {
-        return "SignupRequestDTO [password=" + password + ", roles=" + rolesIds + ", username=" + username + "]";
+        return "SignupRequestDTO [password=" + password + ", roles=" + roles + ", username=" + username + "]";
     }
 }

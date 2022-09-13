@@ -16,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.icesi.emt.auth.application.dto.signup.SignupRequestDTO;
-import co.edu.icesi.emt.auth.application.dto.user.UserDTO;
+import co.edu.icesi.emt.auth.application.dto.signup.UserCreationDTO;
+import co.edu.icesi.emt.auth.application.dto.user.UserBasicRetrievalDTO;
+import co.edu.icesi.emt.auth.application.dto.user.UserDetailedRetrievalDTO;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
+import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
+import co.edu.icesi.emt.auth.domain.model.user.User;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
 import co.edu.icesi.emt.auth.util.validators.exceptions.UserIsNotAdminException;
 
@@ -27,35 +30,41 @@ import co.edu.icesi.emt.auth.util.validators.exceptions.UserIsNotAdminException;
 public class UserController {
 
     private UserService userService;
+    private UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
 
     private final UserAdminValidator userAdminValidator;
 
     @Autowired
-    public UserController(UserAdminValidator userAdminValidator, UserService userService,
+    public UserController(UserAdminValidator userAdminValidator,
+            UserRoleService userRoleService,
+            UserService userService,
             PasswordEncoder passwordEncoder) {
         this.userAdminValidator = userAdminValidator;
         this.userService = userService;
+        this.userRoleService = userRoleService;
         this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers(final HttpServletRequest request) throws UserIsNotAdminException {
+    public ResponseEntity<List<UserBasicRetrievalDTO>> getAllUsers(final HttpServletRequest request)
+            throws UserIsNotAdminException {
         userAdminValidator.validate(request);
-        return new ResponseEntity<List<UserDTO>>(UserDTO.from(userService.findAll()), HttpStatus.OK);
+        return new ResponseEntity<List<UserBasicRetrievalDTO>>(UserBasicRetrievalDTO.from(userService.findAll()),
+                HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<String> signUp(@RequestBody final SignupRequestDTO signUpRequestDTO,
+    public ResponseEntity<String> createUser(@RequestBody final UserCreationDTO userCreationDTO,
             final HttpServletRequest httpRequest) throws UserIsNotAdminException {
 
         userAdminValidator.validate(httpRequest);
 
-        userService.save(signUpRequestDTO.getUsername(), passwordEncoder.encode(signUpRequestDTO.getPassword()),
-                signUpRequestDTO.getRolesIds());
+        userService.save(userCreationDTO.getUsername(), passwordEncoder.encode(userCreationDTO.getPassword()),
+                userCreationDTO.getRoles());
 
         return new ResponseEntity<String>(
-                "User created: " + userService.findByUsername(signUpRequestDTO.getUsername()).toString(),
+                "User created: " + userService.findByUsername(userCreationDTO.getUsername()).toString(),
                 HttpStatus.OK);
     }
 
@@ -67,5 +76,14 @@ public class UserController {
         userService.setUserStatus(id, isEnabled);
 
         return new ResponseEntity<String>("User status changed for username: " + id, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDetailedRetrievalDTO> findUserById(@PathVariable("id") String id) {
+        User user = userService.findByUsername(id);
+        return new ResponseEntity<UserDetailedRetrievalDTO>(
+                UserDetailedRetrievalDTO.from(user.getUsername(), user.getLastLogin(),
+                        userRoleService.findUserRoleIdsByUsername(user.getUsername()), user.isEnabled()),
+                HttpStatus.OK);
     }
 }
