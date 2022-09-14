@@ -41,6 +41,15 @@ const register = (username, password, rolesIds) => {
     { headers: authHeader() }
   );
 };
+
+const getUserByUsername = (username) => {
+  return axios
+    .get(`${API_URL}"user"/${username}`, { headers: authHeader() })
+    .then((response) => {
+      return response.data;
+    });
+};
+
 const userService = {
   getPublicContent,
   getUserBoard,
@@ -49,5 +58,6 @@ const userService = {
   register,
   getAllUsers,
   getAllRoles,
+  getUserByUsername,
 };
 export default userService;
