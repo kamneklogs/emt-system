@@ -21,7 +21,6 @@ const EditUser = () => {
     dispatch(getUserByUsername(username));
   }, [setRoles, dispatch, username]);
 
-  console.log(user);
   return (
     <Container>
       <Row>
