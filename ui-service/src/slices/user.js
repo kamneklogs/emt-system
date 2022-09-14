@@ -29,7 +29,7 @@ export const getUserByUsername = createAsyncThunk(
   "user/getUserByUsername",
   async ({ username }, thunkAPI) => {
     try {
-      const data = await UserService.getUserByUsername(username);
+      const data = await UserService.getUserByUsername("admin"); //FIXME: username is comming undefined
       return { user: data };
     } catch (error) {
       const message =

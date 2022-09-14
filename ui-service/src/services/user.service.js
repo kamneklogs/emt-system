@@ -44,8 +44,9 @@ const register = (username, password, rolesIds) => {
 
 const getUserByUsername = (username) => {
   return axios
-    .get(`${API_URL}"user"/${username}`, { headers: authHeader() })
+    .get(`${API_URL}user/${username}`, { headers: authHeader() })
     .then((response) => {
+      console.log(response.data);
       return response.data;
     });
 };
