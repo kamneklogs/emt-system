@@ -81,6 +81,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDetailedRetrievalDTO> findUserById(@PathVariable("id") String id) {
         User user = userService.findByUsername(id);
+
+        if (user == null) {
+            return new ResponseEntity<UserDetailedRetrievalDTO>(HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<UserDetailedRetrievalDTO>(
                 UserDetailedRetrievalDTO.from(user.getUsername(), user.getLastLogin(),
                         userRoleService.findUserRoleIdsByUsername(user.getUsername()), user.isEnabled()),
