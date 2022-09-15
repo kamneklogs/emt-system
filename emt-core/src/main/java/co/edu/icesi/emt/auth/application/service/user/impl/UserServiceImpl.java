@@ -71,4 +71,9 @@ public class UserServiceImpl implements UserService {
     public boolean isAccountEnabled(String username) {
         return this.userRepository.getUserAccountStatus(username);
     }
+
+    @Override
+    public void saveLastLogin(String username) {
+        this.userRepository.saveLastLogin(username);
+    }
 }

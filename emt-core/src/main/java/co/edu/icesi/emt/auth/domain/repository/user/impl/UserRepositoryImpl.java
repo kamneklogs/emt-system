@@ -2,6 +2,7 @@ package co.edu.icesi.emt.auth.domain.repository.user.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
@@ -49,6 +50,9 @@ public class UserRepositoryImpl implements UserRepository {
 
     private static final String SELECT_USER_IS_ENABLED = "SELECT " + IS_ENABLED + " FROM " + USER_FULL_TABLE_NAME
             + " WHERE " + ID + " = ?";
+
+    private static final String UPDATE_USER_LAST_LOGIN = "UPDATE " + USER_FULL_TABLE_NAME + " SET " + LAST_LOGIN
+            + " = ? WHERE " + ID + " = ?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -109,5 +113,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean getUserAccountStatus(String username) {
         return jdbcTemplate.queryForObject(SELECT_USER_IS_ENABLED, Boolean.class);
+    }
+
+    @Override
+    public void saveLastLogin(String username) {
+        jdbcTemplate.update(UPDATE_USER_LAST_LOGIN, new Object[] { Timestamp.from(Instant.now()), username });
     }
 }
