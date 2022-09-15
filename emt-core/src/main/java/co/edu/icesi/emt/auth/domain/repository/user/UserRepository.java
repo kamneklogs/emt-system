@@ -18,4 +18,6 @@ public interface UserRepository {
     void setUserStatus(String username, boolean status);
 
     boolean getUserAccountStatus(String username);
+
+    void saveLastLogin(String username);
 }

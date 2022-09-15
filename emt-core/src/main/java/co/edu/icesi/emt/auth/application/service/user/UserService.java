@@ -22,4 +22,6 @@ public interface UserService {
     void setUserStatus(String username, boolean status);
 
     boolean isAccountEnabled(String username);
+
+    void saveLastLogin(String username);
 }

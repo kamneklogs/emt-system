@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.security.service.userdetails.impl.UserDetailsServiceImpl;
 
 public class JWTTokenFilter extends OncePerRequestFilter {// Run in each request, validate with TokenProvider
@@ -29,6 +30,9 @@ public class JWTTokenFilter extends OncePerRequestFilter {// Run in each request
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
@@ -42,6 +46,10 @@ public class JWTTokenFilter extends OncePerRequestFilter {// Run in each request
                         userDetails.getAuthorities());
 
                 SecurityContextHolder.getContext().setAuthentication(auth);
+
+                if(auth.isAuthenticated()){
+                    userService.saveLastLogin(username);
+                }
             }
         } catch (Exception e) {
             log.error("fail in doFilterInternal", e);
