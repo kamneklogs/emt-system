@@ -12,6 +12,7 @@ const EditUser = () => {
   const [roles, setRoles] = useState([]);
   const { loading, user } = useSelector((state) => state.user);
   const [enableEdit, setEnableEdit] = useState(true);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,13 +43,11 @@ const EditUser = () => {
   const handleAddRoleToUser = (roleName) => {
     UserService.addRoleToAUser(roleName, user.username).then((data) => {
       console.log(data);
+      window.location.reload();
     });
-    window.location.reload();
   };
   const handleDeleteRoleToUser = (roleName) => {
-    UserService.deleteRoleToAUser(roleName, user.username).then((data) => {
-      console.log(data);
-    });
+    UserService.deleteRoleToAUser(roleName, user.username);
     //window.location.reload();
   };
 
@@ -163,7 +162,7 @@ const EditUser = () => {
                               </li>
                             ))}
                           </ul>
-                          {/* <div className="mt-4">
+                          <div className="mt-4">
                             <div className="d-flex flex-row-reverse">
                               <Button
                                 variant="outline-primary"
@@ -173,7 +172,7 @@ const EditUser = () => {
                                 Guardar cambios
                               </Button>
                             </div>
-                          </div> */}
+                          </div>
                         </Form>
                       </>
                     )}
