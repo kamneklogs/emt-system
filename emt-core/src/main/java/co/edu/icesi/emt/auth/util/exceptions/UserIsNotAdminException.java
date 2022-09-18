@@ -1,4 +1,4 @@
-package co.edu.icesi.emt.auth.util.validators.exceptions;
+package co.edu.icesi.emt.auth.util.exceptions;
 
 public class UserIsNotAdminException extends Exception {
 

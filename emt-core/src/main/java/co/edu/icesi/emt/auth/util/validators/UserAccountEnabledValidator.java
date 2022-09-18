@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import co.edu.icesi.emt.auth.application.service.user.UserService;
-import co.edu.icesi.emt.auth.util.validators.exceptions.UserAccountDisabledException;
+import co.edu.icesi.emt.auth.util.exceptions.UserAccountDisabledException;
 
 @Component
 public class UserAccountEnabledValidator {

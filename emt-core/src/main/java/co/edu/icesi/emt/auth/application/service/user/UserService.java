@@ -13,7 +13,7 @@ public interface UserService {
 
     List<User> findAll();
 
-    void deleteByUsername(String username);
+    void deleteByUsername(String username) throws Exception;
 
     Set<Role> findUserRolesByUsername(String username);
 
