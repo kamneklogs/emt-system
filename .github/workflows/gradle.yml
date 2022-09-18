@@ -7,11 +7,7 @@
 
 name: Java CI with Gradle
 
-on:
-  push:
-    branches: [ "main" ]
-    paths:
-      - 'emt-core/**'
+on: 
   pull_request:
     branches: [ "main" ]
     paths:

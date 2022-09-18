@@ -4,10 +4,6 @@
 name: Node.js pipeline for ui-service
 
 on:
-  push:
-    branches: [ "main" ]
-    paths:
-      - 'ui-service/**'
   pull_request:
     branches: [ "main" ]
     paths:
