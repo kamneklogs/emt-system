@@ -47,8 +47,10 @@ const EditUser = () => {
     });
   };
   const handleDeleteRoleToUser = (roleName) => {
-    UserService.deleteRoleToAUser(roleName, user.username);
-    //window.location.reload();
+    UserService.deleteRoleToAUser(roleName, user.username).then((data) => {
+      console.log(data);
+      window.location.reload();
+    });
   };
 
   return (

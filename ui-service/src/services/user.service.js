@@ -63,13 +63,16 @@ const addRoleToAUser = (roleName, username) => {
       return response.data;
     });
 };
-const deleteRoleToAUser = async (roleName, username) => {
-  const response = await axios.delete(
+const deleteRoleToAUser = (roleName, username) => {
+   return axios.delete(
     `${API_URL}${API_ROLE}/${roleName}/${API_USER}/${username}`,
-    {},
-    { headers: authHeader() }
-  );
-  return response.data;
+    {
+      headers: authHeader(),
+    }
+  ).then((response) => {
+    return response.data;
+  });
+  
 };
 const userService = {
   getPublicContent,
