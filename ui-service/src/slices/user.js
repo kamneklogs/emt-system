@@ -5,7 +5,12 @@ import UserService from "../services/user.service";
 const initialState = {
   loading: false,
   usersApp: [],
-  user: null,
+  user: {
+    username: "",
+    last_login: "",
+    roles: [],
+    accountStatus: true,
+  },
 };
 export const getAllUsers = createAsyncThunk(
   "user/getAllUsers",
@@ -27,9 +32,9 @@ export const getAllUsers = createAsyncThunk(
 );
 export const getUserByUsername = createAsyncThunk(
   "user/getUserByUsername",
-  async ({ username }, thunkAPI) => {
+  async (username, thunkAPI) => {
     try {
-      const data = await UserService.getUserByUsername("admin"); //FIXME: username is comming undefined
+      const data = await UserService.getUserByUsername(username);
       return { user: data };
     } catch (error) {
       const message =

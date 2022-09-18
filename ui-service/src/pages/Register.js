@@ -44,7 +44,6 @@ const Register = () => {
 
   const handleRegister = (formValue) => {
     const { username, password, rolesIds } = formValue;
-    console.log(username, password, rolesIds);
     setSuccessful(false);
     dispatch(register({ username, password, rolesIds }))
       .unwrap()
@@ -54,7 +53,6 @@ const Register = () => {
       .catch((error) => {
         setSuccessful(false);
       });
-    console.log(formik.values);
   };
 
   const validationSchema = Yup.object({
