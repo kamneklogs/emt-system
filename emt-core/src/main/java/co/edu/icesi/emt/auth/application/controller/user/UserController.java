@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +23,8 @@ import co.edu.icesi.emt.auth.application.dto.user.UserDetailedRetrievalDTO;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
 import co.edu.icesi.emt.auth.domain.model.user.User;
+import co.edu.icesi.emt.auth.util.exceptions.UserIsNotAdminException;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
-import co.edu.icesi.emt.auth.util.validators.exceptions.UserIsNotAdminException;
 
 @RestController
 @RequestMapping("/user")
@@ -90,5 +91,16 @@ public class UserController {
                 UserDetailedRetrievalDTO.from(user.getUsername(), user.getLastLogin(),
                         userRoleService.findUserRoleIdsByUsername(user.getUsername()), user.isEnabled()),
                 HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") String id, final HttpServletRequest httpRequest)
+            throws Exception {
+
+        userAdminValidator.validate(httpRequest);
+
+        userService.deleteByUsername(id);
+
+        return new ResponseEntity<String>("User deleted: " + id, HttpStatus.OK);
     }
 }
