@@ -9,6 +9,8 @@ import PublicRoutes from "./components/PublicRoutes";
 import Product from "./pages/Product";
 import Register from "./pages/Register";
 import UserView from "./pages/UserView";
+import EditUser from "./pages/EditUser";
+
 function App() {
   return (
     <Router>
@@ -18,6 +20,10 @@ function App() {
           <Route path="/users" element={<UserManagment />}>
             <Route path="/users/userRegister" element={<Register />}></Route>
             <Route path="/users/emtUsers" element={<UserView />}></Route>
+            <Route
+              path="/users/editUser/:userId"
+              element={<EditUser />}
+            ></Route>
           </Route>
           <Route path="/roles" element={<RoleManagment />}></Route>
           <Route path="/products" element={<Product />}></Route>
