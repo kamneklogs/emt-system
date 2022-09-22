@@ -13,9 +13,12 @@ import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
 import co.edu.icesi.emt.auth.domain.model.role.Role;
 import co.edu.icesi.emt.auth.domain.model.user.User;
 import co.edu.icesi.emt.auth.domain.repository.user.UserRepository;
+import co.edu.icesi.emt.auth.util.exceptions.RootAdminCanNotBeRemovedException;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final String ROOT_ADMIN_USERNAME = "admin";
 
     private final UserRepository userRepository;
     private final UserRoleService userRoleService;
@@ -47,9 +50,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteByUsername(String username) {
-        // TODO: Add other validations
+    public void deleteByUsername(String username) throws RootAdminCanNotBeRemovedException {
+        if (username.equals(ROOT_ADMIN_USERNAME)) {
+            throw new RootAdminCanNotBeRemovedException();
+        }
         this.userRepository.deleteByUsername(username);
+
     }
 
     @Override

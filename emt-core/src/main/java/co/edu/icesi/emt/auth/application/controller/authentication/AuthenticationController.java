@@ -22,10 +22,10 @@ import co.edu.icesi.emt.auth.application.dto.login.LoginResponseDTO;
 import co.edu.icesi.emt.auth.application.dto.resetpassword.ResetPasswordRequestDTO;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.security.jwt.JWTProvider;
+import co.edu.icesi.emt.auth.util.exceptions.UserAccountDisabledException;
+import co.edu.icesi.emt.auth.util.exceptions.UserIsNotAdminException;
 import co.edu.icesi.emt.auth.util.validators.UserAccountEnabledValidator;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
-import co.edu.icesi.emt.auth.util.validators.exceptions.UserAccountDisabledException;
-import co.edu.icesi.emt.auth.util.validators.exceptions.UserIsNotAdminException;
 
 @RestController
 @RequestMapping("/public/auth")
