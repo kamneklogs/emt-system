@@ -3,8 +3,11 @@ package co.edu.icesi.emt.core.domain.repository.implementation;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Instant;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +17,7 @@ import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformatio
 import co.edu.icesi.emt.core.domain.repository.PersonalInformationRepository;
 
 @Repository
-public class PersonalInformationImpl implements PersonalInformationRepository {
+public class PersonalInformationRepositoryImpl implements PersonalInformationRepository {
 
     private static final String PERSONAL_INFORMATION_TABLE = "personal_information";
 
@@ -32,19 +35,36 @@ public class PersonalInformationImpl implements PersonalInformationRepository {
             + ", " +
             BIRTH_DATE + ", " + GENDER + ", " + CIVIL_STATUS + ", " + PHONE_NUMBER + ", " + ADDRESS;
 
-    private static final String SELECT_FROM_PERSONAL_INFORMATION_BY_ID = "SELECT " + PERSONAL_INFORMATION_COLUM
-            + " FROM " + PERSONAL_INFORMATION_TABLE + " WHERE " + ID + " = ?";
+    private static final String SELECT_FROM_PERSONAL_INFORMATION = "SELECT " + PERSONAL_INFORMATION_COLUM + " FROM "
+            + PERSONAL_INFORMATION_TABLE;
+
+    private static final String SELECT_FROM_PERSONAL_INFORMATION_BY_ID = SELECT_FROM_PERSONAL_INFORMATION
+            + " WHERE " + ID + " = ?";
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public PersonalInformationImpl(JdbcTemplate jdbcTemplate) {
+    public PersonalInformationRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public PersonalInformation findById(String id) {
-        return jdbcTemplate.queryForObject(SELECT_FROM_PERSONAL_INFORMATION_BY_ID, this::parse, id);
+        try {
+            return jdbcTemplate.queryForObject(SELECT_FROM_PERSONAL_INFORMATION_BY_ID, this::parse, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<PersonalInformation> findAll() {
+        try {
+            return jdbcTemplate.query(SELECT_FROM_PERSONAL_INFORMATION,
+                    this::parse);
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
     }
 
     @Override
@@ -66,14 +86,13 @@ public class PersonalInformationImpl implements PersonalInformationRepository {
     }
 
     private PersonalInformation parse(final ResultSet rs, final int rowNum) throws SQLException {
-
         final String id = rs.getString(ID);
         final String firstName = rs.getString(FIRST_NAME);
         final String lastName = rs.getString(LAST_NAME);
         final String email = rs.getString(EMAIL);
         final Instant birthDate = rs.getTimestamp(BIRTH_DATE).toInstant();
-        final Gender gender = Gender.findById(rs.getString(GENDER));
-        final CivilStatus civilStatus = CivilStatus.findById(rs.getString(CIVIL_STATUS));
+        final Gender gender = Gender.findById(rs.getInt(GENDER));
+        final CivilStatus civilStatus = CivilStatus.findById(rs.getInt(CIVIL_STATUS));
         final String phoneNumber = rs.getString(PHONE_NUMBER);
         final String address = rs.getString(ADDRESS);
 

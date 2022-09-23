@@ -2,23 +2,33 @@ package co.edu.icesi.emt.core.domain.model.personalinformation;
 
 public enum CivilStatus {
 
-    SINGLE("Soltero"),
-    MARRIED("Casado"),
-    DIVORCED("Divorciado"),
-    WIDOWED("Viudo"),
-    SEPARATED("Separado"),
-    COHABITING("Conviviendo"),
-    OTHER("Otro");
+    SINGLE(1, "Soltero"),
+    MARRIED(2, "Casado"),
+    DIVORCED(3, "Divorciado"),
+    WIDOWED(4, "Viudo"),
+    SEPARATED(5, "Separado"),
+    COHABITING(6, "Conviviendo"),
+    OTHER(7, "Otro");
 
-    private final String id;
+    private final int id;
+    private final String name;
 
-    private CivilStatus(final String id) {
+    private CivilStatus(final int id, final String name) {
         this.id = id;
+        this.name = name;
     }
 
-    public static CivilStatus findById(String id) {
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public static CivilStatus findById(int id) {
         for (CivilStatus civilStatus : CivilStatus.values()) {
-            if (civilStatus.id.equals(id)) {
+            if (civilStatus.id == id) {
                 return civilStatus;
             }
         }
