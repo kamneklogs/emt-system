@@ -1,4 +1,4 @@
-package co.edu.icesi.emt.core.feature.model.sections;
+package co.edu.icesi.emt.core.domain.model.feature;
 
 public enum Feature { // For a first realese we will only have the features that are already implemented and the same way with the roles by default
 
