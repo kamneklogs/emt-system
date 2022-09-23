@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +32,7 @@ public class PersonalInformationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PersonalInformationRetrievalDTO> findById(String id) {
+    public ResponseEntity<PersonalInformationRetrievalDTO> findById(@PathVariable("id") String id) {
         PersonalInformation personalInformation = personalInformationService.findById(id);
 
         if (personalInformation == null) {
@@ -41,7 +42,7 @@ public class PersonalInformationController {
         return ResponseEntity.ok(PersonalInformationRetrievalDTO.from(personalInformation));
     }
 
-    @PostMapping("/{id}")
+    @PostMapping
     public ResponseEntity<PersonalInformationRetrievalDTO> save(
             PersonalInformationCreationDTO personalInformationCreationDTO) {
         personalInformationService.save(PersonalInformationCreationDTO.fromDTO(personalInformationCreationDTO));
