@@ -1,6 +1,7 @@
 package co.edu.icesi.emt.core.domain.model.personalinformation;
 
 import java.time.Instant;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
 public class PersonalInformation {
@@ -27,7 +28,13 @@ public class PersonalInformation {
         this.civilStatus = civilStatus;
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.age = ChronoUnit.YEARS.between(birthDate, Instant.now());
+
+        Instant now = Instant.now();
+        Instant ago = Instant.ofEpochSecond(birthDate.getEpochSecond());
+
+        this.age = ChronoUnit.YEARS.between(
+                ago.atZone(ZoneId.systemDefault()),
+                now.atZone(ZoneId.systemDefault()));
     }
 
     public String getId() {
