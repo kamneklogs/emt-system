@@ -1,6 +1,7 @@
 package co.edu.icesi.emt.core.domain.model.personalinformation;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 public class PersonalInformation {
 
@@ -13,6 +14,7 @@ public class PersonalInformation {
     private final CivilStatus civilStatus;
     private final String phoneNumber;
     private final String address;
+    private final long age;
 
     public PersonalInformation(String id, String firstName, String lastName, String email, Instant birthDate,
             Gender gender, CivilStatus civilStatus, String phoneNumber, String address) {
@@ -25,6 +27,7 @@ public class PersonalInformation {
         this.civilStatus = civilStatus;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.age = ChronoUnit.YEARS.between(birthDate, Instant.now());
     }
 
     public String getId() {
@@ -63,4 +66,7 @@ public class PersonalInformation {
         return address;
     }
 
+    public long getAge() {
+        return age;
+    }
 }
