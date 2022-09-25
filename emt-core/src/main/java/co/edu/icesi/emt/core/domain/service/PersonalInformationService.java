@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformation;
+import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformationPreview;
 import co.edu.icesi.emt.core.domain.repository.PersonalInformationRepository;
 import co.edu.icesi.emt.core.domain.repository.implementation.PersonalInformationRepositoryImpl;
 
@@ -23,7 +24,7 @@ public class PersonalInformationService {
         return this.personalInformationRepository.findById(id);
     }
 
-    public List<PersonalInformation> findAll() {
+    public List<PersonalInformationPreview> findAll() {
         return this.personalInformationRepository.findAll();
     }
 

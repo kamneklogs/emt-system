@@ -18,6 +18,7 @@ import co.edu.icesi.emt.auth.util.exceptions.UserIsNotAdminException;
 import co.edu.icesi.emt.auth.util.exceptions.UserNotFoundException;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
 import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationCreationDTO;
+import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationPreviewDTO;
 import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationRetrievalDTO;
 import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformation;
 import co.edu.icesi.emt.core.domain.service.PersonalInformationService;
@@ -38,10 +39,10 @@ public class PersonalInformationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PersonalInformationRetrievalDTO>> findAll(final HttpServletRequest httpRequest)
+    public ResponseEntity<List<PersonalInformationPreviewDTO>> findAll(final HttpServletRequest httpRequest)
             throws UserIsNotAdminException, UserNotFoundException {
         userAdminValidator.validate(httpRequest);
-        return ResponseEntity.ok(PersonalInformationRetrievalDTO.from(personalInformationService.findAll()));
+        return ResponseEntity.ok(PersonalInformationPreviewDTO.from(personalInformationService.findAll()));
     }
 
     @GetMapping("/{id}")
@@ -76,6 +77,6 @@ public class PersonalInformationController {
         userAdminValidator.validate(httpRequest);
         personalInformationService.deleteById(id);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Personal information deleted");
     }
 }
