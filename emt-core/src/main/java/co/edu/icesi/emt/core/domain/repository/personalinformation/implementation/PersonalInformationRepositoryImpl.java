@@ -1,4 +1,4 @@
-package co.edu.icesi.emt.core.domain.repository.implementation;
+package co.edu.icesi.emt.core.domain.repository.personalinformation.implementation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +15,7 @@ import co.edu.icesi.emt.core.domain.model.personalinformation.CivilStatus;
 import co.edu.icesi.emt.core.domain.model.personalinformation.Gender;
 import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformation;
 import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformationPreview;
-import co.edu.icesi.emt.core.domain.repository.PersonalInformationRepository;
+import co.edu.icesi.emt.core.domain.repository.personalinformation.PersonalInformationRepository;
 
 @Repository
 public class PersonalInformationRepositoryImpl implements PersonalInformationRepository {
@@ -43,6 +43,9 @@ public class PersonalInformationRepositoryImpl implements PersonalInformationRep
             + PERSONAL_INFORMATION_COLUMS_PREVIEW
             + " FROM "
             + PERSONAL_INFORMATION_TABLE;
+
+    private static final String SELECT_FROM_PERSONAL_INFORMATION_PREVIEW_WHERE_ID = SELECT_FROM_PERSONAL_INFORMATION_PREVIEW
+            + " WHERE " + ID + " = ?";
 
     private static final String SELECT_FROM_PERSONAL_INFORMATION_BY_ID = "SELECT " + PERSONAL_INFORMATION_COLUMS
             + " FROM "
@@ -108,6 +111,16 @@ public class PersonalInformationRepositoryImpl implements PersonalInformationRep
         // TODO Auto-generated method stub
     }
 
+    @Override
+    public PersonalInformationPreview findPreviewById(String id) {
+        try {
+            return jdbcTemplate.queryForObject(SELECT_FROM_PERSONAL_INFORMATION_PREVIEW_WHERE_ID,
+                    this::parsePreview);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     private PersonalInformation parse(final ResultSet rs, final int rowNum) throws SQLException {
         final String id = rs.getString(ID);
         final String firstName = rs.getString(FIRST_NAME);
@@ -132,4 +145,5 @@ public class PersonalInformationRepositoryImpl implements PersonalInformationRep
 
         return new PersonalInformationPreview(id, firstName, lastName, email);
     }
+
 }

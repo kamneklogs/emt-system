@@ -1,4 +1,4 @@
-package co.edu.icesi.emt.core.domain.repository;
+package co.edu.icesi.emt.core.domain.repository.personalinformation;
 
 import java.util.List;
 
@@ -16,4 +16,6 @@ public interface PersonalInformationRepository {
     void update(PersonalInformation personalInformation);
 
     List<PersonalInformationPreview> findAll();
+
+    PersonalInformationPreview findPreviewById(String id);
 }

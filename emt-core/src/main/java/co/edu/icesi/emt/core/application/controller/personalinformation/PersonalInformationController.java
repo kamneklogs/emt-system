@@ -21,7 +21,7 @@ import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInforma
 import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationPreviewDTO;
 import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationRetrievalDTO;
 import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformation;
-import co.edu.icesi.emt.core.domain.service.PersonalInformationService;
+import co.edu.icesi.emt.core.domain.service.personalinformation.PersonalInformationService;
 
 @RestController
 @RequestMapping("/personalinformation")
