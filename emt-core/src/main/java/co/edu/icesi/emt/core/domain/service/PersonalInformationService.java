@@ -30,4 +30,8 @@ public class PersonalInformationService {
     public void save(PersonalInformation personalInformation) {
         this.personalInformationRepository.save(personalInformation);
     }
+
+    public void deleteById(String id) {
+        this.personalInformationRepository.delete(id);
+    }
 }

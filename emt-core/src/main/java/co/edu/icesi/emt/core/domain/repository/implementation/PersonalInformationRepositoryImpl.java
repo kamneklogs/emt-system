@@ -41,6 +41,13 @@ public class PersonalInformationRepositoryImpl implements PersonalInformationRep
     private static final String SELECT_FROM_PERSONAL_INFORMATION_BY_ID = SELECT_FROM_PERSONAL_INFORMATION
             + " WHERE " + ID + " = ?";
 
+    private static final String DELETE_FROM_PERSONAL_INFORMATION_WHERE_ID = "DELETE FROM " + PERSONAL_INFORMATION_TABLE
+            + " WHERE " + ID + " = ?";
+
+    private static final String INSERT_INTO_PERSONAL_INFORMATION = "INSERT INTO " + PERSONAL_INFORMATION_TABLE + " ("
+            + PERSONAL_INFORMATION_COLUM
+            + ") VALUES (?,?,?,?,?,?,?,?,?)";
+
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -69,20 +76,28 @@ public class PersonalInformationRepositoryImpl implements PersonalInformationRep
 
     @Override
     public void save(PersonalInformation personalInformation) {
-        // TODO Auto-generated method stub
+        jdbcTemplate.update(
+                INSERT_INTO_PERSONAL_INFORMATION,
+                personalInformation.getId(),
+                personalInformation.getFirstName(),
+                personalInformation.getLastName(),
+                personalInformation.getEmail(),
+                personalInformation.getBirthDate(),
+                personalInformation.getGender().getId(),
+                personalInformation.getCivilStatus().getId(),
+                personalInformation.getPhoneNumber(),
+                personalInformation.getAddress());
 
     }
 
     @Override
     public void delete(String id) {
-        // TODO Auto-generated method stub
-
+        jdbcTemplate.update(DELETE_FROM_PERSONAL_INFORMATION_WHERE_ID, id);
     }
 
     @Override
     public void update(PersonalInformation personalInformation) {
         // TODO Auto-generated method stub
-
     }
 
     private PersonalInformation parse(final ResultSet rs, final int rowNum) throws SQLException {

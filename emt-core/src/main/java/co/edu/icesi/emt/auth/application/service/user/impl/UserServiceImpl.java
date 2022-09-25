@@ -14,6 +14,7 @@ import co.edu.icesi.emt.auth.domain.model.role.Role;
 import co.edu.icesi.emt.auth.domain.model.user.User;
 import co.edu.icesi.emt.auth.domain.repository.user.UserRepository;
 import co.edu.icesi.emt.auth.util.exceptions.RootAdminCanNotBeRemovedException;
+import co.edu.icesi.emt.auth.util.exceptions.UserNotFoundException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,9 +40,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
-        // TODO: Add other validations
-        return this.userRepository.findByUsername(username);
+    public User findByUsername(String username) throws UserNotFoundException {
+        User user = this.userRepository.findByUsername(username);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user;
     }
 
     @Override

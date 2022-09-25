@@ -2,14 +2,21 @@ package co.edu.icesi.emt.core.application.controller.personalinformation;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.edu.icesi.emt.auth.util.exceptions.UserIsNotAdminException;
+import co.edu.icesi.emt.auth.util.exceptions.UserNotFoundException;
+import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
 import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationCreationDTO;
 import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationRetrievalDTO;
 import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformation;
@@ -21,18 +28,27 @@ public class PersonalInformationController {
 
     private final PersonalInformationService personalInformationService;
 
+    private final UserAdminValidator userAdminValidator;
+
     @Autowired
-    public PersonalInformationController(PersonalInformationService personalInformationService) {
+    public PersonalInformationController(PersonalInformationService personalInformationService,
+            UserAdminValidator userAdminValidator) {
         this.personalInformationService = personalInformationService;
+        this.userAdminValidator = userAdminValidator;
     }
 
     @GetMapping
-    public ResponseEntity<List<PersonalInformationRetrievalDTO>> findAll() {
+    public ResponseEntity<List<PersonalInformationRetrievalDTO>> findAll(final HttpServletRequest httpRequest)
+            throws UserIsNotAdminException, UserNotFoundException {
+        userAdminValidator.validate(httpRequest);
         return ResponseEntity.ok(PersonalInformationRetrievalDTO.from(personalInformationService.findAll()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PersonalInformationRetrievalDTO> findById(@PathVariable("id") String id) {
+    public ResponseEntity<PersonalInformationRetrievalDTO> findById(@PathVariable("id") String id,
+            final HttpServletRequest httpRequest)
+            throws UserIsNotAdminException, UserNotFoundException {
+        userAdminValidator.validate(httpRequest);
         PersonalInformation personalInformation = personalInformationService.findById(id);
 
         if (personalInformation == null) {
@@ -43,9 +59,22 @@ public class PersonalInformationController {
     }
 
     @PostMapping
-    public ResponseEntity<PersonalInformationRetrievalDTO> save(
-            PersonalInformationCreationDTO personalInformationCreationDTO) {
+    public ResponseEntity<?> save(@RequestBody PersonalInformationCreationDTO personalInformationCreationDTO,
+            final HttpServletRequest httpRequest)
+            throws UserIsNotAdminException, UserNotFoundException {
+
+        userAdminValidator.validate(httpRequest);
+
         personalInformationService.save(PersonalInformationCreationDTO.fromDTO(personalInformationCreationDTO));
+
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") String id, final HttpServletRequest httpRequest)
+            throws UserIsNotAdminException, UserNotFoundException {
+        userAdminValidator.validate(httpRequest);
+        personalInformationService.deleteById(id);
 
         return ResponseEntity.ok().build();
     }

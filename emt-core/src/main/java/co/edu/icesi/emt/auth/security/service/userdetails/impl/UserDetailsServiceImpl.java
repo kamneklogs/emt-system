@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.application.service.user.impl.UserServiceImpl;
 import co.edu.icesi.emt.auth.security.entity.MainUser;
+import co.edu.icesi.emt.auth.util.exceptions.UserNotFoundException;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -22,7 +23,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return MainUser.build(this.userService.findByUsername(username),
-                this.userService.findUserRolesByUsername(username));
+        try {
+            return MainUser.build(this.userService.findByUsername(username),
+                    this.userService.findUserRolesByUsername(username));
+        } catch (UserNotFoundException e) {
+            throw new UsernameNotFoundException("User not found");
+        }
     }
 }
