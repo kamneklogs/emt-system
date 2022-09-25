@@ -21,13 +21,15 @@ public class PersonalInformationRetrievalDTO {
     private final CivilStatusDTO civilStatus;
     private final String phoneNumber;
     private final String address;
+    private final long age;
 
     @JsonCreator
     public PersonalInformationRetrievalDTO(@JsonProperty("id") String id, @JsonProperty("firstName") String firstName,
             @JsonProperty("lastName") String lastName, @JsonProperty("email") String email,
             @JsonProperty("birthDate") Instant birthDate,
             @JsonProperty("gender") GenderDTO gender, @JsonProperty("civilStatus") CivilStatusDTO civilStatus,
-            @JsonProperty("phoneNumber") String phoneNumber, @JsonProperty("address") String address) {
+            @JsonProperty("phoneNumber") String phoneNumber, @JsonProperty("address") String address,
+            @JsonProperty("age") long age) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -37,6 +39,7 @@ public class PersonalInformationRetrievalDTO {
         this.civilStatus = civilStatus;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.age = age;
     }
 
     public String getId() {
@@ -75,12 +78,16 @@ public class PersonalInformationRetrievalDTO {
         return address;
     }
 
+    public long getAge() {
+        return age;
+    }
+
     public static PersonalInformationRetrievalDTO from(PersonalInformation personalInformation) {
         return new PersonalInformationRetrievalDTO(personalInformation.getId(), personalInformation.getFirstName(),
                 personalInformation.getLastName(), personalInformation.getEmail(), personalInformation.getBirthDate(),
                 GenderDTO.from(personalInformation.getGender()),
                 CivilStatusDTO.from(personalInformation.getCivilStatus()),
-                personalInformation.getPhoneNumber(), personalInformation.getAddress());
+                personalInformation.getPhoneNumber(), personalInformation.getAddress(), personalInformation.getAge());
     }
 
     public static List<PersonalInformationRetrievalDTO> from(List<PersonalInformation> personalInformations) {

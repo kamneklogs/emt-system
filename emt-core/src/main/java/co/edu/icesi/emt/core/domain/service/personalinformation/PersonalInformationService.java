@@ -1,4 +1,4 @@
-package co.edu.icesi.emt.core.domain.service;
+package co.edu.icesi.emt.core.domain.service.personalinformation;
 
 import java.util.List;
 
@@ -6,8 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformation;
-import co.edu.icesi.emt.core.domain.repository.PersonalInformationRepository;
-import co.edu.icesi.emt.core.domain.repository.implementation.PersonalInformationRepositoryImpl;
+import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformationPreview;
+import co.edu.icesi.emt.core.domain.repository.personalinformation.PersonalInformationRepository;
+import co.edu.icesi.emt.core.domain.repository.personalinformation.implementation.PersonalInformationRepositoryImpl;
 
 @Service
 public class PersonalInformationService {
@@ -23,7 +24,11 @@ public class PersonalInformationService {
         return this.personalInformationRepository.findById(id);
     }
 
-    public List<PersonalInformation> findAll() {
+    public PersonalInformationPreview findPreviewById(String id) {
+        return this.personalInformationRepository.findPreviewById(id);
+    }
+
+    public List<PersonalInformationPreview> findAll() {
         return this.personalInformationRepository.findAll();
     }
 
