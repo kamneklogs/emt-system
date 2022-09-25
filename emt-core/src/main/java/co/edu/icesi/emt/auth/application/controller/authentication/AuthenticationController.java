@@ -54,25 +54,21 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody final LoginRequestDTO loginRequestDTO)
-            throws UserAccountDisabledException {
+            throws UserAccountDisabledException, UserNotFoundException {
 
-        try {
-            userAccountEnabledValidator.validate(loginRequestDTO.getUsername());
+        userAccountEnabledValidator.validate(loginRequestDTO.getUsername());
 
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(),
-                            loginRequestDTO.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = jwtProvider.generateJWT(authentication);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(),
+                        loginRequestDTO.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtProvider.generateJWT(authentication);
 
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-            return new ResponseEntity<LoginResponseDTO>(
-                    new LoginResponseDTO(loginRequestDTO.getUsername(), jwt, userDetails.getAuthorities()),
-                    HttpStatus.OK);
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return new ResponseEntity<LoginResponseDTO>(
+                new LoginResponseDTO(loginRequestDTO.getUsername(), jwt, userDetails.getAuthorities()),
+                HttpStatus.OK);
 
     }
 
@@ -85,13 +81,10 @@ public class AuthenticationController {
         userService.changePassword(resetPasswordRequestDTO.getUsername(),
                 passwordEncoder.encode(resetPasswordRequestDTO.getPassword()));
 
-        try {
-            return new ResponseEntity<String>(
-                    "User password changed: "
-                            + userService.findByUsername(resetPasswordRequestDTO.getUsername()).toString(),
-                    HttpStatus.OK);
-        } catch (UserNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        return new ResponseEntity<String>(
+                "User password changed: "
+                        + userService.findByUsername(resetPasswordRequestDTO.getUsername()).toString(),
+                HttpStatus.OK);
+
     }
 }

@@ -65,13 +65,10 @@ public class UserController {
         userService.save(userCreationDTO.getUsername(), passwordEncoder.encode(userCreationDTO.getPassword()),
                 userCreationDTO.getRoles());
 
-        try {
-            return new ResponseEntity<String>(
-                    "User created: " + userService.findByUsername(userCreationDTO.getUsername()).toString(),
-                    HttpStatus.OK);
-        } catch (UserNotFoundException e) {
-            return new ResponseEntity<String>("User not found", HttpStatus.NOT_FOUND);
-        }
+        return new ResponseEntity<String>(
+                "User created: " + userService.findByUsername(userCreationDTO.getUsername()).toString(),
+                HttpStatus.OK);
+
     }
 
     @PutMapping("/{id}/status")
@@ -85,13 +82,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDetailedRetrievalDTO> findUserById(@PathVariable("id") String id) {
-        User user;
-        try {
-            user = userService.findByUsername(id);
-        } catch (UserNotFoundException e) {
-            return new ResponseEntity<UserDetailedRetrievalDTO>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<UserDetailedRetrievalDTO> findUserById(@PathVariable("id") String id)
+            throws UserNotFoundException {
+        User user = userService.findByUsername(id);
 
         return new ResponseEntity<UserDetailedRetrievalDTO>(
                 UserDetailedRetrievalDTO.from(user.getUsername(), user.getLastLogin(),

@@ -43,7 +43,8 @@ public class RoleController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<RoleDTO>> getRoles(final HttpServletRequest request) throws UserIsNotAdminException, UserNotFoundException {
+    public ResponseEntity<List<RoleDTO>> getRoles(final HttpServletRequest request)
+            throws UserIsNotAdminException, UserNotFoundException {
         userAdminValidator.validate(request);
 
         return new ResponseEntity<List<RoleDTO>>(RoleDTO.from(roleService.findAll()), HttpStatus.OK);
@@ -51,30 +52,26 @@ public class RoleController {
 
     @PostMapping("{roleName}/user/{id}")
     public ResponseEntity<String> addUserRole(@PathVariable("roleName") final String roleName,
-            @PathVariable("id") final String id, final HttpServletRequest request) throws UserIsNotAdminException, UserNotFoundException {
+            @PathVariable("id") final String id, final HttpServletRequest request)
+            throws UserIsNotAdminException, UserNotFoundException {
 
         userAdminValidator.validate(request);
 
-        try {
-            userRoleService.save(userService.findByUsername(id), roleService.findById(roleName));
-        } catch (UserNotFoundException e) {
-            return new ResponseEntity<String>("User not found", HttpStatus.NOT_FOUND);
-        }
+        userRoleService.save(userService.findByUsername(id), roleService.findById(roleName));
+
         return new ResponseEntity<String>("Role added to user with id " + id, HttpStatus.OK);
     }
 
     @DeleteMapping("{roleName}/user/{id}")
     public ResponseEntity<String> deleteUserRole(@PathVariable("roleName") final String roleName,
-            @PathVariable("id") final String id, final HttpServletRequest request) throws UserIsNotAdminException, UserNotFoundException {
+            @PathVariable("id") final String id, final HttpServletRequest request)
+            throws UserIsNotAdminException, UserNotFoundException {
 
         userAdminValidator.validate(request);
 
-        try {
-            userRoleService.deleteUserRoleByUsernameAndRoleId(userService.findByUsername(id),
-                    roleService.findById(roleName));
-        } catch (UserNotFoundException e) {
-            return new ResponseEntity<String>("User not found", HttpStatus.NOT_FOUND);
-        }
+        userRoleService.deleteUserRoleByUsernameAndRoleId(userService.findByUsername(id),
+                roleService.findById(roleName));
+
         return new ResponseEntity<String>("Role removed from the user with id " + id, HttpStatus.OK);
     }
 }
