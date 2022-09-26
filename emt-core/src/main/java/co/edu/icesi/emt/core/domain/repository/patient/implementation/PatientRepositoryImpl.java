@@ -43,7 +43,7 @@ public class PatientRepositoryImpl implements PatientRepository {
     public Patient findById(String id) {
         try {
             return jdbcTemplate.queryForObject(SELECT_BY_ID,
-                    this::parse);
+                    this::parse, id);
         } catch (Exception e) {
             return null;
         }
