@@ -19,9 +19,9 @@ import co.edu.icesi.emt.auth.application.service.role.RoleService;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
 import co.edu.icesi.emt.auth.application.service.userrole.impl.UserRoleServiceImpl;
-import co.edu.icesi.emt.auth.util.exceptions.UserIsNotAdminException;
-import co.edu.icesi.emt.auth.util.exceptions.UserNotFoundException;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
+import co.edu.icesi.emt.common.exception.model.UserIsNotAdminException;
+import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
 
 @RestController
 @RequestMapping("/role")
