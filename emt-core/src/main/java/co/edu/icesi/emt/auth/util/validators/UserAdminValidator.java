@@ -9,6 +9,7 @@ import co.edu.icesi.emt.auth.application.service.role.RoleService;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
 import co.edu.icesi.emt.auth.util.exceptions.UserIsNotAdminException;
+import co.edu.icesi.emt.auth.util.exceptions.UserNotFoundException;
 import co.edu.icesi.emt.auth.util.http.HttpRequestUtil;
 
 @Component
@@ -30,7 +31,7 @@ public class UserAdminValidator {
         this.roleService = roleService;
     }
 
-    public void validate(final HttpServletRequest httpRequest) throws UserIsNotAdminException {
+    public void validate(final HttpServletRequest httpRequest) throws UserIsNotAdminException, UserNotFoundException {
 
         String userId = httpRequestUtil.getUserIdFromRequest(httpRequest);
 

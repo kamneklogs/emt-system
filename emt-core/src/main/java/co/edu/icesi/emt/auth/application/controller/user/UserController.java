@@ -24,6 +24,7 @@ import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
 import co.edu.icesi.emt.auth.domain.model.user.User;
 import co.edu.icesi.emt.auth.util.exceptions.UserIsNotAdminException;
+import co.edu.icesi.emt.auth.util.exceptions.UserNotFoundException;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
 
 @RestController
@@ -49,7 +50,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserBasicRetrievalDTO>> getAllUsers(final HttpServletRequest request)
-            throws UserIsNotAdminException {
+            throws UserIsNotAdminException, UserNotFoundException {
         userAdminValidator.validate(request);
         return new ResponseEntity<List<UserBasicRetrievalDTO>>(UserBasicRetrievalDTO.from(userService.findAll()),
                 HttpStatus.OK);
@@ -57,7 +58,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody final UserCreationDTO userCreationDTO,
-            final HttpServletRequest httpRequest) throws UserIsNotAdminException {
+            final HttpServletRequest httpRequest) throws UserIsNotAdminException, UserNotFoundException {
 
         userAdminValidator.validate(httpRequest);
 
@@ -67,11 +68,12 @@ public class UserController {
         return new ResponseEntity<String>(
                 "User created: " + userService.findByUsername(userCreationDTO.getUsername()).toString(),
                 HttpStatus.OK);
+
     }
 
     @PutMapping("/{id}/status")
     public ResponseEntity<String> setUserStatus(@PathVariable("id") String id, @RequestBody final boolean isEnabled,
-            final HttpServletRequest httpRequest) throws UserIsNotAdminException {
+            final HttpServletRequest httpRequest) throws UserIsNotAdminException, UserNotFoundException {
 
         userAdminValidator.validate(httpRequest);
         userService.setUserStatus(id, isEnabled);
@@ -80,12 +82,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDetailedRetrievalDTO> findUserById(@PathVariable("id") String id) {
+    public ResponseEntity<UserDetailedRetrievalDTO> findUserById(@PathVariable("id") String id)
+            throws UserNotFoundException {
         User user = userService.findByUsername(id);
-
-        if (user == null) {
-            return new ResponseEntity<UserDetailedRetrievalDTO>(HttpStatus.NOT_FOUND);
-        }
 
         return new ResponseEntity<UserDetailedRetrievalDTO>(
                 UserDetailedRetrievalDTO.from(user.getUsername(), user.getLastLogin(),

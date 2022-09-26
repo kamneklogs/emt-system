@@ -24,6 +24,7 @@ import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.security.jwt.JWTProvider;
 import co.edu.icesi.emt.auth.util.exceptions.UserAccountDisabledException;
 import co.edu.icesi.emt.auth.util.exceptions.UserIsNotAdminException;
+import co.edu.icesi.emt.auth.util.exceptions.UserNotFoundException;
 import co.edu.icesi.emt.auth.util.validators.UserAccountEnabledValidator;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
 
@@ -53,24 +54,27 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody final LoginRequestDTO loginRequestDTO)
-            throws UserAccountDisabledException {
+            throws UserAccountDisabledException, UserNotFoundException {
 
         userAccountEnabledValidator.validate(loginRequestDTO.getUsername());
 
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(), loginRequestDTO.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequestDTO.getUsername(),
+                        loginRequestDTO.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateJWT(authentication);
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         return new ResponseEntity<LoginResponseDTO>(
-                new LoginResponseDTO(loginRequestDTO.getUsername(), jwt, userDetails.getAuthorities()), HttpStatus.OK);
+                new LoginResponseDTO(loginRequestDTO.getUsername(), jwt, userDetails.getAuthorities()),
+                HttpStatus.OK);
+
     }
 
     @PutMapping("/password")
     public ResponseEntity<String> changePassword(@RequestBody final ResetPasswordRequestDTO resetPasswordRequestDTO,
-            final HttpServletRequest httpRequest) throws UserIsNotAdminException {
+            final HttpServletRequest httpRequest) throws UserIsNotAdminException, UserNotFoundException {
 
         userAdminValidator.validate(httpRequest);
 
@@ -81,5 +85,6 @@ public class AuthenticationController {
                 "User password changed: "
                         + userService.findByUsername(resetPasswordRequestDTO.getUsername()).toString(),
                 HttpStatus.OK);
+
     }
 }
