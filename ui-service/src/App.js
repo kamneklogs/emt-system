@@ -1,5 +1,4 @@
 import "./App.css";
-import Sidebar from "./components/Sidebar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import UserManagment from "./pages/UserManagment";
 import RoleManagment from "./pages/RoleManagment";
@@ -16,7 +15,6 @@ function App() {
   return (
     <Router>
       <NavbarC />
-      {/* <Sidebar /> */}
       <Routes>
         <Route path="/" element={<ProtectedRoutes />}>
           <Route path="/users" element={<UserManagment />}>

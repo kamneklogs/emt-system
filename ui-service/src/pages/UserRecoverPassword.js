@@ -31,7 +31,7 @@ const UserRecoverPassword = () => {
     return Yup.mixed().test({
       name: "equalTo",
       exclusive: false,
-      message: msg || "${path} debe ser igual a ${reference}",
+      message: "${path} debe ser igual a ${reference}",
       params: {
         reference: ref.path,
       },

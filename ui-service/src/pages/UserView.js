@@ -46,9 +46,9 @@ const UserView = () => {
     navigate(`/users/editUser/${username}`);
   };
 
-  const handleViewUser = (username) => {
-    navigate(``);
-  };
+  // const handleViewUser = (username) => {
+  //   navigate(``);
+  // };
 
   const actionsButtons = (cell, row, rowIndex, formatExtraData) => {
     return (
@@ -76,11 +76,6 @@ const UserView = () => {
           <Col lg={3} md={12} sm={12}>
             <span onClick={() => handleShow(row.username)}>
               <Trash></Trash>
-            </span>
-          </Col>
-          <Col lg={3} md={12} sm={12} className="me-1">
-            <span>
-              <RiIcons.RiLockPasswordLine></RiIcons.RiLockPasswordLine>
             </span>
           </Col>
         </Row>
@@ -148,12 +143,12 @@ const UserView = () => {
     onSizePerPageChange: function (page, sizePerPage) {},
   });
 
-  const defaultSorted = [
-    {
-      dataField: "username",
-      order: "desc",
-    },
-  ];
+  // const defaultSorted = [
+  //   {
+  //     dataField: "username",
+  //     order: "desc",
+  //   },
+  // ];
   const renderTable = () => {
     return (
       <>

@@ -5,7 +5,6 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { SidebarData } from "./SidebarData";
 import { useDispatch, useSelector } from "react-redux";
-import emt from "./../img/emt.png";
 import { useNavigate } from "react-router-dom";
 import { useCallback, useEffect } from "react";
 import { logout } from "../slices/auth";
@@ -34,23 +33,7 @@ function NavbarC() {
     };
   }, [currentUser, dispatch, logOut]);
 
-  const verify = () => {
-    for (let i = 0; i < features.length; i++) {
-      //console.log(features[i].rolesWithAccess);
-      currentUser.authorities.forEach((userRol) => {
-        const existeEnRoles = features[i].rolesWithAccess.find(
-          (rol) => rol === userRol.authority
-        );
-        if (existeEnRoles) {
-          console.log(features[i].name, "existe");
-        } else {
-          console.log(features[i].name, "no existe");
-        }
-      });
-    }
-  };
-  //verify();
-
+  console.log(features);
   return (
     <>
       {[false].map((expand) => (
@@ -128,6 +111,8 @@ function NavbarC() {
                           {item.title}
                         </Button>
                       );
+                    } else {
+                      return null;
                     }
                   })}
                 </Nav>

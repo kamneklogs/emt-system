@@ -61,6 +61,7 @@ const Login = (props) => {
       return navigate("/login");
     }
   };
+  console.log(features);
 
   return (
     <Container className="me-25">
