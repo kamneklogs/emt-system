@@ -92,7 +92,7 @@ export const SidebarData = [
     roles: ["DOCTOR_ROLE"],
   },
   {
-    title: "Logout",
+    title: "Cerrar Sesión",
     path: "/logout",
     roles: ["ADMIN_ROLE", "DOCTOR_ROLE"],
   },
