@@ -13,8 +13,8 @@ import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
 import co.edu.icesi.emt.auth.domain.model.role.Role;
 import co.edu.icesi.emt.auth.domain.model.user.User;
 import co.edu.icesi.emt.auth.domain.repository.user.UserRepository;
-import co.edu.icesi.emt.auth.util.exceptions.RootAdminCanNotBeRemovedException;
-import co.edu.icesi.emt.auth.util.exceptions.UserNotFoundException;
+import co.edu.icesi.emt.common.exception.model.RootAdminCanNotBeRemovedException;
+import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
 
 @Service
 public class UserServiceImpl implements UserService {

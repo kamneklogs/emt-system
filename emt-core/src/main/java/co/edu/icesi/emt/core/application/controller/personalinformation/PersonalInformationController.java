@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.icesi.emt.auth.util.exceptions.UserIsNotAdminException;
-import co.edu.icesi.emt.auth.util.exceptions.UserNotFoundException;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
+import co.edu.icesi.emt.common.exception.model.UserIsNotAdminException;
+import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
 import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationCreationDTO;
 import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationPreviewDTO;
 import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationRetrievalDTO;

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.application.service.user.impl.UserServiceImpl;
 import co.edu.icesi.emt.auth.security.entity.MainUser;
-import co.edu.icesi.emt.auth.util.exceptions.UserNotFoundException;
+import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
