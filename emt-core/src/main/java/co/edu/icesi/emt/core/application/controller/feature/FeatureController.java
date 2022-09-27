@@ -1,4 +1,4 @@
-package co.edu.icesi.emt.core.feature.controller;
+package co.edu.icesi.emt.core.application.controller.feature;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.icesi.emt.core.feature.dto.FeatureDTO;
-import co.edu.icesi.emt.core.feature.model.sections.Feature;
+import co.edu.icesi.emt.core.application.dto.feature.FeatureDTO;
+import co.edu.icesi.emt.core.domain.model.feature.Feature;
 
 @RestController
 @RequestMapping("/feature")

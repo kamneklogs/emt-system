@@ -61,7 +61,7 @@ public class SecutiryConfig {
 
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/public/auth/login").permitAll()
+                .antMatchers("/public/auth/login", "/feature/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
@@ -80,7 +80,7 @@ public class SecutiryConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins(uiServiceSocket);
+                registry.addMapping("/**").allowedOrigins(uiServiceSocket).allowedMethods("*");
             }
         };
     }

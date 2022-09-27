@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import co.edu.icesi.emt.auth.application.service.user.UserService;
-import co.edu.icesi.emt.auth.util.exceptions.UserAccountDisabledException;
+import co.edu.icesi.emt.common.exception.model.UserAccountDisabledException;
+import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
 
 @Component
 public class UserAccountEnabledValidator {
@@ -16,7 +17,7 @@ public class UserAccountEnabledValidator {
         this.userService = userService;
     }
 
-    public void validate(String username) throws UserAccountDisabledException {
+    public void validate(String username) throws UserAccountDisabledException, UserNotFoundException {
         if (!userService.findByUsername(username).isEnabled()) {
             throw new UserAccountDisabledException();
         }

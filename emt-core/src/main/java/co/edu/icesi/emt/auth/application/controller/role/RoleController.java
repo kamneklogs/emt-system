@@ -19,8 +19,9 @@ import co.edu.icesi.emt.auth.application.service.role.RoleService;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
 import co.edu.icesi.emt.auth.application.service.userrole.impl.UserRoleServiceImpl;
-import co.edu.icesi.emt.auth.util.exceptions.UserIsNotAdminException;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
+import co.edu.icesi.emt.common.exception.model.UserIsNotAdminException;
+import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
 
 @RestController
 @RequestMapping("/role")
@@ -42,7 +43,8 @@ public class RoleController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<RoleDTO>> getRoles(final HttpServletRequest request) throws UserIsNotAdminException {
+    public ResponseEntity<List<RoleDTO>> getRoles(final HttpServletRequest request)
+            throws UserIsNotAdminException, UserNotFoundException {
         userAdminValidator.validate(request);
 
         return new ResponseEntity<List<RoleDTO>>(RoleDTO.from(roleService.findAll()), HttpStatus.OK);
@@ -50,22 +52,26 @@ public class RoleController {
 
     @PostMapping("{roleName}/user/{id}")
     public ResponseEntity<String> addUserRole(@PathVariable("roleName") final String roleName,
-            @PathVariable("id") final String id, final HttpServletRequest request) throws UserIsNotAdminException {
+            @PathVariable("id") final String id, final HttpServletRequest request)
+            throws UserIsNotAdminException, UserNotFoundException {
 
         userAdminValidator.validate(request);
 
         userRoleService.save(userService.findByUsername(id), roleService.findById(roleName));
+
         return new ResponseEntity<String>("Role added to user with id " + id, HttpStatus.OK);
     }
 
     @DeleteMapping("{roleName}/user/{id}")
     public ResponseEntity<String> deleteUserRole(@PathVariable("roleName") final String roleName,
-            @PathVariable("id") final String id, final HttpServletRequest request) throws UserIsNotAdminException {
+            @PathVariable("id") final String id, final HttpServletRequest request)
+            throws UserIsNotAdminException, UserNotFoundException {
 
         userAdminValidator.validate(request);
 
         userRoleService.deleteUserRoleByUsernameAndRoleId(userService.findByUsername(id),
                 roleService.findById(roleName));
+
         return new ResponseEntity<String>("Role removed from the user with id " + id, HttpStatus.OK);
     }
 }

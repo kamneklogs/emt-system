@@ -5,11 +5,12 @@ import java.util.Set;
 
 import co.edu.icesi.emt.auth.domain.model.role.Role;
 import co.edu.icesi.emt.auth.domain.model.user.User;
+import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
 
 public interface UserService {
     void save(String username, String password, String[] roles);
 
-    User findByUsername(String username);
+    User findByUsername(String username) throws UserNotFoundException;
 
     List<User> findAll();
 

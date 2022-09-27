@@ -1,9 +1,9 @@
-package co.edu.icesi.emt.core.feature.dto;
+package co.edu.icesi.emt.core.application.dto.feature;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import co.edu.icesi.emt.core.feature.model.sections.Feature;
+import co.edu.icesi.emt.core.domain.model.feature.Feature;
 
 public class FeatureDTO {
     private final String name;
