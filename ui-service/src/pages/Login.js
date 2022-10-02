@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import { login } from "../slices/auth";
 import { clearMessage } from "../slices/message";
 import { useNavigate } from "react-router-dom";
-import { getAllFeatures } from "../slices/feature";
 import {
   Alert,
   Button,
@@ -20,12 +19,10 @@ const Login = (props) => {
   const [loading, setLoading] = useState(false);
   const { isLoggedIn } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.message);
-  const { features } = useSelector((state) => state.feature);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(clearMessage());
-    dispatch(getAllFeatures());
   }, [dispatch]);
   const initialValues = {
     username: "",
