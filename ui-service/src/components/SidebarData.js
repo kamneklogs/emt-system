@@ -1,99 +1,75 @@
-import React from "react";
-import * as FaIcons from "react-icons/fa";
-import * as IoIcons from "react-icons/io";
-import * as RiIcons from "react-icons/ri";
-import * as HiIcons from "react-icons/hi";
-import * as ImIcons from "react-icons/im";
-
 export const SidebarData = [
   {
     title: "Iniciar Sesión",
+    name: "login",
     path: "/login",
-    roles: ["ADMIN", "MEDICO"],
+    roles: ["ADMIN", "medical_staff"],
   },
   {
     title: "Gestión de Usuarios",
+    name: "users_list",
     path: "/users",
-    icon: <FaIcons.FaUsers />,
-    roles: ["ADMIN_ROLE"],
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
+    roles: ["ADMIN", "medical_staff"],
     subNav: [
       {
         title: "Registro de Usuarios",
         path: "/users/userRegister",
-        icon: <HiIcons.HiUserAdd />,
       },
 
       {
         title: "Usuarios del EMT",
         path: "/users/emtUsers",
-        icon: <HiIcons.HiUsers />,
       },
     ],
   },
   {
     title: "Gestión de Roles",
+    name: "roles_list",
     path: "/roles",
-    icon: <FaIcons.FaUserLock />,
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
-    roles: ["ADMIN_ROLE"],
+    roles: ["ADMIN"],
     subNav: [
       {
         title: "Registro de Roles",
-        path: "/roles/reports1",
-        icon: <ImIcons.ImUserPlus />,
+        path: "/roles/rolesRegister",
       },
       {
         title: "Roles del EMT",
-        path: "/roles/reports2",
-        icon: <IoIcons.IoIosPaper />,
-      },
-      {
-        title: "Reports 3",
-        path: "/roles/reports3",
-        icon: <IoIcons.IoIosPaper />,
+        path: "/roles/emtRoles",
       },
     ],
   },
   {
     title: "Gestion de Pacientes",
+    name: "pacients_list",
     path: "/pacients",
-    icon: <IoIcons.IoMdPeople />,
-    roles: ["DOCTOR_ROLE"],
+    roles: ["ADMIN", "medical_staff", "nursing_staff"],
   },
   {
     title: "Gestión de Historias Clínicas",
     path: "/clinicHistory",
-    icon: <FaIcons.FaEnvelopeOpenText />,
-    roles: ["DOCTOR_ROLE"],
-
-    iconClosed: <RiIcons.RiArrowDownSFill />,
-    iconOpened: <RiIcons.RiArrowUpSFill />,
-
+    name: "clinical_history_list",
+    roles: ["ADMIN", "medical_staff", "nursing_staff"],
     subNav: [
       {
         title: "Formatos de historias clínicas",
         path: "/clinicHistory/models",
-        icon: <IoIcons.IoIosPaper />,
       },
       {
         title: "Historias clínicas del sistema",
         path: "/clinicHistory/pacients",
-        icon: <IoIcons.IoIosPaper />,
       },
     ],
   },
   {
     title: "Soporte",
     path: "/support",
-    icon: <IoIcons.IoMdHelpCircle />,
-    roles: ["DOCTOR_ROLE"],
+    name: "support",
+    roles: ["ADMIN", "medical_staff", "nursing_staff", "administrative_staff"],
   },
   {
-    title: "Logout",
+    title: "Cerrar Sesión",
+    name: "logout",
     path: "/logout",
-    roles: ["ADMIN_ROLE", "DOCTOR_ROLE"],
+    roles: ["ADMIN", "medical_staff", "nursing_staff", "administrative_staff"],
   },
 ];

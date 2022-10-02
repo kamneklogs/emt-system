@@ -38,15 +38,28 @@ const UserView = () => {
     setUserId(username);
   };
 
+  const handleChangePassword = (username) => {
+    navigate(`/users/recoverPassword/${username}`);
+  };
+
   const handleEditUser = (username) => {
     navigate(`/users/editUser/${username}`);
   };
+
+  // const handleViewUser = (username) => {
+  //   navigate(``);
+  // };
 
   const actionsButtons = (cell, row, rowIndex, formatExtraData) => {
     return (
       <Container>
         <Row className="users-table-controls">
-          <Col lg={3} md={12} sm={12} className="me-1">
+          <Col lg={3} md={12} sm={12}>
+            <span>
+              <RiIcons.RiSearchLine></RiIcons.RiSearchLine>
+            </span>
+          </Col>
+          <Col lg={3} md={12} sm={12}>
             <span
               onClick={() => {
                 handleEditUser(row.username);
@@ -55,15 +68,14 @@ const UserView = () => {
               <FiIcons.FiEdit></FiIcons.FiEdit>
             </span>
           </Col>
-
-          <Col lg={3} md={12} sm={12} className="me-1">
-            <span onClick={() => handleShow(row.username)}>
-              <Trash></Trash>
+          <Col lg={3} md={12} sm={12}>
+            <span onClick={() => handleChangePassword(row.username)}>
+              <RiIcons.RiLockPasswordLine></RiIcons.RiLockPasswordLine>
             </span>
           </Col>
-          <Col lg={3} md={12} sm={12} className="me-1">
-            <span>
-              <RiIcons.RiLockPasswordLine></RiIcons.RiLockPasswordLine>
+          <Col lg={3} md={12} sm={12}>
+            <span onClick={() => handleShow(row.username)}>
+              <Trash></Trash>
             </span>
           </Col>
         </Row>
@@ -82,50 +94,67 @@ const UserView = () => {
   const columns = [
     {
       dataField: "username",
-      text: "Username",
+      text: "Usuario",
       sort: true,
-      filter: textFilter(),
+      filter: textFilter({
+        placeholder: "Buscar por usuario",
+      }),
+      headerClasses: "table-column",
+      headerAlign: "center",
     },
     {
       dataField: "last_login",
-      text: "Last login",
+      text: "Última sesión",
       sort: true,
-      filter: textFilter(),
+      filter: textFilter({
+        placeholder: "Buscar por último inicio de sesión",
+      }),
+      headerClasses: "table-column",
     },
     {
       datafield: "userState",
       text: "Estado del usuario",
+      sort: true,
+      filter: textFilter({
+        placeholder: "Buscar por estado",
+        delay: 0,
+      }),
+      headerClasses: "table-column",
       formatter: userStateToggle,
     },
     {
       dataField: "actions",
       text: "Acciones",
       formatter: actionsButtons,
+      headerClasses: "table-column",
     },
   ];
   const pagination = paginationFactory({
     page: 1,
     sizePerPage: 5,
+    sizePerPageList: [5, 10, 15],
     lastPageText: ">>",
     firstPageText: "<<",
     nextPageText: ">",
     prePageText: "<",
     showTotal: true,
     alwaysShowAllBtns: true,
-    onPageChange: function (page, sizePerPage) {
-      console.log("page", page);
-      console.log("sizePerPage", sizePerPage);
-    },
-    onSizePerPageChange: function (page, sizePerPage) {
-      console.log("page", page);
-      console.log("sizePerPage", sizePerPage);
-    },
+    onPageChange: function (page, sizePerPage) {},
+    onSizePerPageChange: function (page, sizePerPage) {},
   });
+
+  // const defaultSorted = [
+  //   {
+  //     dataField: "username",
+  //     order: "desc",
+  //   },
+  // ];
   const renderTable = () => {
     return (
       <>
         <BootstrapTable
           className="mt-4 users-table text-center"
+          bordered={true}
           responsive
           striped
           hover
@@ -141,15 +170,20 @@ const UserView = () => {
   };
   return (
     <>
-      <Container className="mt-5">
-        <Row>
-          <Col sm="10" md="10" lg="10" className="mx-auto">
-            <h2 className="mb-5 text-center">
-              <strong>Usuarios del EMT</strong>
-            </h2>
-            {renderTable()}
-          </Col>
-        </Row>
+      <Container className="mb-10 mt-5">
+        {usersApp.length ? (
+          <Row>
+            <Col sm="10" md="10" lg="10" className="mx-auto">
+              <h2 className="text-center">
+                <strong>Usuarios del EMT</strong>
+              </h2>
+              <hr />
+              {renderTable()}
+            </Col>
+          </Row>
+        ) : (
+          <h6>No hay ningún usuario</h6>
+        )}
       </Container>
       <ModalUser
         show={show}

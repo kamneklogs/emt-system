@@ -29,8 +29,8 @@ const Login = (props) => {
     password: "",
   };
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("This field is required."),
-    password: Yup.string().required("This field is required."),
+    username: Yup.string().required("Este campo es requerido."),
+    password: Yup.string().required("Este campo es requerido."),
   });
   const handleLogin = (formValue) => {
     const { username, password } = formValue;
@@ -102,9 +102,13 @@ const Login = (props) => {
                 </Form.Group>
                 <Button type="submit" disabled={loading}>
                   {loading && (
-                    <span className="spinner-border spinner-border sm"></span>
+                    <span
+                      className="spinner-border spinner-border-sm"
+                      role="status"
+                      aria-hidden="true"
+                    ></span>
                   )}
-                  <span>Login</span>
+                  <span>Iniciar Sesión</span>
                 </Button>
               </Form>
             </Card.Body>

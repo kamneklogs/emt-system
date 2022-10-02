@@ -3,6 +3,9 @@ import authHeader from "./auth-header";
 const API_URL = "http://localhost:8080/";
 const API_USER = "user";
 const API_ROLE = "role";
+const API_AUTH = "auth";
+const API_PASSWORD = "password";
+const API_STATUS = "status";
 
 const getPublicContent = () => {
   return axios.get(API_URL + "all");
@@ -64,15 +67,42 @@ const addRoleToAUser = (roleName, username) => {
     });
 };
 const deleteRoleToAUser = (roleName, username) => {
-   return axios.delete(
-    `${API_URL}${API_ROLE}/${roleName}/${API_USER}/${username}`,
-    {
+  return axios
+    .delete(`${API_URL}${API_ROLE}/${roleName}/${API_USER}/${username}`, {
       headers: authHeader(),
-    }
-  ).then((response) => {
-    return response.data;
-  });
-  
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+const changePassword = (username, password) => {
+  return axios
+    .put(
+      `${API_URL}public/${API_AUTH}/${API_PASSWORD}`,
+      { username, password },
+      { headers: authHeader() }
+    )
+    .then((response) => {
+      return response.data;
+    });
+};
+
+// var data = "true";
+// var config = {
+//   method: "put",
+//   url: "http://localhost:8080/user/1010138801/status",
+//   headers: authHeader(),
+//   data: data,
+// };
+
+const editUserStatus = (username, isEnabled) => {
+  return axios
+    .put(`${API_URL}${API_USER}/${username}/${API_STATUS}`, isEnabled, {
+      headers: authHeader(),
+    })
+    .then((response) => {
+      return response.data;
+    });
 };
 const userService = {
   getPublicContent,
@@ -85,5 +115,7 @@ const userService = {
   getUserByUsername,
   addRoleToAUser,
   deleteRoleToAUser,
+  changePassword,
+  editUserStatus,
 };
 export default userService;

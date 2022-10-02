@@ -68,7 +68,25 @@ export const register = createAsyncThunk(
     }
   }
 );
-
+export const changePassword = createAsyncThunk(
+  "auth/changePassword",
+  async ({ username, newPassword }, thunkAPI) => {
+    try {
+      const data = await UserService.changePassword(username, newPassword);
+      return data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(error);
+      thunkAPI.dispatch(setMessage(message));
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -98,6 +116,15 @@ const userSlice = createSlice({
     [getUserByUsername.fulfilled]: (state, action) => {
       state.loading = false;
       state.user = action.payload.user;
+    },
+    [changePassword.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [changePassword.fulfilled]: (state, action) => {
+      state.loading = false;
+    },
+    [changePassword.rejected]: (state, action) => {
+      state.loading = false;
     },
   },
 });
