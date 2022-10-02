@@ -170,15 +170,20 @@ const UserView = () => {
   };
   return (
     <>
-      <Container className="mt-5">
-        <Row>
-          <Col sm="10" md="10" lg="10" className="mx-auto">
-            <h2 className="mb-5 text-center">
-              <strong>Usuarios del EMT</strong>
-            </h2>
-            {renderTable()}
-          </Col>
-        </Row>
+      <Container className="mb-10 mt-5">
+        {usersApp.length ? (
+          <Row>
+            <Col sm="10" md="10" lg="10" className="mx-auto">
+              <h2 className="text-center">
+                <strong>Usuarios del EMT</strong>
+              </h2>
+              <hr />
+              {renderTable()}
+            </Col>
+          </Row>
+        ) : (
+          <h6>No hay ningún usuario</h6>
+        )}
       </Container>
       <ModalUser
         show={show}

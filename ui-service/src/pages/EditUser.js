@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-import { Card, Col, Container, Row } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserByUsername } from "../slices/user";
@@ -11,8 +11,10 @@ import EditUserPersonalInformation from "./EditUserPersonalInformation";
 import EditUserRoles from "./EditUserRoles";
 import EditUserContactInformation from "./EditUserContactInformation";
 import EditUserStatus from "./EditUserStatus";
+import { useNavigate } from "react-router-dom";
 
 const EditUser = () => {
+  const navigate = useNavigate();
   const params = useParams();
   const username = params.userId;
   const [roles, setRoles] = useState([]);
@@ -29,11 +31,11 @@ const EditUser = () => {
   }, [username, setRoles, dispatch]);
 
   return (
-    <Container>
+    <Container className="mt-5">
       {!loading ? (
         <Row>
           <Col lg="10" md="10" sm="10" className="mx-auto">
-            <Card className="mt-5 mb-5 shadow-lg p-1">
+            <Card className="mb-5 shadow-lg p-1">
               <Card.Body>
                 <Card.Title>
                   <h3>
@@ -68,6 +70,12 @@ const EditUser = () => {
                 </Tabs>
               </Card.Body>
             </Card>
+            <Button
+              variant="outline-primary"
+              onClick={() => navigate("/users/emtUsers")}
+            >
+              Volver atrás
+            </Button>
           </Col>
         </Row>
       ) : (
@@ -84,6 +92,12 @@ const EditUser = () => {
                 <Card></Card>
               </Card.Body>
             </Card>
+            <Button
+              variant="outline-primary"
+              onClick={() => navigate("/users/emtUsers")}
+            >
+              Volver atrás
+            </Button>
           </Col>
         </Row>
       )}

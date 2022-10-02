@@ -31,7 +31,7 @@ const UserRecoverPassword = () => {
     return Yup.mixed().test({
       name: "equalTo",
       exclusive: false,
-      message: "${path} debe ser igual a ${reference}",
+      message: msg,
       params: {
         reference: ref.path,
       },
@@ -80,13 +80,20 @@ const UserRecoverPassword = () => {
       {!successful ? (
         <Row>
           <Col lg="5" md="10" sm="10" className="mx-auto">
-            <Card className="mt-5">
+            <Card className="mt-5 mb-5 shadow-lg p-1">
               <Card.Body>
-                <h4>Cambiar Contraseña del usuario {username}</h4>
+                <Card.Title>
+                  <h4 className="text-center">
+                    <strong>Cambiar Contraseña del usuario {username}</strong>
+                  </h4>
+                </Card.Title>
+
                 <hr />
                 <Form onSubmit={formik.handleSubmit}>
                   <Form.Group className="mb-3" controlId="username">
-                    <Form.Label>Usuario</Form.Label>
+                    <Form.Label>
+                      <strong>Usuario:</strong>
+                    </Form.Label>
                     <Form.Control
                       type="text"
                       value={username}
@@ -94,7 +101,9 @@ const UserRecoverPassword = () => {
                     ></Form.Control>
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="newPassword">
-                    <Form.Label>Nueva Contraseña</Form.Label>
+                    <Form.Label>
+                      <strong>Nueva Contraseña:</strong>
+                    </Form.Label>
                     <Form.Control
                       type="password"
                       value={formik.values.newPassword}
@@ -111,7 +120,9 @@ const UserRecoverPassword = () => {
                     ) : null}
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="passwordConfirm">
-                    <Form.Label>Confirmar Contraseña</Form.Label>
+                    <Form.Label>
+                      <strong>Confirmar Contraseña:</strong>
+                    </Form.Label>
                     <Form.Control
                       type="password"
                       value={formik.values.passwordConfirm}
@@ -141,12 +152,18 @@ const UserRecoverPassword = () => {
                 </Form>
               </Card.Body>
             </Card>
+            <Button
+              variant="outline-primary"
+              onClick={() => navigate("/users/emtUsers")}
+            >
+              Volver atrás
+            </Button>
           </Col>
         </Row>
       ) : (
         <div className="alert">
           <Row>
-            <Col lg="5" md="10" sm="10" className="mx-auto">
+            <Col lg="10" md="10" sm="10" className="mx-auto">
               <Alert variant="success">
                 La contraseña del usuario {username} ha sido cambiada
                 exitosamente!
@@ -155,7 +172,7 @@ const UserRecoverPassword = () => {
                 variant="outline-primary"
                 onClick={() => navigate("/users/emtUsers")}
               >
-                Go back
+                Volver atrás
               </Button>
             </Col>
           </Row>

@@ -5,6 +5,7 @@ const API_USER = "user";
 const API_ROLE = "role";
 const API_AUTH = "auth";
 const API_PASSWORD = "password";
+const API_STATUS = "status";
 
 const getPublicContent = () => {
   return axios.get(API_URL + "all");
@@ -85,6 +86,24 @@ const changePassword = (username, password) => {
       return response.data;
     });
 };
+
+// var data = "true";
+// var config = {
+//   method: "put",
+//   url: "http://localhost:8080/user/1010138801/status",
+//   headers: authHeader(),
+//   data: data,
+// };
+
+const editUserStatus = (username, isEnabled) => {
+  return axios
+    .put(`${API_URL}${API_USER}/${username}/${API_STATUS}`, isEnabled, {
+      headers: authHeader(),
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
 const userService = {
   getPublicContent,
   getUserBoard,
@@ -97,5 +116,6 @@ const userService = {
   addRoleToAUser,
   deleteRoleToAUser,
   changePassword,
+  editUserStatus,
 };
 export default userService;

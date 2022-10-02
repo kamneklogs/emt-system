@@ -56,12 +56,14 @@ const Register = () => {
   };
 
   const validationSchema = Yup.object({
-    username: Yup.string().required("Required"),
-    email: Yup.string().email("Invalid email format").required("Required"),
-    password: Yup.string().required("Required"),
-    firstName: Yup.string().required("Required"),
-    lastName: Yup.string().required("Required"),
-    phone: Yup.string().required("Required"),
+    username: Yup.string().required("Este campo es requerido"),
+    email: Yup.string()
+      .email("Formato inválido de email")
+      .required("Este campo es requerido"),
+    password: Yup.string().required("Este campo es requerido"),
+    firstName: Yup.string().required("Este campo es requerido"),
+    lastName: Yup.string().required("Este campo es requerido"),
+    phone: Yup.string().required("Este campo es requerido"),
   });
   const formik = useFormik({
     initialValues,
@@ -70,13 +72,15 @@ const Register = () => {
   });
 
   return (
-    <Container>
+    <Container className="mb-5">
       {!successful && (
         <Row>
-          <Col lg="8" md="10" sm="10" className="mx-auto">
+          <Col lg="10" md="10" sm="10" className="mx-auto">
             <Card className="mt-5 mb-5 shadow-lg p-1">
               <Card.Body>
-                <h3>Crear cuenta para un usuario</h3>
+                <h3>
+                  <strong>Crear cuenta para un usuario</strong>
+                </h3>
                 <hr />
                 <h4>Información de usuario</h4>
                 <Form onSubmit={formik.handleSubmit}>
@@ -299,9 +303,9 @@ const Register = () => {
             </Card>
             <Button
               variant="outline-primary"
-              onClick={() => navigate("/users/userRegister")}
+              onClick={() => navigate("/users/emtUsers")}
             >
-              Go back
+              Volver atrás
             </Button>
           </Col>
         </Row>
@@ -315,7 +319,7 @@ const Register = () => {
                 variant="outline-primary"
                 onClick={() => navigate("/users/emtUsers")}
               >
-                Go back
+                Volver atrás
               </Button>
             </Col>
           </Row>

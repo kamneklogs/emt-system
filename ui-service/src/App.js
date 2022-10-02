@@ -9,12 +9,12 @@ import Register from "./pages/Register";
 import UserView from "./pages/UserView";
 import EditUser from "./pages/EditUser";
 import UserRecoverPassword from "./pages/UserRecoverPassword";
-import NavbarC from "./components/NavbarC";
+import NavbarMenu from "./components/NavbarMenu";
 
 function App() {
   return (
     <Router>
-      <NavbarC />
+      <NavbarMenu />
       <Routes>
         <Route path="/" element={<ProtectedRoutes />}>
           <Route path="/users" element={<UserManagment />}>

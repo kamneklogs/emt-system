@@ -1,16 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Card } from "react-bootstrap";
+import UserService from "../services/user.service";
 
 const EditUserStatus = ({ user }) => {
   const actualUser = user;
-  const [editText, setEditText] = useState(true);
-  const [isDisabled, setIsDisable] = useState(true);
 
   const handleEditInformation = () => {
-    setEditText(!editText);
-    setIsDisable(!isDisabled);
+    UserService.editUserStatus();
   };
-  console.log(actualUser.accountStatus);
   return (
     <>
       <Card>
@@ -26,13 +23,13 @@ const EditUserStatus = ({ user }) => {
             <strong>Estado actual del usuario: {actualUser.username}</strong>.
           </h5>
           {actualUser.accountStatus ? (
-            <h5>
+            <h6>
               Actualmente el usuario se encuentra <strong>activo</strong>.
-            </h5>
+            </h6>
           ) : (
-            <h5>
+            <h6>
               Actualmente el usuario se encuentra <strong>inactivo</strong>
-            </h5>
+            </h6>
           )}
           <div className="d-flex flex-row-reverse">
             <Button variant="outline-primary" onClick={handleEditInformation}>
