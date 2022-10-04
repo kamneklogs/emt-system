@@ -86,6 +86,12 @@ const changePassword = (username, password) => {
       return response.data;
     });
 };
+const deleteUserByUsername = async (username) => {
+  const response = await axios.delete(`${API_URL}${API_USER}/${username}`, {
+    headers: authHeader(),
+  });
+  return response.data;
+};
 
 // var data = "true";
 // var config = {
@@ -117,5 +123,6 @@ const userService = {
   deleteRoleToAUser,
   changePassword,
   editUserStatus,
+  deleteUserByUsername,
 };
 export default userService;

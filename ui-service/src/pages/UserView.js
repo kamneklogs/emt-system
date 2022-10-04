@@ -16,11 +16,13 @@ import * as FiIcons from "react-icons/fi";
 import * as RiIcons from "react-icons/ri";
 import ModalUser from "./ModalUser";
 import { useNavigate } from "react-router-dom";
+import UserService from "../services/user.service";
 
 const UserView = () => {
-  const { loading, usersApp } = useSelector((state) => state.user);
+  const { usersApp } = useSelector((state) => state.user);
   const [show, setShow] = useState(false);
   const [userId, setUserId] = useState();
+  const [selectedUser, setSelectedUser] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -30,12 +32,20 @@ const UserView = () => {
   }, [dispatch]);
   const handleClose = () => {
     setShow(false);
-    console.log(userId);
-    console.log(loading);
   };
+
+  const handleDeleteUser = () => {
+    UserService.deleteUserByUsername(selectedUser.username).then(() => {
+      window.location.reload();
+    });
+  };
+
   const handleShow = (username) => {
     setShow(true);
     setUserId(username);
+    UserService.getUserByUsername(username).then((data) => {
+      setSelectedUser(data);
+    });
   };
 
   const handleChangePassword = (username) => {
@@ -192,6 +202,7 @@ const UserView = () => {
       <ModalUser
         show={show}
         handleClose={() => handleClose()}
+        handleDeleteUser={() => handleDeleteUser()}
         userId={userId}
       />
     </>
