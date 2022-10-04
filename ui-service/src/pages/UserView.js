@@ -15,12 +15,17 @@ import "react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css
 import * as FiIcons from "react-icons/fi";
 import * as RiIcons from "react-icons/ri";
 import ModalUser from "./ModalUser";
+import Toast from "react-bootstrap/Toast";
 import { useNavigate } from "react-router-dom";
+import UserService from "../services/user.service";
+import DeletedUserToast from "./DeletedUserToast";
 
 const UserView = () => {
   const { loading, usersApp } = useSelector((state) => state.user);
   const [show, setShow] = useState(false);
   const [userId, setUserId] = useState();
+  const [selectedUser, setSelectedUser] = useState();
+  const [showDeletedToast, setShowDeletedToast] = useState(true);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -30,12 +35,36 @@ const UserView = () => {
   }, [dispatch]);
   const handleClose = () => {
     setShow(false);
-    console.log(userId);
-    console.log(loading);
+  };
+  const handleCloseToast = () => {
+    setShowDeletedToast(false);
+  };
+  const handleShowToast = () => {
+    setShowDeletedToast(true);
+  };
+  const handleDeleteUser = async () => {
+    await deleteRolesFromUser(selectedUser);
+    UserService.deleteUserByUsername(selectedUser.username).then(() => {
+      window.location.reload();
+    });
+  };
+
+  const deleteRolesFromUser = (username) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        for (const role of username.roles) {
+          UserService.deleteRoleToAUser(role.name, userId);
+        }
+        resolve();
+      }, 2000);
+    });
   };
   const handleShow = (username) => {
     setShow(true);
     setUserId(username);
+    UserService.getUserByUsername(username).then((data) => {
+      setSelectedUser(data);
+    });
   };
 
   const handleChangePassword = (username) => {
@@ -188,6 +217,8 @@ const UserView = () => {
       <ModalUser
         show={show}
         handleClose={() => handleClose()}
+        handleDeleteUser={() => handleDeleteUser()}
+        handleShowToast={() => handleShowToast()}
         userId={userId}
       />
     </>
