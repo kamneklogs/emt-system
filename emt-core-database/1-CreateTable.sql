@@ -31,7 +31,7 @@ CREATE TABLE `clinical_history` (
   PRIMARY KEY (`id`),
   KEY `FKclinical_h450476` (`pacientid`),
   KEY `FKclinical_h693953` (`clinical_history_formatid`),
-  CONSTRAINT `FKclinical_h450476` FOREIGN KEY (`pacientid`) REFERENCES `pacient` (`id`),
+  CONSTRAINT `FKclinical_h450476` FOREIGN KEY (`pacientid`) REFERENCES `patient` (`id`),
   CONSTRAINT `FKclinical_h693953` FOREIGN KEY (`clinical_history_formatid`) REFERENCES `clinical_history_format` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -91,36 +91,35 @@ CREATE TABLE `option_item` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `pacient`
+-- Table structure for table `patient`
 --
 
-DROP TABLE IF EXISTS `pacient`;
+DROP TABLE IF EXISTS `patient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `pacient` (
+CREATE TABLE `patient` (
   `id` varchar(255) NOT NULL,
-  `eps` int DEFAULT NULL,
-  `disability` tinyint DEFAULT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  CONSTRAINT `FKpacient150320` FOREIGN KEY (`id`) REFERENCES `personalinformation` (`id`)
+  CONSTRAINT `FKpacient150320` FOREIGN KEY (`id`) REFERENCES `personal_information` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `personalinformation`
+-- Table structure for table `personal_information`
 --
 
-DROP TABLE IF EXISTS `personalinformation`;
+DROP TABLE IF EXISTS `personal_information`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `personalinformation` (
+CREATE TABLE `personal_information` (
   `id` varchar(255) NOT NULL,
   `first_name` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `dob` timestamp NULL DEFAULT NULL,
-  `gender` varchar(255) DEFAULT NULL,
-  `civil_status` varchar(255) DEFAULT NULL,
+  `gender` int DEFAULT NULL,
+  `civil_status` int DEFAULT NULL,
   `phone_number` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -183,4 +182,4 @@ CREATE TABLE `user_role` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-09-18  0:21:57
+-- Dump completed on 2022-10-04 15:38:24
