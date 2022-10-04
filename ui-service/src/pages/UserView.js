@@ -46,16 +46,20 @@ const UserView = () => {
     navigate(`/users/editUser/${username}`);
   };
 
-  // const handleViewUser = (username) => {
-  //   navigate(``);
-  // };
+  const handleViewUser = (username) => {
+    navigate(`/users/userDetails/${username}`);
+  };
 
   const actionsButtons = (cell, row, rowIndex, formatExtraData) => {
     return (
       <Container>
         <Row className="users-table-controls">
           <Col lg={3} md={12} sm={12}>
-            <span>
+            <span
+              onClick={() => {
+                handleViewUser(row.username);
+              }}
+            >
               <RiIcons.RiSearchLine></RiIcons.RiSearchLine>
             </span>
           </Col>
