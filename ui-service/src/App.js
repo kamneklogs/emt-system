@@ -10,6 +10,7 @@ import UserView from "./pages/UserView";
 import EditUser from "./pages/EditUser";
 import UserRecoverPassword from "./pages/UserRecoverPassword";
 import NavbarMenu from "./components/NavbarMenu";
+import UserDetails from "./pages/UserDetails";
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
             <Route
               path="/users/editUser/:userId"
               element={<EditUser />}
+            ></Route>
+            <Route
+              path="/users/userDetails/:userId"
+              element={<UserDetails />}
             ></Route>
             <Route
               path="/users/recoverPassword/:userId"
