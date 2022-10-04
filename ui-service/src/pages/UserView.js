@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import UserService from "../services/user.service";
 
 const UserView = () => {
-  const { loading, usersApp } = useSelector((state) => state.user);
+  const { usersApp } = useSelector((state) => state.user);
   const [show, setShow] = useState(false);
   const [userId, setUserId] = useState();
   const [selectedUser, setSelectedUser] = useState();
