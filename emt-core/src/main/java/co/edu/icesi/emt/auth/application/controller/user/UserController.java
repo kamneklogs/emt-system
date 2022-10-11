@@ -25,8 +25,10 @@ import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
 import co.edu.icesi.emt.auth.domain.model.user.User;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
+import co.edu.icesi.emt.auth.util.validators.UserNotExistValidator;
 import co.edu.icesi.emt.common.exception.model.UserIsNotAdminException;
 import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
+import co.edu.icesi.emt.common.exception.model.UsernameAlreadyExistsException;
 
 @RestController
 @RequestMapping("/user")
@@ -37,13 +39,16 @@ public class UserController {
     private final PasswordEncoder passwordEncoder;
 
     private final UserAdminValidator userAdminValidator;
+    private final UserNotExistValidator userNotExistValidator;
 
     @Autowired
     public UserController(UserAdminValidator userAdminValidator,
+            UserNotExistValidator userNotExistValidator,
             UserRoleService userRoleService,
             UserService userService,
             PasswordEncoder passwordEncoder) {
         this.userAdminValidator = userAdminValidator;
+        this.userNotExistValidator = userNotExistValidator;
         this.userService = userService;
         this.userRoleService = userRoleService;
         this.passwordEncoder = passwordEncoder;
@@ -59,9 +64,11 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<String> createUser(@RequestBody final UserCreationDTO userCreationDTO,
-            final HttpServletRequest httpRequest) throws UserIsNotAdminException, UserNotFoundException {
+            final HttpServletRequest httpRequest)
+            throws UserIsNotAdminException, UserNotFoundException, UsernameAlreadyExistsException {
 
         userAdminValidator.validate(httpRequest);
+        userNotExistValidator.validate(userCreationDTO.getUsername());
 
         userService.save(userCreationDTO.getUsername(), passwordEncoder.encode(userCreationDTO.getPassword()),
                 userCreationDTO.getRoles());

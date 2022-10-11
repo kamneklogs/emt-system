@@ -59,7 +59,6 @@ public class UserServiceImpl implements UserService {
             throw new RootAdminCanNotBeRemovedException();
         }
         this.userRepository.deleteByUsername(username);
-
     }
 
     @Override
@@ -85,5 +84,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveLastLogin(String username) {
         this.userRepository.saveLastLogin(username);
+    }
+
+    @Override
+    public boolean userExist(String username) {
+        try {
+            findByUsername(username);
+            return true;
+        } catch (UserNotFoundException e) {
+            return false;
+        }
     }
 }
