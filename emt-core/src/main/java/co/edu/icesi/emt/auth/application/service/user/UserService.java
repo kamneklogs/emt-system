@@ -25,4 +25,6 @@ public interface UserService {
     boolean isAccountEnabled(String username);
 
     void saveLastLogin(String username);
+
+    boolean userExist(String username);
 }

@@ -15,6 +15,7 @@ import co.edu.icesi.emt.common.exception.model.RootAdminCanNotBeRemovedException
 import co.edu.icesi.emt.common.exception.model.UserAccountDisabledException;
 import co.edu.icesi.emt.common.exception.model.UserIsNotAdminException;
 import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
+import co.edu.icesi.emt.common.exception.model.UsernameAlreadyExistsException;
 
 @ControllerAdvice
 public class EMTCoreExceptionHandler extends ResponseEntityExceptionHandler {
@@ -39,6 +40,12 @@ public class EMTCoreExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UserIsNotAdminException.class)
     public ResponseEntity<Object> handleUserIsNotAdmin(UserIsNotAdminException exception, WebRequest webRequest) {
         return this.handle(exception, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(UsernameAlreadyExistsException.class)
+    public ResponseEntity<Object> handleUsernameAlreadyExists(UsernameAlreadyExistsException exception,
+            WebRequest webRequest) {
+        return this.handle(exception, HttpStatus.BAD_REQUEST);
     }
 
     private ResponseEntity<Object> handle(EMTException exception, HttpStatus status) {
