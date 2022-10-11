@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Col, Form, Row } from "react-bootstrap";
 
-const UserDetailsPersonalInformation = ({ user }) => {
+const UserDetailsPersonalInformation = ({ user, userPersonalInformation }) => {
   const actualUser = user;
+  const actualUserPersonalInformation = userPersonalInformation;
 
+  useEffect(() => {}, []);
   return (
     <>
       <Card>
@@ -29,7 +31,7 @@ const UserDetailsPersonalInformation = ({ user }) => {
                     <Col lg={12} md={8} sm={8}>
                       <Form.Control
                         type="text"
-                        value=""
+                        value={actualUserPersonalInformation.firstName}
                         disabled={true}
                       ></Form.Control>
                     </Col>
@@ -45,7 +47,7 @@ const UserDetailsPersonalInformation = ({ user }) => {
                     <Col lg={12} md={8} sm={8}>
                       <Form.Control
                         type="text"
-                        value=""
+                        value={actualUserPersonalInformation.lastName}
                         disabled={true}
                       ></Form.Control>
                     </Col>
@@ -59,7 +61,12 @@ const UserDetailsPersonalInformation = ({ user }) => {
                   <Form.Label>
                     <strong>Fecha de nacimiento:</strong>
                   </Form.Label>
-                  <Form.Control type="text" name="" value="" disabled={true} />
+                  <Form.Control
+                    type="text"
+                    name=""
+                    value={actualUserPersonalInformation.birthDate}
+                    disabled={true}
+                  />
                 </Form.Group>
               </Col>
               <Col lg={6} md={12} sm={12}>
@@ -67,7 +74,12 @@ const UserDetailsPersonalInformation = ({ user }) => {
                   <Form.Label>
                     <strong>Género:</strong>
                   </Form.Label>
-                  <Form.Control type="text" name="" value="" disabled={true} />
+                  <Form.Control
+                    type="text"
+                    name=""
+                    value={actualUserPersonalInformation.gender.name}
+                    disabled={true}
+                  />
                 </Form.Group>
               </Col>
             </Row>

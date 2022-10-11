@@ -9,7 +9,7 @@ export const SidebarData = [
     title: "Gestión de Usuarios",
     name: "users_list",
     path: "/users",
-    roles: ["ADMIN", "medical_staff"],
+    roles: ["ADMIN"],
     subNav: [
       {
         title: "Registro de Usuarios",

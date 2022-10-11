@@ -1,8 +1,9 @@
 import React from "react";
 import { Card, Col, Form, Row } from "react-bootstrap";
 
-const UserDetailsContactInformation = ({ user }) => {
+const UserDetailsContactInformation = ({ user, userPersonalInformation }) => {
   const actualUser = user;
+  const actualUserPersonalInformation = userPersonalInformation;
 
   return (
     <>
@@ -28,7 +29,7 @@ const UserDetailsContactInformation = ({ user }) => {
                   <Form.Control
                     type="number"
                     name=""
-                    value=""
+                    value={actualUserPersonalInformation.phoneNumber}
                     disabled={true}
                   />
                 </Form.Group>
@@ -38,7 +39,27 @@ const UserDetailsContactInformation = ({ user }) => {
                   <Form.Label>
                     <strong>Correo electrónico:</strong>
                   </Form.Label>
-                  <Form.Control type="text" name="" value="" disabled={true} />
+                  <Form.Control
+                    type="text"
+                    name=""
+                    value={actualUserPersonalInformation.email}
+                    disabled={true}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={6} md={12} sm={12}>
+                <Form.Group controlId="address">
+                  <Form.Label>
+                    <strong>Dirección:</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name=""
+                    value={actualUserPersonalInformation.address}
+                    disabled={true}
+                  />
                 </Form.Group>
               </Col>
             </Row>
