@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.icesi.emt.auth.application.dto.signup.UserCreationDTO;
 import co.edu.icesi.emt.auth.application.dto.user.UserBasicRetrievalDTO;
 import co.edu.icesi.emt.auth.application.dto.user.UserDetailedRetrievalDTO;
+import co.edu.icesi.emt.auth.application.dto.user.status.AccountStatusModificationDTO;
 import co.edu.icesi.emt.auth.application.service.user.UserService;
 import co.edu.icesi.emt.auth.application.service.userrole.UserRoleService;
 import co.edu.icesi.emt.auth.domain.model.user.User;
@@ -72,11 +73,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<String> setUserStatus(@PathVariable("id") String id, @RequestBody final boolean isEnabled,
+    public ResponseEntity<String> setUserStatus(@PathVariable("id") String id,
+            @RequestBody final AccountStatusModificationDTO accountStatusModificationDTO,
             final HttpServletRequest httpRequest) throws UserIsNotAdminException, UserNotFoundException {
 
         userAdminValidator.validate(httpRequest);
-        userService.setUserStatus(id, isEnabled);
+        userService.setUserStatus(id, accountStatusModificationDTO.isEnabled());
 
         return new ResponseEntity<String>("User status changed for username: " + id, HttpStatus.OK);
     }
