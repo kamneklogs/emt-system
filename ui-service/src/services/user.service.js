@@ -2,6 +2,7 @@ import axios from "axios";
 import authHeader from "./auth-header";
 const API_URL = "http://localhost:8080/";
 const API_USER = "user";
+const API_PERSONAL_INFORMATION = "personalinformation";
 const API_ROLE = "role";
 const API_AUTH = "auth";
 const API_PASSWORD = "password";
@@ -41,6 +42,33 @@ const register = (username, password, rolesIds) => {
   return axios.post(
     API_URL + API_USER,
     { username, password, rolesIds },
+    { headers: authHeader() }
+  );
+};
+const registerPersonalInformation = (
+  id,
+  firstName,
+  lastName,
+  email,
+  birthDate,
+  genderId,
+  civilStatusId,
+  phoneNumber,
+  address
+) => {
+  return axios.post(
+    API_URL + API_PERSONAL_INFORMATION,
+    {
+      id,
+      firstName,
+      lastName,
+      email,
+      birthDate,
+      genderId,
+      civilStatusId,
+      phoneNumber,
+      address,
+    },
     { headers: authHeader() }
   );
 };
@@ -93,17 +121,29 @@ const deleteUserByUsername = async (username) => {
   return response.data;
 };
 
-// var data = "true";
-// var config = {
-//   method: "put",
-//   url: "http://localhost:8080/user/1010138801/status",
-//   headers: authHeader(),
-//   data: data,
-// };
-
 const editUserStatus = (username, isEnabled) => {
   return axios
     .put(`${API_URL}${API_USER}/${username}/${API_STATUS}`, isEnabled, {
+      headers: authHeader(),
+    })
+    .then((response) => {
+      return response.data;
+    });
+};
+
+// const getUserPersonalInformation = async (username) => {
+//   const response = await axios.get(
+//     `${API_URL}${API_PERSONAL_INFORMATION}/${username}`,
+//     {
+//       headers: authHeader(),
+//     }
+//   );
+//   return response.data;
+// };
+
+const getUserPersonalInformation = (username) => {
+  return axios
+    .get(`${API_URL}${API_PERSONAL_INFORMATION}/${username}`, {
       headers: authHeader(),
     })
     .then((response) => {
@@ -124,5 +164,7 @@ const userService = {
   changePassword,
   editUserStatus,
   deleteUserByUsername,
+  registerPersonalInformation,
+  getUserPersonalInformation,
 };
 export default userService;

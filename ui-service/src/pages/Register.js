@@ -8,10 +8,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useFormik } from "formik";
 import { Alert } from "react-bootstrap";
-import { register } from "../slices/user";
+import { register, registerPersonalInformation } from "../slices/user";
 import * as Yup from "yup";
 import UserService from "../services/user.service";
 import { useNavigate } from "react-router-dom";
+import userData from "../utils/UserData";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -29,23 +30,52 @@ const Register = () => {
     username: "",
     email: "",
     password: "",
+    id: "",
     firstName: "",
     lastName: "",
-    dob: "",
+    birthDate: "",
     genre: {
       value: "",
     },
     civilStatus: {
       value: "",
     },
-    phone: "",
+    phoneNumber: "",
     rolesIds: [],
+    address: "",
   };
 
   const handleRegister = (formValue) => {
     const { username, password, rolesIds } = formValue;
+    const {
+      civilStatus,
+      genre,
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      address,
+    } = formValue;
+    const civilStatusId = civilStatus.value;
+    const genderId = genre.value;
+    let { birthDate } = formValue;
+    birthDate = new Date(birthDate);
+    let id = username;
     setSuccessful(false);
-    dispatch(register({ username, password, rolesIds }))
+    dispatch(register({ username, password, rolesIds }));
+    dispatch(
+      registerPersonalInformation({
+        id,
+        firstName,
+        lastName,
+        email,
+        birthDate,
+        genderId,
+        civilStatusId,
+        phoneNumber,
+        address,
+      })
+    )
       .unwrap()
       .then(() => {
         setSuccessful(true);
@@ -61,9 +91,11 @@ const Register = () => {
       .email("Formato inválido de email")
       .required("Este campo es requerido"),
     password: Yup.string().required("Este campo es requerido"),
+    id: Yup.string().required("Este campo es requerido"),
     firstName: Yup.string().required("Este campo es requerido"),
     lastName: Yup.string().required("Este campo es requerido"),
-    phone: Yup.string().required("Este campo es requerido"),
+    phoneNumber: Yup.string().required("Este campo es requerido"),
+    address: Yup.string().required("Este campo es requerido"),
   });
   const formik = useFormik({
     initialValues,
@@ -83,12 +115,13 @@ const Register = () => {
                 </h3>
                 <hr />
                 <h4>Información de usuario</h4>
+
                 <Form onSubmit={formik.handleSubmit}>
                   <Row className="py-2">
                     <Col lg={12} md={12} sm={12}>
                       <Form.Group className="mb-3" controlId="email">
                         <Form.Label>
-                          <strong>Correo electrónico</strong>
+                          <strong>Correo electrónico:</strong>
                         </Form.Label>
                         <Form.Control
                           type="email"
@@ -112,7 +145,7 @@ const Register = () => {
                     <Col lg={6} md={12} sm={12}>
                       <Form.Group className="mb-3" controlId="username">
                         <Form.Label>
-                          <strong>Usuario</strong>
+                          <strong>Usuario (Número de identificación):</strong>
                         </Form.Label>
                         <Form.Control
                           type="text"
@@ -134,7 +167,7 @@ const Register = () => {
                     <Col lg={6} md={12} sm={12}>
                       <Form.Group className="mb-3" controlId="password">
                         <Form.Label>
-                          <strong>Contraseña</strong>
+                          <strong>Contraseña:</strong>
                         </Form.Label>
                         <Form.Control
                           type="password"
@@ -160,7 +193,7 @@ const Register = () => {
                     <Col lg={6} md={12} sm={12}>
                       <Form.Group className="mb-3" controlId="firstName">
                         <Form.Label>
-                          <strong>Nombre</strong>
+                          <strong>Nombre:</strong>
                         </Form.Label>
                         <Form.Control
                           type="text"
@@ -183,7 +216,7 @@ const Register = () => {
                     <Col lg={6} md={12} sm={12}>
                       <Form.Group className="mb-3" controlId="lastName">
                         <Form.Label>
-                          <strong>Apellido</strong>
+                          <strong>Apellido:</strong>
                         </Form.Label>
                         <Form.Control
                           type="text"
@@ -205,22 +238,43 @@ const Register = () => {
                   </Row>
                   <Row className="pb-2">
                     <Col lg={6} md={12} sm={12}>
-                      <Form.Group controlId="dob">
+                      <Form.Group className="mb-3" controlId="id">
+                        <Form.Label>
+                          <strong>Número de identificación:</strong>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={formik.values.id}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          isInvalid={formik.errors.id && formik.touched.id}
+                        ></Form.Control>
+                        {formik.errors.id && formik.touched.id ? (
+                          <Alert className="mt-3" variant="danger">
+                            {formik.errors.id}
+                          </Alert>
+                        ) : null}
+                      </Form.Group>
+                    </Col>
+                    <Col lg={6} md={12} sm={12}>
+                      <Form.Group controlId="birthDate">
                         <Form.Label>
                           <strong>Fecha de nacimiento</strong>
                         </Form.Label>
                         <Form.Control
                           type="date"
-                          name={formik.values.dob}
+                          name={formik.values.birthDate}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           placeholder="Date of Birth"
                         />
                       </Form.Group>
                     </Col>
+                  </Row>
+                  <Row>
                     <Col lg={6} md={12} sm={12}>
                       <div className="mb-2">
-                        <strong>Género</strong>
+                        <strong>Género:</strong>
                       </div>
                       <Form.Group controlId="genre">
                         <Form.Select
@@ -228,17 +282,17 @@ const Register = () => {
                           onChange={formik.handleChange}
                         >
                           <option value="">Seleccione una opción</option>
-                          <option value="female">Femenino</option>
-                          <option value="male">Masculino</option>
-                          <option value="other">Otro</option>
+                          {userData.gender.map((status, index) => (
+                            <option key={index} value={status.value}>
+                              {status.name}
+                            </option>
+                          ))}
                         </Form.Select>
                       </Form.Group>
                     </Col>
-                  </Row>
-                  <Row>
                     <Col lg={6} md={12} sm={12}>
-                      <div className="mt-3">
-                        <strong>Estado civil</strong>
+                      <div className="mb-2">
+                        <strong>Estado civil:</strong>
                       </div>
                       <Form.Group controlId="civilStatus">
                         <Form.Select
@@ -247,29 +301,57 @@ const Register = () => {
                           className="mt-2"
                         >
                           <option value="">Seleccione una opción</option>
-                          <option value="soltero">Soltero</option>
-                          <option value="casado">Casado</option>
-                          <option value="other">Otro</option>
+                          {userData.civilStatus.map((status, index) => (
+                            <option key={index} value={status.value}>
+                              {status.name}
+                            </option>
+                          ))}
                         </Form.Select>
                       </Form.Group>
                     </Col>
+                  </Row>
+                  <Row>
                     <Col lg={6} md={12} sm={12}>
-                      <Form.Group className="my-3" controlId="phone">
+                      <Form.Group className="my-3" controlId="phoneNumber">
                         <Form.Label>
-                          <strong>Número de teléfono</strong>
+                          <strong>Número de teléfono:</strong>
                         </Form.Label>
                         <Form.Control
                           type="number"
-                          value={formik.values.phone}
+                          value={formik.values.phoneNumber}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                           isInvalid={
-                            formik.errors.phone && formik.touched.phone
+                            formik.errors.phoneNumber &&
+                            formik.touched.phoneNumber
                           }
                         ></Form.Control>
-                        {formik.errors.phone && formik.touched.phone ? (
+                        {formik.errors.phoneNumber &&
+                        formik.touched.phoneNumber ? (
                           <Alert className="mt-3" variant="danger">
-                            {formik.errors.phone}
+                            {formik.errors.phoneNumber}
+                          </Alert>
+                        ) : null}
+                      </Form.Group>
+                    </Col>
+                    <Col lg={6} md={12} sm={12}>
+                      <Form.Group className="my-3" controlId="address">
+                        <Form.Label>
+                          <strong>Dirección:</strong>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Carrera 11 #95 - 37, Bogotá"
+                          value={formik.values.address}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          isInvalid={
+                            formik.errors.address && formik.touched.address
+                          }
+                        ></Form.Control>
+                        {formik.errors.address && formik.touched.address ? (
+                          <Alert className="mt-3" variant="danger">
+                            {formik.errors.address}
                           </Alert>
                         ) : null}
                       </Form.Group>
@@ -313,8 +395,11 @@ const Register = () => {
       {successful && (
         <div className="alert">
           <Row>
-            <Col lg="5" md="10" sm="10" className="mx-auto">
-              <Alert variant="success">Usuario creado exitosamente!</Alert>
+            <Col lg="10" md="10" sm="10" className="mx-auto">
+              <Alert variant="success">
+                ¡El usuario <strong>{formik.values.username}</strong> ha sido
+                creado exitosamente!
+              </Alert>
               <Button
                 variant="outline-primary"
                 onClick={() => navigate("/users/emtUsers")}

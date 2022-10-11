@@ -6,7 +6,7 @@ const EditUserStatus = ({ user }) => {
   const actualUser = user;
 
   const handleEditInformation = () => {
-    UserService.editUserStatus();
+    UserService.editUserStatus(actualUser.username, false);
   };
   return (
     <>

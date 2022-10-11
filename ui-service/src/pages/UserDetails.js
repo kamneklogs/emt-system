@@ -4,7 +4,7 @@ import Tabs from "react-bootstrap/Tabs";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserByUsername } from "../slices/user";
+import { getUserByUsername, getUserPersonalInformation } from "../slices/user";
 import { clearMessage } from "../slices/message";
 import UserService from "../services/user.service";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,9 @@ const UserDetails = () => {
   const params = useParams();
   const username = params.userId;
   const [roles, setRoles] = useState([]);
-  const { loading, user } = useSelector((state) => state.user);
+  const { loading, user, userPersonalInformation } = useSelector(
+    (state) => state.user
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -25,6 +27,7 @@ const UserDetails = () => {
       setRoles(data);
     });
     dispatch(getUserByUsername(username));
+    dispatch(getUserPersonalInformation(username));
     dispatch(clearMessage());
   }, [username, setRoles, dispatch]);
   return (
@@ -50,13 +53,20 @@ const UserDetails = () => {
                     eventKey="personalInformation"
                     title="Información Personal"
                   >
-                    <UserDetailsPersonalInformation user={user} />
+                    <UserDetailsPersonalInformation
+                      user={user}
+                      userPersonalInformation={userPersonalInformation}
+                    />
                   </Tab>
                   <Tab
                     eventKey="contactInformation"
                     title="Información de Contacto"
                   >
-                    <UserDetailsContactInformation user={user} roles={roles} />
+                    <UserDetailsContactInformation
+                      user={user}
+                      roles={roles}
+                      userPersonalInformation={userPersonalInformation}
+                    />
                   </Tab>
                   <Tab eventKey="roles" title="Roles">
                     <UserDetailsRoles user={user} roles={roles} />

@@ -11,6 +11,24 @@ const initialState = {
     roles: [],
     accountStatus: true,
   },
+  userPersonalInformation: {
+    id: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    birthDate: "",
+    gender: {
+      id: "",
+      name: "",
+    },
+    civilStatus: {
+      id: "",
+      name: "",
+    },
+    phoneNumber: "",
+    address: "",
+    age: "",
+  },
 };
 export const getAllUsers = createAsyncThunk(
   "user/getAllUsers",
@@ -68,8 +86,70 @@ export const register = createAsyncThunk(
     }
   }
 );
+
+export const registerPersonalInformation = createAsyncThunk(
+  "user/registerPersonalInformation",
+  async (
+    {
+      id,
+      firstName,
+      lastName,
+      email,
+      birthDate,
+      genderId,
+      civilStatusId,
+      phoneNumber,
+      address,
+    },
+    thunkAPI
+  ) => {
+    try {
+      const response = await UserService.registerPersonalInformation(
+        id,
+        firstName,
+        lastName,
+        email,
+        birthDate,
+        genderId,
+        civilStatusId,
+        phoneNumber,
+        address
+      );
+      thunkAPI.dispatch(setMessage(response.data.message));
+      return response.data;
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      thunkAPI.dispatch(setMessage(message));
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+export const getUserPersonalInformation = createAsyncThunk(
+  "user/getUserPersonalInformation",
+  async (username, thunkAPI) => {
+    try {
+      const data = await UserService.getUserPersonalInformation(username);
+      return { userPersonalInformation: data };
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      console.log(error);
+      thunkAPI.dispatch(setMessage(message));
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
 export const changePassword = createAsyncThunk(
-  "auth/changePassword",
+  "user/changePassword",
   async ({ username, newPassword }, thunkAPI) => {
     try {
       const data = await UserService.changePassword(username, newPassword);
@@ -100,6 +180,15 @@ const userSlice = createSlice({
     [register.rejected]: (state, action) => {
       state.loading = false;
     },
+    [registerPersonalInformation.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [registerPersonalInformation.fulfilled]: (state, action) => {
+      state.loading = false;
+    },
+    [registerPersonalInformation.rejected]: (state, action) => {
+      state.loading = false;
+    },
     [getAllUsers.pending]: (state, action) => {
       state.loading = true;
     },
@@ -124,6 +213,16 @@ const userSlice = createSlice({
       state.loading = false;
     },
     [changePassword.rejected]: (state, action) => {
+      state.loading = false;
+    },
+    [getUserPersonalInformation.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getUserPersonalInformation.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.userPersonalInformation = action.payload.userPersonalInformation;
+    },
+    [getUserPersonalInformation.rejected]: (state, action) => {
       state.loading = false;
     },
   },
