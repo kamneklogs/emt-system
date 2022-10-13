@@ -9,7 +9,7 @@ import co.edu.icesi.emt.core.domain.model.personalinformation.CivilStatus;
 import co.edu.icesi.emt.core.domain.model.personalinformation.Gender;
 import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformation;
 
-public class PersonalInformationCreationDTO {
+public class PersonalInformationModificationDTO {
 
     private final String id;
     private final String firstName;
@@ -22,7 +22,7 @@ public class PersonalInformationCreationDTO {
     private final String address;
 
     @JsonCreator
-    public PersonalInformationCreationDTO(@JsonProperty("id") String id, @JsonProperty("firstName") String firstName,
+    public PersonalInformationModificationDTO(@JsonProperty("id") String id, @JsonProperty("firstName") String firstName,
             @JsonProperty("lastName") String lastName, @JsonProperty("email") String email,
             @JsonProperty("birthDate") Instant birthDate,
             @JsonProperty("genderId") int genderId, @JsonProperty("civilStatusId") int civilStatusId,
@@ -74,7 +74,7 @@ public class PersonalInformationCreationDTO {
         return address;
     }
 
-    public static PersonalInformation fromDTO(PersonalInformationCreationDTO dto) {
+    public static PersonalInformation fromDTO(PersonalInformationModificationDTO dto) {
         return new PersonalInformation(dto.getId(), dto.getFirstName(), dto.getLastName(), dto.getEmail(),
                 dto.getBirthDate(), Gender.findById(dto.getGenderId()), CivilStatus.findById(dto.getCivilStatusId()),
                 dto.getPhoneNumber(), dto.getAddress());

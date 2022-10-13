@@ -39,4 +39,8 @@ public class PersonalInformationService {
     public void deleteById(String id) {
         this.personalInformationRepository.delete(id);
     }
+
+    public void update(PersonalInformation personalInformation) {
+        this.personalInformationRepository.update(personalInformation);
+    }
 }

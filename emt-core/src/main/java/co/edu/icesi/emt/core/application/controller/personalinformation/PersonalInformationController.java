@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.icesi.emt.auth.util.validators.UserAdminValidator;
 import co.edu.icesi.emt.common.exception.model.UserIsNotAdminException;
 import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
-import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationCreationDTO;
+import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationModificationDTO;
 import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationPreviewDTO;
 import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationRetrievalDTO;
 import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformation;
@@ -60,13 +61,13 @@ public class PersonalInformationController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody PersonalInformationCreationDTO personalInformationCreationDTO,
+    public ResponseEntity<?> save(@RequestBody PersonalInformationModificationDTO personalInformationCreationDTO,
             final HttpServletRequest httpRequest)
             throws UserIsNotAdminException, UserNotFoundException {
 
         userAdminValidator.validate(httpRequest);
 
-        personalInformationService.save(PersonalInformationCreationDTO.fromDTO(personalInformationCreationDTO));
+        personalInformationService.save(PersonalInformationModificationDTO.fromDTO(personalInformationCreationDTO));
 
         return ResponseEntity.ok().build();
     }
@@ -78,5 +79,15 @@ public class PersonalInformationController {
         personalInformationService.deleteById(id);
 
         return ResponseEntity.ok("Personal information deleted");
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") String id,
+            @RequestBody PersonalInformationModificationDTO personalInformationModificationDTO, final HttpServletRequest httpRequest)
+            throws UserIsNotAdminException, UserNotFoundException {
+        userAdminValidator.validate(httpRequest);
+
+        personalInformationService.update( PersonalInformationModificationDTO.fromDTO(personalInformationModificationDTO));
+        return ResponseEntity.ok("Personal information updated");
     }
 }
