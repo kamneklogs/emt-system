@@ -2,6 +2,7 @@ package co.edu.icesi.emt.core.domain.repository.personalinformation.implementati
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
@@ -59,6 +60,10 @@ public class PersonalInformationRepositoryImpl implements PersonalInformationRep
             + PERSONAL_INFORMATION_COLUMS
             + ") VALUES (?,?,?,?,?,?,?,?,?)";
 
+    private static final String UPDATE_PERSONAL_INFORMATION_WHERE = "UPDATE " + PERSONAL_INFORMATION_TABLE + " SET "
+            + FIRST_NAME + " = ?, " + LAST_NAME + " = ?, " + EMAIL + " = ?, " + BIRTH_DATE + " = ?, " + GENDER
+            + " = ?, " + CIVIL_STATUS + " = ?, " + PHONE_NUMBER + " = ?, " + ADDRESS + " = ? WHERE " + ID + " = ?";
+
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -93,7 +98,7 @@ public class PersonalInformationRepositoryImpl implements PersonalInformationRep
                 personalInformation.getFirstName(),
                 personalInformation.getLastName(),
                 personalInformation.getEmail(),
-                personalInformation.getBirthDate(),
+                Timestamp.from(personalInformation.getBirthDate()),
                 personalInformation.getGender().getId(),
                 personalInformation.getCivilStatus().getId(),
                 personalInformation.getPhoneNumber(),
@@ -108,7 +113,17 @@ public class PersonalInformationRepositoryImpl implements PersonalInformationRep
 
     @Override
     public void update(PersonalInformation personalInformation) {
-        // TODO Auto-generated method stub
+        jdbcTemplate.update(
+                UPDATE_PERSONAL_INFORMATION_WHERE,
+                personalInformation.getFirstName(),
+                personalInformation.getLastName(),
+                personalInformation.getEmail(),
+                Timestamp.from(personalInformation.getBirthDate()),
+                personalInformation.getGender().getId(),
+                personalInformation.getCivilStatus().getId(),
+                personalInformation.getPhoneNumber(),
+                personalInformation.getAddress(),
+                personalInformation.getId());
     }
 
     @Override
@@ -145,5 +160,4 @@ public class PersonalInformationRepositoryImpl implements PersonalInformationRep
 
         return new PersonalInformationPreview(id, firstName, lastName, email);
     }
-
 }
