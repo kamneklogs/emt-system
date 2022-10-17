@@ -76,7 +76,14 @@ public class UserController {
         return new ResponseEntity<String>(
                 "User created: " + userService.findByUsername(userCreationDTO.getUsername()).toString(),
                 HttpStatus.OK);
+    }
 
+    @GetMapping("/{id}/status")
+    public ResponseEntity<Boolean> getUserStatus(@PathVariable("id") final String id,
+            final HttpServletRequest httpRequest) throws UserIsNotAdminException, UserNotFoundException {
+        userAdminValidator.validate(httpRequest);
+
+        return new ResponseEntity<Boolean>(userService.isAccountEnabled(id), HttpStatus.OK);
     }
 
     @PutMapping("/{id}/status")

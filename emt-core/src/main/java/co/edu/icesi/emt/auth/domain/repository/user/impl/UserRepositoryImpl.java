@@ -112,7 +112,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public boolean getUserAccountStatus(String username) {
-        Boolean status = jdbcTemplate.queryForObject(SELECT_USER_IS_ENABLED, Boolean.class);
+        Boolean status = jdbcTemplate.queryForObject(SELECT_USER_IS_ENABLED, Boolean.class, username);
 
         return status != null ? status : false;
     }
