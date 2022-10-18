@@ -33,7 +33,11 @@ public class PersonalInformationService {
     }
 
     public void save(PersonalInformation personalInformation) {
-        this.personalInformationRepository.save(personalInformation);
+        if (this.findById(personalInformation.getId()) == null) {
+            this.personalInformationRepository.save(personalInformation);
+        } else {
+            this.personalInformationRepository.update(personalInformation);
+        }
     }
 
     public void deleteById(String id) {
