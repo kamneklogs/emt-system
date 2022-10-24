@@ -57,27 +57,60 @@ const UserDetailsPersonalInformation = ({ user, userPersonalInformation }) => {
             </Row>
             <Row className="pb-2">
               <Col lg={6} md={12} sm={12}>
-                <Form.Group controlId="dob">
+                <Form.Group className="mb-3" controlId="id">
                   <Form.Label>
-                    <strong>Fecha de nacimiento:</strong>
+                    <strong>Identificación:</strong>
                   </Form.Label>
+
+                  <Form.Control
+                    type="text"
+                    value={actualUserPersonalInformation.id}
+                    disabled={true}
+                  ></Form.Control>
+                </Form.Group>
+              </Col>
+              <Col lg={6} md={12} sm={12}>
+                <Form.Label>
+                  <strong>Fecha de nacimiento:</strong>
+                </Form.Label>
+                <Form.Group controlId="dob">
                   <Form.Control
                     type="text"
                     name=""
-                    value={actualUserPersonalInformation.birthDate}
+                    value={new Date(
+                      actualUserPersonalInformation.birthDate
+                    ).toLocaleDateString()}
+                    disabled={true}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="pb-2">
+              <Col lg={6} md={12} sm={12}>
+                <Form.Label>
+                  <strong>Género:</strong>
+                </Form.Label>
+
+                <Form.Group controlId="genre">
+                  <Form.Control
+                    type="text"
+                    name=""
+                    value={actualUserPersonalInformation.gender.name}
                     disabled={true}
                   />
                 </Form.Group>
               </Col>
               <Col lg={6} md={12} sm={12}>
-                <Form.Group controlId="genre">
-                  <Form.Label>
-                    <strong>Género:</strong>
-                  </Form.Label>
+                <Form.Label>
+                  <strong>Estado Civil:</strong>
+                </Form.Label>
+
+                <Form.Group controlId="civilStatus">
                   <Form.Control
                     type="text"
                     name=""
-                    value={actualUserPersonalInformation.gender.name}
+                    value={actualUserPersonalInformation.civilStatus.name}
                     disabled={true}
                   />
                 </Form.Group>

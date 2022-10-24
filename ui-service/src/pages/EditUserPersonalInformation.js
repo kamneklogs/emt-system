@@ -1,16 +1,68 @@
 import React, { useState } from "react";
-import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import * as FiIcons from "react-icons/fi";
-
-const EditUserPersonalInformation = ({ user }) => {
+import { Alert, Button, Card, Col, Form, Row } from "react-bootstrap";
+import userData from "../utils/UserData";
+import UserService from "../services/user.service";
+const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
   const actualUser = user;
-  const [editText, setEditText] = useState(true);
+  const actualUserPersonalInformation = userPersonalInformation;
   const [isDisabled, setIsDisable] = useState(true);
-
+  const [firstNameEdit, setFirstNameEdit] = useState();
+  const [lastNameEdit, setLastNameEdit] = useState();
+  const [idEdit, setIdEdit] = useState();
+  const [genreIdEdit, setGenreIdEdit] = useState();
+  const [statusIdEdit, setStatusIdEdit] = useState();
+  const [validFirstName, setValidFirstName] = useState(true);
+  const [validLastName, setValidLastName] = useState(true);
+  const [validId, setValidId] = useState(true);
   const handleEditInformation = () => {
-    setEditText(!editText);
+    setFirstNameEdit(actualUserPersonalInformation.firstName);
+    setLastNameEdit(actualUserPersonalInformation.lastName);
+    setIdEdit(actualUserPersonalInformation.id);
+    setGenreIdEdit(actualUserPersonalInformation.gender.id);
+    setStatusIdEdit(actualUserPersonalInformation.civilStatus.id);
     setIsDisable(!isDisabled);
   };
+
+  const verifyInputFormatValues = () => {
+    if (firstNameEdit.length === 0) {
+      setValidFirstName(false);
+      return false;
+    } else {
+      setValidFirstName(true);
+    }
+    if (lastNameEdit.length === 0) {
+      setValidLastName(false);
+      return false;
+    } else {
+      setValidLastName(true);
+    }
+
+    if (idEdit === 0) {
+      setValidId(false);
+      return false;
+    } else {
+      setValidId(true);
+    }
+    return true;
+  };
+  const handleUpdateInformation = () => {
+    if (verifyInputFormatValues()) {
+      UserService.updateUserPersonalInformation(
+        idEdit,
+        firstNameEdit,
+        lastNameEdit,
+        actualUserPersonalInformation.email,
+        actualUserPersonalInformation.birthDate,
+        genreIdEdit,
+        statusIdEdit,
+        actualUserPersonalInformation.phoneNumber,
+        actualUserPersonalInformation.address
+      ).then(() => {
+        window.location.reload();
+      });
+    }
+  };
+
   return (
     <>
       <Card>
@@ -32,79 +84,193 @@ const EditUserPersonalInformation = ({ user }) => {
                   <Form.Label>
                     <strong>Nombre:</strong>
                   </Form.Label>
-                  <Row>
-                    <Col lg={10} md={8} sm={8}>
-                      <Form.Control
-                        type="text"
-                        value=""
-                        disabled={isDisabled}
-                      ></Form.Control>
-                    </Col>
-                    <Col lg={2} md={4} sm={4} className="users-table-controls">
-                      <span>
-                        <FiIcons.FiEdit></FiIcons.FiEdit>
-                      </span>
-                    </Col>
-                  </Row>
+
+                  <Form.Control
+                    type="text"
+                    value={
+                      isDisabled
+                        ? actualUserPersonalInformation.firstName
+                        : firstNameEdit
+                    }
+                    disabled={isDisabled}
+                    onChange={(e) => setFirstNameEdit(e.target.value)}
+                  ></Form.Control>
                 </Form.Group>
+                {!validFirstName && (
+                  <Col lg="12" md="12" sm="12" className="mx-auto">
+                    <Alert variant="danger">Este campo es requerido</Alert>
+                  </Col>
+                )}
               </Col>
+
               <Col lg={6} md={12} sm={12}>
                 <Form.Group className="mb-3" controlId="lastName">
                   <Form.Label>
                     <strong>Apellido:</strong>
                   </Form.Label>
-                  <Row>
-                    <Col lg={10} md={8} sm={8}>
-                      <Form.Control
-                        type="text"
-                        value=""
-                        disabled={isDisabled}
-                      ></Form.Control>
-                    </Col>
-                    <Col lg={2} md={4} sm={4} className="users-table-controls">
-                      <span>
-                        <FiIcons.FiEdit></FiIcons.FiEdit>
-                      </span>
-                    </Col>
-                  </Row>
+
+                  <Form.Control
+                    type="text"
+                    value={
+                      isDisabled
+                        ? actualUserPersonalInformation.lastName
+                        : lastNameEdit
+                    }
+                    disabled={isDisabled}
+                    onChange={(e) => setLastNameEdit(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+                {!validLastName && (
+                  <Col lg="12" md="12" sm="12" className="mx-auto">
+                    <Alert variant="danger">Este campo es requerido</Alert>
+                  </Col>
+                )}
+              </Col>
+            </Row>
+            <Row className="pb-2">
+              <Col lg={6} md={12} sm={12}>
+                <Form.Group className="mb-3" controlId="id">
+                  <Form.Label>
+                    <strong>Identificación:</strong>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={actualUserPersonalInformation.id}
+                    disabled={true}
+                    onChange={(e) => setIdEdit(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+                {!validId && (
+                  <Col lg="12" md="12" sm="12" className="mx-auto">
+                    <Alert variant="danger">Este campo es requerido</Alert>
+                  </Col>
+                )}
+              </Col>
+              <Col lg={6} md={12} sm={12}>
+                <Form.Label>
+                  <strong>Fecha de nacimiento:</strong>
+                </Form.Label>
+                <Form.Group controlId="dob">
+                  <Form.Control
+                    type="text"
+                    name=""
+                    value={new Date(
+                      actualUserPersonalInformation.birthDate
+                    ).toLocaleDateString()}
+                    disabled={true}
+                  />
                 </Form.Group>
               </Col>
             </Row>
             <Row className="pb-2">
               <Col lg={6} md={12} sm={12}>
-                <Form.Group controlId="dob">
-                  <Form.Label>
-                    <strong>Fecha de nacimiento:</strong>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name=""
-                    value=""
-                    disabled={isDisabled}
-                  />
-                </Form.Group>
+                <Form.Label>
+                  <strong>Género:</strong>
+                </Form.Label>
+                {isDisabled ? (
+                  <Form.Group controlId="genre">
+                    <Form.Control
+                      type="text"
+                      name=""
+                      value={actualUserPersonalInformation.gender.name}
+                      disabled={isDisabled}
+                    />
+                  </Form.Group>
+                ) : (
+                  <Form.Group controlId="genre">
+                    <Form.Select
+                      name="genre.value"
+                      onChange={(e) => setGenreIdEdit(e.target.value)}
+                    >
+                      <option value={actualUserPersonalInformation.gender.id}>
+                        {actualUserPersonalInformation.gender.name}
+                      </option>
+
+                      {userData.gender.map((status, index) => {
+                        if (
+                          status.value ===
+                          actualUserPersonalInformation.gender.id
+                        ) {
+                          return null;
+                        } else {
+                          return (
+                            <option key={index} value={status.value}>
+                              {status.name}
+                            </option>
+                          );
+                        }
+                      })}
+                    </Form.Select>
+                  </Form.Group>
+                )}
               </Col>
               <Col lg={6} md={12} sm={12}>
-                <Form.Group controlId="genre">
-                  <Form.Label>
-                    <strong>Género:</strong>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name=""
-                    value=""
-                    disabled={isDisabled}
-                  />
-                </Form.Group>
+                <Form.Label>
+                  <strong>Estado Civil:</strong>
+                </Form.Label>
+                {isDisabled ? (
+                  <Form.Group controlId="civilStatus">
+                    <Form.Control
+                      type="text"
+                      name=""
+                      value={actualUserPersonalInformation.civilStatus.name}
+                      disabled={isDisabled}
+                    />
+                  </Form.Group>
+                ) : (
+                  <Form.Group controlId="civilStatus">
+                    <Form.Select
+                      name="civilStatus.value"
+                      onChange={(e) => setStatusIdEdit(e.target.value)}
+                    >
+                      <option
+                        value={actualUserPersonalInformation.civilStatus.id}
+                      >
+                        {actualUserPersonalInformation.civilStatus.name}
+                      </option>
+
+                      {userData.civilStatus.map((status, index) => {
+                        if (
+                          status.value ===
+                          actualUserPersonalInformation.civilStatus.id
+                        ) {
+                          return null;
+                        } else {
+                          return (
+                            <option key={index} value={status.value}>
+                              {status.name}
+                            </option>
+                          );
+                        }
+                      })}
+                    </Form.Select>
+                  </Form.Group>
+                )}
               </Col>
             </Row>
+            <hr />
+            <div className="d-flex flex-row-reverse">
+              {isDisabled ? (
+                <Button
+                  variant="outline-primary"
+                  onClick={() => {
+                    handleEditInformation();
+                  }}
+                >
+                  Editar
+                </Button>
+              ) : (
+                <Button
+                  variant="outline-primary"
+                  onClick={() => {
+                    handleUpdateInformation();
+                  }}
+                >
+                  Guardar Cambios
+                </Button>
+              )}
+            </div>
           </Form>
-          <hr />
-          <div className="d-flex flex-row-reverse">
-            <Button variant="outline-primary" onClick={handleEditInformation}>
-              {editText ? "Editar" : "Guardar Cambios"}
-            </Button>
-          </div>
         </Card.Body>
       </Card>
     </>

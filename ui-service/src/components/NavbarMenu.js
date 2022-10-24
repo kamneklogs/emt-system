@@ -10,6 +10,7 @@ import { useCallback, useEffect } from "react";
 import { logout } from "../slices/auth";
 import EventBus from "../common/EventBus";
 import { Button } from "react-bootstrap";
+import emtImage from "../img/emt.png";
 
 function NavbarC() {
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -45,18 +46,21 @@ function NavbarC() {
         className="mb-3 navbarcolor"
       >
         <Container fluid>
-          <Navbar.Brand href="#home">
-            <h5>Emt system</h5>
+          <Navbar.Brand href="/" placement="start">
+            <img src={emtImage} className="emtImg" alt="emt" />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${false}`} />
           <Navbar.Offcanvas
-            side="left"
             id={`offcanvasNavbar-expand-${false}`}
             aria-labelledby={`offcanvasNavbarLabel-expand-${false}`}
+            placement="end"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${false}`}>
-                <strong>EMT SYSTEM</strong>
+              <Offcanvas.Title
+                id={`offcanvasNavbarLabel-expand-${false}`}
+                className="text-primary"
+              >
+                <strong>SISTEMA DEL EMT</strong>
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>

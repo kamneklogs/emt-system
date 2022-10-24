@@ -13,6 +13,7 @@ import * as Yup from "yup";
 import UserService from "../services/user.service";
 import { useNavigate } from "react-router-dom";
 import userData from "../utils/UserData";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -43,6 +44,11 @@ const Register = () => {
     phoneNumber: "",
     rolesIds: [],
     address: "",
+    birthDateDay: "",
+    birthDateMonth: {
+      value: "",
+    },
+    birthDateYear: "",
   };
 
   const handleRegister = (formValue) => {
@@ -58,8 +64,13 @@ const Register = () => {
     } = formValue;
     const civilStatusId = civilStatus.value;
     const genderId = genre.value;
-    let { birthDate } = formValue;
-    birthDate = new Date(birthDate);
+    //let { birthDate } = formValue;
+    // birthDate = new Date(birthDate);
+    let { birthDateDay } = formValue;
+    let { birthDateMonth } = formValue;
+    let { birthDateYear } = formValue;
+    let correctDateFormat = `${birthDateYear}/${birthDateMonth.value}/${birthDateDay}`;
+    let birthDate = new Date(correctDateFormat);
     let id = username;
     setSuccessful(false);
     dispatch(register({ username, password, rolesIds }));
@@ -96,7 +107,17 @@ const Register = () => {
     lastName: Yup.string().required("Este campo es requerido"),
     phoneNumber: Yup.string().required("Este campo es requerido"),
     address: Yup.string().required("Este campo es requerido"),
+    birthDateDay: Yup.number()
+      .positive()
+      .lessThan(32)
+      .moreThan(0)
+      .required("Este campo es requerido"),
+    birthDateYear: Yup.number()
+      .positive()
+      .moreThan(0)
+      .required("Este campo es requerido"),
   });
+
   const formik = useFormik({
     initialValues,
     onSubmit: handleRegister,
@@ -110,11 +131,11 @@ const Register = () => {
           <Col lg="10" md="10" sm="10" className="mx-auto">
             <Card className="mt-5 mb-5 shadow-lg p-1">
               <Card.Body>
-                <h3>
+                <h3 className="text-primary">
                   <strong>Crear cuenta para un usuario</strong>
                 </h3>
                 <hr />
-                <h4>Información de usuario</h4>
+                <h4 className="text-primary">Información de usuario</h4>
 
                 <Form onSubmit={formik.handleSubmit}>
                   <Row className="py-2">
@@ -188,7 +209,7 @@ const Register = () => {
                     </Col>
                   </Row>
                   <hr />
-                  <h4>Información personal</h4>
+                  <h4 className="text-primary">Información personal</h4>
                   <Row className="py-2">
                     <Col lg={6} md={12} sm={12}>
                       <Form.Group className="mb-3" controlId="firstName">
@@ -257,18 +278,74 @@ const Register = () => {
                       </Form.Group>
                     </Col>
                     <Col lg={6} md={12} sm={12}>
-                      <Form.Group controlId="birthDate">
-                        <Form.Label>
-                          <strong>Fecha de nacimiento</strong>
-                        </Form.Label>
-                        <Form.Control
-                          type="date"
-                          name={formik.values.birthDate}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          placeholder="Date of Birth"
-                        />
-                      </Form.Group>
+                      <Form.Label>
+                        <strong>Fecha de Nacimiento:</strong>
+                      </Form.Label>
+                      <Row>
+                        <Col lg={4}>
+                          <Form.Group controlId="birthDateDay">
+                            <Form.Control
+                              type="number"
+                              placeholder="DD"
+                              value={formik.values.birthDateDay}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              isInvalid={
+                                formik.errors.birthDateDay &&
+                                formik.touched.birthDateDay
+                              }
+                            ></Form.Control>
+                            {formik.errors.birthDateDay &&
+                            formik.touched.birthDateDay ? (
+                              <Alert className="mt-3" variant="danger">
+                                {formik.errors.birthDateDay}
+                              </Alert>
+                            ) : null}
+                          </Form.Group>
+                        </Col>
+                        <Col lg={4}>
+                          <Form.Group controlId="birthDateMonth">
+                            <Form.Select
+                              name="birthDateMonth.value"
+                              onChange={formik.handleChange}
+                            >
+                              <option value="">Seleccione una opción</option>
+                              {userData.months.map((status, index) => (
+                                <option key={index} value={status.value}>
+                                  {status.name}
+                                </option>
+                              ))}
+                            </Form.Select>
+                            {formik.errors.birthDateMonth &&
+                            formik.touched.birthDateMonth ? (
+                              <Alert className="mt-3" variant="danger">
+                                {formik.errors.birthDateMonth}
+                              </Alert>
+                            ) : null}
+                          </Form.Group>
+                        </Col>
+                        <Col lg={4}>
+                          <Form.Group controlId="birthDateYear">
+                            <Form.Control
+                              type="text"
+                              placeholder="AAAA"
+                              value={formik.values.birthDateYear}
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              isInvalid={
+                                formik.errors.birthDateYear &&
+                                formik.touched.birthDateYear
+                              }
+                            ></Form.Control>
+                            {formik.errors.birthDateYear &&
+                            formik.touched.birthDateYear ? (
+                              <Alert className="mt-3" variant="danger">
+                                {formik.errors.birthDateYear}
+                              </Alert>
+                            ) : null}
+                          </Form.Group>
+                        </Col>
+                      </Row>
                     </Col>
                   </Row>
                   <Row>
@@ -357,6 +434,7 @@ const Register = () => {
                       </Form.Group>
                     </Col>
                   </Row>
+                  <Row></Row>
                   <Row>
                     <div className="mb-2">
                       <strong>Rol del usuario:</strong>
@@ -376,7 +454,7 @@ const Register = () => {
                   </Row>
                   <hr />
                   <div className="d-flex flex-row-reverse">
-                    <Button variant="outline-primary" type="submit">
+                    <Button variant="primary" type="submit">
                       Crear cuenta
                     </Button>
                   </div>
