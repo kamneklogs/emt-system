@@ -4,7 +4,7 @@ import Tabs from "react-bootstrap/Tabs";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserByUsername } from "../slices/user";
+import { getUserByUsername, getUserPersonalInformation } from "../slices/user";
 import { clearMessage } from "../slices/message";
 import UserService from "../services/user.service";
 import EditUserPersonalInformation from "./EditUserPersonalInformation";
@@ -18,7 +18,9 @@ const EditUser = () => {
   const params = useParams();
   const username = params.userId;
   const [roles, setRoles] = useState([]);
-  const { loading, user } = useSelector((state) => state.user);
+  const { loading, user, userPersonalInformation } = useSelector(
+    (state) => state.user
+  );
 
   const dispatch = useDispatch();
 
@@ -27,11 +29,13 @@ const EditUser = () => {
       setRoles(data);
     });
     dispatch(getUserByUsername(username));
+    dispatch(getUserPersonalInformation(username));
+
     dispatch(clearMessage());
   }, [username, setRoles, dispatch]);
 
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 mb-5">
       {!loading ? (
         <Row>
           <Col lg="10" md="10" sm="10" className="mx-auto">
@@ -53,19 +57,34 @@ const EditUser = () => {
                     eventKey="personalInformation"
                     title="Información Personal"
                   >
-                    <EditUserPersonalInformation user={user} />
+                    <EditUserPersonalInformation
+                      user={user}
+                      userPersonalInformation={userPersonalInformation}
+                    />
                   </Tab>
                   <Tab
                     eventKey="contactInformation"
                     title="Información de Contacto"
                   >
-                    <EditUserContactInformation user={user} roles={roles} />
+                    <EditUserContactInformation
+                      user={user}
+                      roles={roles}
+                      userPersonalInformation={userPersonalInformation}
+                    />
                   </Tab>
                   <Tab eventKey="roles" title="Roles">
-                    <EditUserRoles user={user} roles={roles} />
+                    <EditUserRoles
+                      user={user}
+                      roles={roles}
+                      userPersonalInformation={userPersonalInformation}
+                    />
                   </Tab>
                   <Tab eventKey="status" title="Estado del Usuario">
-                    <EditUserStatus user={user} roles={roles} />
+                    <EditUserStatus
+                      user={user}
+                      roles={roles}
+                      userPersonalInformation={userPersonalInformation}
+                    />
                   </Tab>
                 </Tabs>
               </Card.Body>

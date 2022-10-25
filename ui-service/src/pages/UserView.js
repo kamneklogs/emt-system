@@ -188,7 +188,7 @@ const UserView = () => {
         {usersApp.length ? (
           <Row>
             <Col sm="10" md="10" lg="10" className="mx-auto">
-              <h2 className="text-center">
+              <h2 className="text-center text-primary">
                 <strong>Usuarios del EMT</strong>
               </h2>
               <hr />

@@ -123,9 +123,13 @@ const deleteUserByUsername = async (username) => {
 
 const editUserStatus = (username, isEnabled) => {
   return axios
-    .put(`${API_URL}${API_USER}/${username}/${API_STATUS}`, isEnabled, {
-      headers: authHeader(),
-    })
+    .put(
+      `${API_URL}${API_USER}/${username}/${API_STATUS}`,
+      { isEnabled },
+      {
+        headers: authHeader(),
+      }
+    )
     .then((response) => {
       return response.data;
     });
@@ -150,6 +154,35 @@ const getUserPersonalInformation = (username) => {
       return response.data;
     });
 };
+
+const updateUserPersonalInformation = async (
+  id,
+  firstName,
+  lastName,
+  email,
+  birthDate,
+  genderId,
+  civilStatusId,
+  phoneNumber,
+  address
+) => {
+  const response = await axios.put(
+    `${API_URL}${API_PERSONAL_INFORMATION}/${id}`,
+    {
+      id,
+      firstName,
+      lastName,
+      email,
+      birthDate,
+      genderId,
+      civilStatusId,
+      phoneNumber,
+      address,
+    },
+    { headers: authHeader() }
+  );
+  return response.data;
+};
 const userService = {
   getPublicContent,
   getUserBoard,
@@ -166,5 +199,6 @@ const userService = {
   deleteUserByUsername,
   registerPersonalInformation,
   getUserPersonalInformation,
+  updateUserPersonalInformation,
 };
 export default userService;
