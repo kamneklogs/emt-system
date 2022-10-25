@@ -1,6 +1,8 @@
 package co.edu.icesi.emt.auth.application.controller.user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,12 +31,15 @@ import co.edu.icesi.emt.auth.util.validators.UserNotExistValidator;
 import co.edu.icesi.emt.common.exception.model.UserIsNotAdminException;
 import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
 import co.edu.icesi.emt.common.exception.model.UsernameAlreadyExistsException;
+import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformationPreview;
+import co.edu.icesi.emt.core.domain.service.personalinformation.PersonalInformationService;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     private UserService userService;
+    private PersonalInformationService personalInformationService;
     private UserRoleService userRoleService;
     private final PasswordEncoder passwordEncoder;
 
@@ -46,10 +51,12 @@ public class UserController {
             UserNotExistValidator userNotExistValidator,
             UserRoleService userRoleService,
             UserService userService,
+            PersonalInformationService personalInformationService,
             PasswordEncoder passwordEncoder) {
         this.userAdminValidator = userAdminValidator;
         this.userNotExistValidator = userNotExistValidator;
         this.userService = userService;
+        this.personalInformationService = personalInformationService;
         this.userRoleService = userRoleService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -58,7 +65,23 @@ public class UserController {
     public ResponseEntity<List<UserBasicRetrievalDTO>> getAllUsers(final HttpServletRequest request)
             throws UserIsNotAdminException, UserNotFoundException {
         userAdminValidator.validate(request);
-        return new ResponseEntity<List<UserBasicRetrievalDTO>>(UserBasicRetrievalDTO.from(userService.findAll()),
+
+        Map<String, String> fullNames = new HashMap<>();
+        List<User> users = userService.findAll();
+
+        users.forEach(user -> {
+            PersonalInformationPreview personalInformation = personalInformationService
+                    .findPreviewById(user.getUsername());
+
+            if (personalInformation != null) {
+                fullNames.put(user.getUsername(),
+                        personalInformation.getFirstName() + " " + personalInformation.getLastName());
+            } else {
+                fullNames.put(user.getUsername(), "Sin nombre");
+            }
+        });
+
+        return new ResponseEntity<List<UserBasicRetrievalDTO>>(UserBasicRetrievalDTO.from(users, fullNames),
                 HttpStatus.OK);
     }
 

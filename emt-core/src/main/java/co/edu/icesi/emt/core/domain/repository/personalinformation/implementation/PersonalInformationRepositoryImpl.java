@@ -130,8 +130,8 @@ public class PersonalInformationRepositoryImpl implements PersonalInformationRep
     public PersonalInformationPreview findPreviewById(String id) {
         try {
             return jdbcTemplate.queryForObject(SELECT_FROM_PERSONAL_INFORMATION_PREVIEW_WHERE_ID,
-                    this::parsePreview);
-        } catch (Exception e) {
+                    this::parsePreview, id);
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }
