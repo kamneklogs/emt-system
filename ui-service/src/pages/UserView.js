@@ -99,8 +99,24 @@ const UserView = () => {
   const userStateToggle = (cell, row, rowIndex, formatExtraData) => {
     return (
       <Container>
-        <Row className="users-table-controls">
-          <Col>Activo</Col>
+        <Row>
+          <Col>{row.accountStatus}</Col>
+        </Row>
+      </Container>
+    );
+  };
+  const userBirthdateFormat = (cell, row, rowIndex, formatExtraData) => {
+    return (
+      <Container>
+        <Row>
+          <Col>
+            {new Date(row.last_login).toLocaleString("default", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+              hour12: false,
+            })}
+          </Col>
         </Row>
       </Container>
     );
@@ -117,6 +133,16 @@ const UserView = () => {
       headerAlign: "center",
     },
     {
+      dataField: "fullName",
+      text: "Nombre completo",
+      sort: true,
+      filter: textFilter({
+        placeholder: "Buscar por nombre completo",
+      }),
+      headerClasses: "table-column",
+      headerAlign: "center",
+    },
+    {
       dataField: "last_login",
       text: "Última sesión",
       sort: true,
@@ -124,9 +150,10 @@ const UserView = () => {
         placeholder: "Buscar por último inicio de sesión",
       }),
       headerClasses: "table-column",
+      formatter: userBirthdateFormat,
     },
     {
-      datafield: "userState",
+      dataField: "accountStatus",
       text: "Estado del usuario",
       sort: true,
       filter: textFilter({
