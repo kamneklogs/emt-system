@@ -4,7 +4,7 @@ import userData from "../utils/UserData";
 import UserService from "../services/user.service";
 const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
   const actualUser = user;
-  const actualUserPersonalInformation = userPersonalInformation;
+  const currentUserPersonalInformation = userPersonalInformation;
   const [isDisabled, setIsDisable] = useState(true);
   const [firstNameEdit, setFirstNameEdit] = useState();
   const [lastNameEdit, setLastNameEdit] = useState();
@@ -15,11 +15,11 @@ const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
   const [validLastName, setValidLastName] = useState(true);
   const [validId, setValidId] = useState(true);
   const handleEditInformation = () => {
-    setFirstNameEdit(actualUserPersonalInformation.firstName);
-    setLastNameEdit(actualUserPersonalInformation.lastName);
-    setIdEdit(actualUserPersonalInformation.id);
-    setGenreIdEdit(actualUserPersonalInformation.gender.id);
-    setStatusIdEdit(actualUserPersonalInformation.civilStatus.id);
+    setFirstNameEdit(currentUserPersonalInformation.firstName);
+    setLastNameEdit(currentUserPersonalInformation.lastName);
+    setIdEdit(currentUserPersonalInformation.id);
+    setGenreIdEdit(currentUserPersonalInformation.gender.id);
+    setStatusIdEdit(currentUserPersonalInformation.civilStatus.id);
     setIsDisable(!isDisabled);
   };
 
@@ -51,12 +51,12 @@ const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
         idEdit,
         firstNameEdit,
         lastNameEdit,
-        actualUserPersonalInformation.email,
-        actualUserPersonalInformation.birthDate,
+        currentUserPersonalInformation.email,
+        currentUserPersonalInformation.birthDate,
         genreIdEdit,
         statusIdEdit,
-        actualUserPersonalInformation.phoneNumber,
-        actualUserPersonalInformation.address
+        currentUserPersonalInformation.phoneNumber,
+        currentUserPersonalInformation.address
       ).then(() => {
         window.location.reload();
       });
@@ -89,7 +89,7 @@ const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
                     type="text"
                     value={
                       isDisabled
-                        ? actualUserPersonalInformation.firstName
+                        ? currentUserPersonalInformation.firstName
                         : firstNameEdit
                     }
                     disabled={isDisabled}
@@ -113,7 +113,7 @@ const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
                     type="text"
                     value={
                       isDisabled
-                        ? actualUserPersonalInformation.lastName
+                        ? currentUserPersonalInformation.lastName
                         : lastNameEdit
                     }
                     disabled={isDisabled}
@@ -135,7 +135,7 @@ const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    value={actualUserPersonalInformation.id}
+                    value={currentUserPersonalInformation.id}
                     disabled={true}
                     onChange={(e) => setIdEdit(e.target.value)}
                   ></Form.Control>
@@ -155,7 +155,7 @@ const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
                     type="text"
                     name=""
                     value={new Date(
-                      actualUserPersonalInformation.birthDate
+                      currentUserPersonalInformation.birthDate
                     ).toLocaleDateString()}
                     disabled={true}
                   />
@@ -172,7 +172,7 @@ const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
                     <Form.Control
                       type="text"
                       name=""
-                      value={actualUserPersonalInformation.gender.name}
+                      value={currentUserPersonalInformation.gender.name}
                       disabled={isDisabled}
                     />
                   </Form.Group>
@@ -182,14 +182,14 @@ const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
                       name="genre.value"
                       onChange={(e) => setGenreIdEdit(e.target.value)}
                     >
-                      <option value={actualUserPersonalInformation.gender.id}>
-                        {actualUserPersonalInformation.gender.name}
+                      <option value={currentUserPersonalInformation.gender.id}>
+                        {currentUserPersonalInformation.gender.name}
                       </option>
 
                       {userData.gender.map((status, index) => {
                         if (
                           status.value ===
-                          actualUserPersonalInformation.gender.id
+                          currentUserPersonalInformation.gender.id
                         ) {
                           return null;
                         } else {
@@ -213,7 +213,7 @@ const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
                     <Form.Control
                       type="text"
                       name=""
-                      value={actualUserPersonalInformation.civilStatus.name}
+                      value={currentUserPersonalInformation.civilStatus.name}
                       disabled={isDisabled}
                     />
                   </Form.Group>
@@ -224,15 +224,15 @@ const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
                       onChange={(e) => setStatusIdEdit(e.target.value)}
                     >
                       <option
-                        value={actualUserPersonalInformation.civilStatus.id}
+                        value={currentUserPersonalInformation.civilStatus.id}
                       >
-                        {actualUserPersonalInformation.civilStatus.name}
+                        {currentUserPersonalInformation.civilStatus.name}
                       </option>
 
                       {userData.civilStatus.map((status, index) => {
                         if (
                           status.value ===
-                          actualUserPersonalInformation.civilStatus.id
+                          currentUserPersonalInformation.civilStatus.id
                         ) {
                           return null;
                         } else {

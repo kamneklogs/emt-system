@@ -4,7 +4,7 @@ import UserService from "../services/user.service";
 
 const EditUserContactInformation = ({ user, userPersonalInformation }) => {
   const actualUser = user;
-  const actualUserPersonalInformation = userPersonalInformation;
+  const currentUserPersonalInformation = userPersonalInformation;
   const [editText, setEditText] = useState(true);
   const [isDisabled, setIsDisable] = useState(true);
   const [phoneNumberEdit, setPhoneNumberEdit] = useState();
@@ -15,9 +15,9 @@ const EditUserContactInformation = ({ user, userPersonalInformation }) => {
   const [validAddress, setValidAddress] = useState(true);
 
   const handleEditInformation = () => {
-    setPhoneNumberEdit(actualUserPersonalInformation.phoneNumber);
-    setEmailEdit(actualUserPersonalInformation.email);
-    setAddressEdit(actualUserPersonalInformation.address);
+    setPhoneNumberEdit(currentUserPersonalInformation.phoneNumber);
+    setEmailEdit(currentUserPersonalInformation.email);
+    setAddressEdit(currentUserPersonalInformation.address);
     setEditText(!editText);
     setIsDisable(!isDisabled);
   };
@@ -46,13 +46,13 @@ const EditUserContactInformation = ({ user, userPersonalInformation }) => {
   const handleUpdateInformation = () => {
     if (verifyInputFormatValues()) {
       UserService.updateUserPersonalInformation(
-        actualUserPersonalInformation.id,
-        actualUserPersonalInformation.firstName,
-        actualUserPersonalInformation.lastName,
+        currentUserPersonalInformation.id,
+        currentUserPersonalInformation.firstName,
+        currentUserPersonalInformation.lastName,
         emailEdit,
-        actualUserPersonalInformation.birthDate,
-        actualUserPersonalInformation.gender.id,
-        actualUserPersonalInformation.civilStatus.id,
+        currentUserPersonalInformation.birthDate,
+        currentUserPersonalInformation.gender.id,
+        currentUserPersonalInformation.civilStatus.id,
         phoneNumberEdit,
         addressEdit
       ).then(() => {
@@ -87,7 +87,7 @@ const EditUserContactInformation = ({ user, userPersonalInformation }) => {
                     name=""
                     value={
                       isDisabled
-                        ? actualUserPersonalInformation.phoneNumber
+                        ? currentUserPersonalInformation.phoneNumber
                         : phoneNumberEdit
                     }
                     disabled={isDisabled}
@@ -110,7 +110,7 @@ const EditUserContactInformation = ({ user, userPersonalInformation }) => {
                     name=""
                     value={
                       isDisabled
-                        ? actualUserPersonalInformation.email
+                        ? currentUserPersonalInformation.email
                         : emailEdit
                     }
                     disabled={isDisabled}
@@ -135,7 +135,7 @@ const EditUserContactInformation = ({ user, userPersonalInformation }) => {
                     name=""
                     value={
                       isDisabled
-                        ? actualUserPersonalInformation.address
+                        ? currentUserPersonalInformation.address
                         : addressEdit
                     }
                     disabled={isDisabled}
