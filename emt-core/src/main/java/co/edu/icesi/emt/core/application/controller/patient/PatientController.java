@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.edu.icesi.emt.core.application.dto.patient.PatientCreationDTO;
 import co.edu.icesi.emt.core.application.dto.patient.PatientPreviewDTO;
 import co.edu.icesi.emt.core.application.dto.patient.PatientRetrievalDTO;
+import co.edu.icesi.emt.core.application.dto.personalinformation.PersonalInformationModificationDTO;
 import co.edu.icesi.emt.core.domain.model.patient.Patient;
 import co.edu.icesi.emt.core.domain.model.patient.PatientPreview;
 import co.edu.icesi.emt.core.domain.service.patient.PatientService;
@@ -39,6 +43,18 @@ public class PatientController {
 
         Patient patient = this.patientService.findById(id);
 
+        if (patient == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok(PatientRetrievalDTO.from(patient));
+    }
+
+    @PostMapping
+    public ResponseEntity<PatientRetrievalDTO> save(@RequestBody PatientCreationDTO patientRetrievalDTO) {
+        this.patientService.save(patientRetrievalDTO.getId(),
+                PersonalInformationModificationDTO.fromDTO(patientRetrievalDTO.getPersonalInformation()));
+
+        return ResponseEntity.ok(PatientRetrievalDTO.from(this.patientService.findById(patientRetrievalDTO.getId())));
     }
 }
