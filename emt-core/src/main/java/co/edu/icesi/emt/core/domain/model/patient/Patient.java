@@ -8,17 +8,12 @@ public class Patient {
 
     private final String id;
     private final Instant creationDate;
-    private PersonalInformation personalInformation;
+    private final PersonalInformation personalInformation;
 
     public Patient(String id, Instant creationDate, PersonalInformation personalInformation) {
         this.id = id;
         this.creationDate = creationDate;
         this.personalInformation = personalInformation;
-    }
-
-    public Patient(String id, Instant creationDate) {
-        this.id = id;
-        this.creationDate = creationDate;
     }
 
     public String getId() {
@@ -31,9 +26,5 @@ public class Patient {
 
     public PersonalInformation getPersonalInformation() {
         return personalInformation;
-    }
-
-    public void setPersonalInformation(PersonalInformation personalInformation) {
-        this.personalInformation = personalInformation;
     }
 }

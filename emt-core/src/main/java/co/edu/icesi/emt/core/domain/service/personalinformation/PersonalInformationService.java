@@ -47,8 +47,4 @@ public class PersonalInformationService {
     public void update(PersonalInformation personalInformation) {
         this.personalInformationRepository.update(personalInformation);
     }
-
-    public boolean existsById(String id) {
-        return this.personalInformationRepository.findPreviewById(id) != null;
-    }
 }
