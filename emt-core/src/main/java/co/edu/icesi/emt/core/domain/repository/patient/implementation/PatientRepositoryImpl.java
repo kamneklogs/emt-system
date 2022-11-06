@@ -2,6 +2,7 @@ package co.edu.icesi.emt.core.domain.repository.patient.implementation;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
@@ -12,10 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import co.edu.icesi.emt.core.domain.model.patient.Patient;
 import co.edu.icesi.emt.core.domain.model.patient.PatientPreview;
-import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformation;
-import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformationPreview;
 import co.edu.icesi.emt.core.domain.repository.patient.PatientRepository;
-import co.edu.icesi.emt.core.domain.service.personalinformation.PersonalInformationService;
 
 @Repository
 public class PatientRepositoryImpl implements PatientRepository {
@@ -30,13 +28,14 @@ public class PatientRepositoryImpl implements PatientRepository {
     private static final String SELECT_ALL = "SELECT " + PATIENT_COLUMNS + " FROM " + PATIENT_TABLE;
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE " + ID + " = ?";
 
+    private static final String INSERT_INTO_PATIENT = "INSERT INTO " + PATIENT_TABLE + " (" + PATIENT_COLUMNS
+            + ") VALUES (?, ?)";
+
     private final JdbcTemplate jdbcTemplate;
-    private final PersonalInformationService personalInformationService;
 
     @Autowired
-    public PatientRepositoryImpl(JdbcTemplate jdbcTemplate, PersonalInformationService personalInformationService) {
+    public PatientRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.personalInformationService = personalInformationService;
     }
 
     @Override
@@ -51,8 +50,7 @@ public class PatientRepositoryImpl implements PatientRepository {
 
     @Override
     public void save(Patient patient) {
-        // TODO Auto-generated method stub
-
+        jdbcTemplate.update(INSERT_INTO_PATIENT, patient.getId(), Timestamp.from(patient.getCreationDate()));
     }
 
     @Override
@@ -81,17 +79,14 @@ public class PatientRepositoryImpl implements PatientRepository {
 
         String id = rs.getString(ID);
         Instant creationDate = rs.getTimestamp(CREATION_DATE).toInstant();
-        PersonalInformation personalInformation = personalInformationService.findById(id);
 
-        return new Patient(id, creationDate, personalInformation);
+        return new Patient(id, creationDate);
     }
 
     private PatientPreview parsePreview(final ResultSet rs, final int rowNum) throws SQLException {
-
         String id = rs.getString(ID);
         Instant creationDate = rs.getTimestamp(CREATION_DATE).toInstant();
-        PersonalInformationPreview personalInformation = personalInformationService.findPreviewById(id);
 
-        return new PatientPreview(id, creationDate, personalInformation);
+        return new PatientPreview(id, creationDate);
     }
 }
