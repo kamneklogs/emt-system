@@ -32,19 +32,17 @@ public class PatientController {
 
     @GetMapping
     public ResponseEntity<List<PatientPreviewDTO>> findAll() {
+
         List<PatientPreview> patientPreviews = this.patientService.findAll();
-        if (patientPreviews.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+
         return ResponseEntity.ok(PatientPreviewDTO.from(patientPreviews));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PatientRetrievalDTO> findById(@PathVariable("id") String id) {
+
         Patient patient = this.patientService.findById(id);
-        if (patient == null) {
-            return ResponseEntity.notFound().build();
-        }
+
         return ResponseEntity.ok(PatientRetrievalDTO.from(patient));
     }
 
