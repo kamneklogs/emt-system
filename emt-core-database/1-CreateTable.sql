@@ -100,6 +100,12 @@ DROP TABLE IF EXISTS `patient`;
 CREATE TABLE `patient` (
   `id` varchar(255) NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `first_disease_code` varchar(45) DEFAULT 'N/A',
+  `second_disease_code` varchar(45) DEFAULT 'N/A',
+  `third_disease_code` varchar(45) DEFAULT 'N/A',
+  `fourth_disease_code` varchar(45) DEFAULT 'N/A',
+  `nationality` varchar(45) DEFAULT 'N/A',
+  `migratory_state` int DEFAULT '3',
   PRIMARY KEY (`id`),
   CONSTRAINT `FKpacient150320` FOREIGN KEY (`id`) REFERENCES `personal_information` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

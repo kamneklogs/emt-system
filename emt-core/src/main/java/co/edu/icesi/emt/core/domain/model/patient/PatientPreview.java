@@ -10,15 +10,15 @@ public class PatientPreview {
     private final Instant creationDate;
     private PersonalInformationPreview personalInformation;
 
+    public PatientPreview(String id, Instant creationDate) {
+        this.id = id;
+        this.creationDate = creationDate;
+    }
+
     public PatientPreview(String id, Instant creationDate, PersonalInformationPreview personalInformation) {
         this.id = id;
         this.creationDate = creationDate;
         this.personalInformation = personalInformation;
-    }
-
-    public PatientPreview(String id, Instant creationDate) {
-        this.id = id;
-        this.creationDate = creationDate;
     }
 
     public String getId() {
