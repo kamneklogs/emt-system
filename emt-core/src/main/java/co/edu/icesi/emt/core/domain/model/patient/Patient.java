@@ -28,6 +28,14 @@ public class Patient {
         this.nationalityState = nationalityState;
     }
 
+    public Patient(String id, PersonalInformation personalInformation,
+            DiseaseHistorial diseaseHistorial, NationalityState nationalityState) {
+        this.id = id;
+        this.personalInformation = personalInformation;
+        this.diseaseHistorial = diseaseHistorial;
+        this.nationalityState = nationalityState;
+    }
+
     public String getId() {
         return id;
     }

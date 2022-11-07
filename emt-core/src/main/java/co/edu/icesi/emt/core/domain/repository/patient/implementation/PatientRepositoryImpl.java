@@ -49,6 +49,8 @@ public class PatientRepositoryImpl implements PatientRepository {
             + " = ?, " + THIRD_DISEASE_CODE + " = ?, " + FOURTH_DISEASE_CODE + " = ?, " + NATIONALITY + " = ?, "
             + MIGRATORY_STATE + " = ? WHERE " + ID + " = ?";
 
+    private static final String EXIST_BY_ID = "SELECT EXISTS(SELECT 1 FROM " + PATIENT_TABLE + " WHERE " + ID + " = ?)";
+
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -68,13 +70,17 @@ public class PatientRepositoryImpl implements PatientRepository {
 
     @Override
     public void save(Patient patient) {
-        jdbcTemplate.update(INSERT, patient.getId(), patient.getCreationDate(),
-                patient.getDiseaseHistorial().getFirstDisease().getCode(),
-                patient.getDiseaseHistorial().getSecondDisease().getCode(),
-                patient.getDiseaseHistorial().getThirdDisease().getCode(),
-                patient.getDiseaseHistorial().getFourthDisease().getCode(),
-                patient.getNationalityState().getNationality(),
-                patient.getNationalityState().getMigratoryState().getId());
+        if (this.existsById(patient.getId())) {
+            this.update(patient);
+        } else {
+            jdbcTemplate.update(INSERT, patient.getId(), patient.getCreationDate(),
+                    patient.getDiseaseHistorial().getFirstDisease().getCode(),
+                    patient.getDiseaseHistorial().getSecondDisease().getCode(),
+                    patient.getDiseaseHistorial().getThirdDisease().getCode(),
+                    patient.getDiseaseHistorial().getFourthDisease().getCode(),
+                    patient.getNationalityState().getNationality(),
+                    patient.getNationalityState().getMigratoryState().getId());
+        }
     }
 
     @Override
@@ -102,6 +108,10 @@ public class PatientRepositoryImpl implements PatientRepository {
         } catch (Exception e) {
             return Collections.emptyList();
         }
+    }
+
+    public boolean existsById(String id) {
+        return jdbcTemplate.queryForObject(EXIST_BY_ID, Boolean.class, id);
     }
 
     private Patient parse(final ResultSet rs, final int rowNum) throws SQLException {

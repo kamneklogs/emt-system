@@ -1,4 +1,4 @@
-package co.edu.icesi.emt.core.application.dto.patient;
+package co.edu.icesi.emt.core.application.dto.patient.nationality;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

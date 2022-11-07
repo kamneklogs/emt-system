@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.icesi.emt.core.domain.model.patient.Patient;
 import co.edu.icesi.emt.core.domain.model.patient.PatientPreview;
-import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformation;
 import co.edu.icesi.emt.core.domain.repository.patient.PatientRepository;
 import co.edu.icesi.emt.core.domain.repository.patient.implementation.PatientRepositoryImpl;
 import co.edu.icesi.emt.core.domain.service.personalinformation.PersonalInformationService;
@@ -45,14 +44,14 @@ public class PatientService {
     }
 
     @Transactional
-    public void save(Patient patient, PersonalInformation personalInformation) {
+    public void save(Patient patient) {
         if (this.personalInformationService.existsById(patient.getId())) {
-            this.personalInformationService.update(personalInformation);
+            this.personalInformationService.update(patient.getPersonalInformation());
         } else {
-            this.personalInformationService.save(personalInformation);
+            this.personalInformationService.save(patient.getPersonalInformation());
         }
 
-        patient.setCreationDate(Instant.now());
+        patient.setCreationDate(patient.getCreationDate() == null ? Instant.now() : patient.getCreationDate());
         this.patientRepository.save(patient);
     }
 }
