@@ -14,12 +14,20 @@ public class PatientRetrievalDTO {
     private final Instant creationDate;
     private final PersonalInformationRetrievalDTO personalInformation;
 
+    private final DiseaseHistorialRetrievalDTO diseaseHistorial;
+
+    private final NationalityStateRetrievalDTO nationalityStateRetrievalDTO;
+
     @JsonCreator
     public PatientRetrievalDTO(@JsonProperty("id") String id, @JsonProperty("creationDate") Instant creationDate,
-            @JsonProperty("personalInformation") PersonalInformationRetrievalDTO personalInformation) {
+            @JsonProperty("personalInformation") PersonalInformationRetrievalDTO personalInformation,
+            @JsonProperty("diseaseHistorial") DiseaseHistorialRetrievalDTO diseaseHistorial,
+            @JsonProperty("nationalityState") NationalityStateRetrievalDTO nationalityStateRetrievalDTO) {
         this.id = id;
         this.creationDate = creationDate;
         this.personalInformation = personalInformation;
+        this.diseaseHistorial = diseaseHistorial;
+        this.nationalityStateRetrievalDTO = nationalityStateRetrievalDTO;
     }
 
     public String getId() {
@@ -34,8 +42,18 @@ public class PatientRetrievalDTO {
         return personalInformation;
     }
 
+    public DiseaseHistorialRetrievalDTO getDiseaseHistorial() {
+        return diseaseHistorial;
+    }
+
+    public NationalityStateRetrievalDTO getNationalityStateRetrievalDTO() {
+        return nationalityStateRetrievalDTO;
+    }
+
     public static PatientRetrievalDTO from(Patient patient) {
         return new PatientRetrievalDTO(patient.getId(), patient.getCreationDate(),
-                PersonalInformationRetrievalDTO.from(patient.getPersonalInformation()));
+                PersonalInformationRetrievalDTO.from(patient.getPersonalInformation()),
+                DiseaseHistorialRetrievalDTO.from(patient.getDiseaseHistorial()),
+                NationalityStateRetrievalDTO.from(patient.getNationalityState()));
     }
 }

@@ -9,16 +9,10 @@ import co.edu.icesi.emt.core.domain.model.patient.nationality.NationalityState;
 public class Patient {
 
     private final String id;
-    private final Instant creationDate;
+    private Instant creationDate;
     private PersonalInformation personalInformation;
     private DiseaseHistorial diseaseHistorial;
-    private NationalityState NationalityState;
-
-    public Patient(String id, Instant creationDate, PersonalInformation personalInformation) {
-        this.id = id;
-        this.creationDate = creationDate;
-        this.personalInformation = personalInformation;
-    }
+    private NationalityState nationalityState;
 
     public Patient(String id, Instant creationDate) {
         this.id = id;
@@ -26,11 +20,12 @@ public class Patient {
     }
 
     public Patient(String id, Instant creationDate, PersonalInformation personalInformation,
-            DiseaseHistorial diseaseHistorial) {
+            DiseaseHistorial diseaseHistorial, NationalityState nationalityState) {
         this.id = id;
         this.creationDate = creationDate;
         this.personalInformation = personalInformation;
         this.diseaseHistorial = diseaseHistorial;
+        this.nationalityState = nationalityState;
     }
 
     public String getId() {
@@ -55,5 +50,17 @@ public class Patient {
 
     public void setDiseaseHistorial(DiseaseHistorial diseaseHistorial) {
         this.diseaseHistorial = diseaseHistorial;
+    }
+
+    public NationalityState getNationalityState() {
+        return nationalityState;
+    }
+
+    public void setNationalityState(NationalityState nationalityState) {
+        this.nationalityState = nationalityState;
+    }
+
+    public void setCreationDate(Instant creationDate) {
+        this.creationDate = creationDate;
     }
 }

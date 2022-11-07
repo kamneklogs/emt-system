@@ -19,4 +19,13 @@ public enum MigratoryState {
     public String getName() {
         return name;
     }
+
+    public static MigratoryState byId(int id) {
+        for (MigratoryState migratoryState : MigratoryState.values()) {
+            if (migratoryState.getId() == id) {
+                return migratoryState;
+            }
+        }
+        return null;
+    }
 }
