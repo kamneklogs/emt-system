@@ -16,48 +16,11 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Dumping data for table `clinical_history`
---
-
-LOCK TABLES `clinical_history` WRITE;
-/*!40000 ALTER TABLE `clinical_history` DISABLE KEYS */;
-/*!40000 ALTER TABLE `clinical_history` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `clinical_history_format`
---
-
-LOCK TABLES `clinical_history_format` WRITE;
-/*!40000 ALTER TABLE `clinical_history_format` DISABLE KEYS */;
-/*!40000 ALTER TABLE `clinical_history_format` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `field`
---
-
-LOCK TABLES `field` WRITE;
-/*!40000 ALTER TABLE `field` DISABLE KEYS */;
-/*!40000 ALTER TABLE `field` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `option_item`
---
-
-LOCK TABLES `option_item` WRITE;
-/*!40000 ALTER TABLE `option_item` DISABLE KEYS */;
-/*!40000 ALTER TABLE `option_item` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `patient`
 --
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
-INSERT INTO `patient` VALUES ('klogs','2022-09-25 23:26:49');
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,7 +30,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `personal_information` WRITE;
 /*!40000 ALTER TABLE `personal_information` DISABLE KEYS */;
-INSERT INTO `personal_information` VALUES ('klogs','Camilo','Cordoba','kamneklogs@gmail.com','2000-11-18 21:03:52',2,1,'3178981818','Calle 44 #109-80');
+INSERT INTO `personal_information` VALUES ('1007379759','Camilo','Cordoba','kamneklogs@gmail.com','2000-11-18 21:03:52',2,1,'3178981818','Calle 44 #109-80'),('1010138801','Andrea','Nuñez','andrea.nr2000@gmail.com','2000-12-19 05:00:00',1,1,'3182349189','Vereda El ultimo potrero');
 /*!40000 ALTER TABLE `personal_information` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +50,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('admin','$2a$10$b93A5QSc7KAQMZoW7coGC.n6uOgj68U5/lTfnLLZDBYKuPDnmtB5C','2022-10-04 20:31:11',1),('andre','$2a$10$vXIVZc4wxcMDhmUIQcp2Vu159eOYVw1Vfaf1HUxgwzi0EdYQRkw4.','1970-01-01 05:00:01',1),('klogs','$2a$10$9Je/wIrem3v70eDaKDu6iuw7ywANXkWYt7ijxangQtb5BiUqUSK/i','2022-09-26 23:51:07',1);
+INSERT INTO `user` VALUES ('1007379759','$2a$10$b93A5QSc7KAQMZoW7coGC.n6uOgj68U5/lTfnLLZDBYKuPDnmtB5C','2022-09-26 23:51:07',1),('1010138801','$2a$10$b93A5QSc7KAQMZoW7coGC.n6uOgj68U5/lTfnLLZDBYKuPDnmtB5C','1970-01-01 05:00:01',1),('admin','$2a$10$b93A5QSc7KAQMZoW7coGC.n6uOgj68U5/lTfnLLZDBYKuPDnmtB5C','2022-11-07 20:40:28',1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,4 +73,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-04 15:32:56
+-- Dump completed on 2022-11-07 15:43:21

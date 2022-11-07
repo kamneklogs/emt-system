@@ -16,81 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `clinical_history`
---
-
-DROP TABLE IF EXISTS `clinical_history`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `clinical_history` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `pacientid` varchar(255) NOT NULL,
-  `payload` json DEFAULT NULL,
-  `clinical_history_formatid` int NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKclinical_h450476` (`pacientid`),
-  KEY `FKclinical_h693953` (`clinical_history_formatid`),
-  CONSTRAINT `FKclinical_h450476` FOREIGN KEY (`pacientid`) REFERENCES `patient` (`id`),
-  CONSTRAINT `FKclinical_h693953` FOREIGN KEY (`clinical_history_formatid`) REFERENCES `clinical_history_format` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `clinical_history_format`
---
-
-DROP TABLE IF EXISTS `clinical_history_format`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `clinical_history_format` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `disable` tinyint(1) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `field`
---
-
-DROP TABLE IF EXISTS `field`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `field` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  `description` varchar(255) DEFAULT NULL,
-  `type` varchar(255) DEFAULT NULL,
-  `clinical_history_formatid` int NOT NULL,
-  PRIMARY KEY (`id`,`clinical_history_formatid`),
-  KEY `FKfield109767` (`clinical_history_formatid`),
-  CONSTRAINT `FKfield109767` FOREIGN KEY (`clinical_history_formatid`) REFERENCES `clinical_history_format` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `option_item`
---
-
-DROP TABLE IF EXISTS `option_item`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `option_item` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `content` varchar(255) DEFAULT NULL,
-  `fieldid` int NOT NULL,
-  `fieldclinical_history_formatid` int DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FKoption_ite924721` (`fieldid`,`fieldclinical_history_formatid`),
-  CONSTRAINT `FKoption_ite924721` FOREIGN KEY (`fieldid`, `fieldclinical_history_formatid`) REFERENCES `field` (`id`, `clinical_history_formatid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `patient`
 --
 
@@ -188,4 +113,4 @@ CREATE TABLE `user_role` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-04 15:38:24
+-- Dump completed on 2022-11-07 15:42:01
