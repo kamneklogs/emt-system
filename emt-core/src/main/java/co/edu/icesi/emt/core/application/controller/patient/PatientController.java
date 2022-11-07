@@ -50,6 +50,6 @@ public class PatientController {
 
         this.patientService.save(PatientCreationDTO.fromDTO(patientCreationDTO));
 
-        return ResponseEntity.ok(PatientRetrievalDTO.from(null));
+        return ResponseEntity.ok(PatientRetrievalDTO.from(this.patientService.findById(patientCreationDTO.getId())));
     }
 }
