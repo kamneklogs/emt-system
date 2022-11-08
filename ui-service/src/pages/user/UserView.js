@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Trash } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers } from "../slices/user";
-import { clearMessage } from "../slices/message";
+import { getAllUsers } from "../../slices/user";
+import { clearMessage } from "../../slices/message";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,7 +16,7 @@ import * as FiIcons from "react-icons/fi";
 import * as RiIcons from "react-icons/ri";
 import ModalUser from "./ModalUser";
 import { useNavigate } from "react-router-dom";
-import UserService from "../services/user.service";
+import UserService from "../../services/user.service";
 
 const UserView = () => {
   const { usersApp } = useSelector((state) => state.user);

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Button, Card, Col, Form, Row } from "react-bootstrap";
-import userData from "../utils/UserData";
-import UserService from "../services/user.service";
+import userData from "../../utils/UserData";
+import UserService from "../../services/user.service";
 const EditUserPersonalInformation = ({ user, userPersonalInformation }) => {
   const actualUser = user;
   const currentUserPersonalInformation = userPersonalInformation;
