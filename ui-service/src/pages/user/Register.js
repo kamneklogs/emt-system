@@ -8,11 +8,11 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useFormik } from "formik";
 import { Alert } from "react-bootstrap";
-import { register, registerPersonalInformation } from "../slices/user";
+import { register, registerPersonalInformation } from "../../slices/user";
 import * as Yup from "yup";
-import UserService from "../services/user.service";
+import UserService from "../../services/user.service";
 import { useNavigate } from "react-router-dom";
-import userData from "../utils/UserData";
+import userData from "../../utils/UserData";
 import "react-datepicker/dist/react-datepicker.css";
 
 const Register = () => {
@@ -64,8 +64,6 @@ const Register = () => {
     } = formValue;
     const civilStatusId = civilStatus.value;
     const genderId = genre.value;
-    //let { birthDate } = formValue;
-    // birthDate = new Date(birthDate);
     let { birthDateDay } = formValue;
     let { birthDateMonth } = formValue;
     let { birthDateYear } = formValue;

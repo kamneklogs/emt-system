@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
-import UserService from "../services/user.service";
+import UserService from "../../services/user.service";
 
 const EditUserStatus = ({ user }) => {
   const actualUser = user;

@@ -41,8 +41,19 @@ export const SidebarData = [
   {
     title: "Gestion de Pacientes",
     name: "pacients_list",
-    path: "/pacients",
+    path: "/patients",
     roles: ["ADMIN", "medical_staff", "nursing_staff"],
+    subNav: [
+      {
+        title: "Registro de Pacientes",
+        path: "/patients/patientRegister",
+      },
+
+      {
+        title: "Pacientes del EMT",
+        path: "/patients/emtPatients",
+      },
+    ],
   },
   {
     title: "Gestión de Historias Clínicas",
