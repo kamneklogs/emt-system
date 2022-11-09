@@ -10,9 +10,9 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { clearMessage } from "../slices/message";
+import { clearMessage } from "../../slices/message";
 import * as Yup from "yup";
-import { changePassword } from "../slices/user";
+import { changePassword } from "../../slices/user";
 import { useFormik } from "formik";
 const UserRecoverPassword = () => {
   const [loading, setLoading] = useState(false);

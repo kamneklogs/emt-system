@@ -8,7 +8,12 @@ public class PatientPreview {
 
     private final String id;
     private final Instant creationDate;
-    private final PersonalInformationPreview personalInformation;
+    private PersonalInformationPreview personalInformation;
+
+    public PatientPreview(String id, Instant creationDate) {
+        this.id = id;
+        this.creationDate = creationDate;
+    }
 
     public PatientPreview(String id, Instant creationDate, PersonalInformationPreview personalInformation) {
         this.id = id;
@@ -26,5 +31,9 @@ public class PatientPreview {
 
     public PersonalInformationPreview getPersonalInformation() {
         return personalInformation;
+    }
+
+    public void setPersonalInformation(PersonalInformationPreview personalInformation) {
+        this.personalInformation = personalInformation;
     }
 }

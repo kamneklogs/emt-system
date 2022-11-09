@@ -28,10 +28,16 @@ const months = [
   { value: 11, name: "Noviembre" },
   { value: 12, name: "Diciembre" },
 ];
+const migratoryState = [
+  { value: 1, name: "Irregular" },
+  { value: 2, name: "Regular" },
+  { value: 3, name: "No aplica" },
+];
 
 const userData = {
   civilStatus,
   gender,
   months,
+  migratoryState,
 };
 export default userData;

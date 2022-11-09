@@ -4,9 +4,12 @@ import Tabs from "react-bootstrap/Tabs";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserByUsername, getUserPersonalInformation } from "../slices/user";
-import { clearMessage } from "../slices/message";
-import UserService from "../services/user.service";
+import {
+  getUserByUsername,
+  getUserPersonalInformation,
+} from "../../slices/user";
+import { clearMessage } from "../../slices/message";
+import UserService from "../../services/user.service";
 import EditUserPersonalInformation from "./EditUserPersonalInformation";
 import EditUserRoles from "./EditUserRoles";
 import EditUserContactInformation from "./EditUserContactInformation";
