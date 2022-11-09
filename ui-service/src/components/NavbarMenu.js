@@ -80,14 +80,20 @@ function NavbarC() {
                         id={`offcanvasNavbarDropdown-expand-${false}`}
                         key={item.title}
                       >
-                        {item.subNav.map((itemsubnav) => (
-                          <NavDropdown.Item
-                            href={itemsubnav.path}
-                            key={itemsubnav.title}
-                          >
-                            {itemsubnav.title}
-                          </NavDropdown.Item>
-                        ))}
+                        {item.subNav.map((itemsubnav) => {
+                          if (verify(itemsubnav.roles)) {
+                            return (
+                              <NavDropdown.Item
+                                href={itemsubnav.path}
+                                key={itemsubnav.title}
+                              >
+                                {itemsubnav.title}
+                              </NavDropdown.Item>
+                            );
+                          } else {
+                            return null;
+                          }
+                        })}
                       </NavDropdown>
                     );
                   } else if (

@@ -14,11 +14,13 @@ export const SidebarData = [
       {
         title: "Registro de Usuarios",
         path: "/users/userRegister",
+        roles: ["ADMIN"],
       },
 
       {
         title: "Usuarios del EMT",
         path: "/users/emtUsers",
+        roles: ["ADMIN"],
       },
     ],
   },
@@ -31,10 +33,12 @@ export const SidebarData = [
       {
         title: "Registro de Roles",
         path: "/roles/rolesRegister",
+        roles: ["ADMIN"],
       },
       {
         title: "Roles del EMT",
         path: "/roles/emtRoles",
+        roles: ["ADMIN"],
       },
     ],
   },
@@ -47,27 +51,31 @@ export const SidebarData = [
       {
         title: "Registro de Pacientes",
         path: "/patients/patientRegister",
+        roles: ["ADMIN", "medical_staff", "nursing_staff"],
       },
 
       {
         title: "Pacientes del EMT",
         path: "/patients/emtPatients",
+        roles: ["ADMIN", "medical_staff", "nursing_staff"],
       },
     ],
   },
   {
     title: "Gestión de Historias Clínicas",
     path: "/clinicHistory",
-    name: "clinical_history_list",
+    name: "clinic_history_list",
     roles: ["ADMIN", "medical_staff", "nursing_staff"],
     subNav: [
       {
         title: "Formatos de historias clínicas",
-        path: "/clinicHistory/models",
+        path: "/clinicHistory/createClinicHistory",
+        roles: ["ADMIN"],
       },
       {
         title: "Historias clínicas del sistema",
-        path: "/clinicHistory/pacients",
+        path: "/clinicHistory/clinicHistoryFormats",
+        roles: ["ADMIN", "medical_staff", "nursing_staff"],
       },
     ],
   },
