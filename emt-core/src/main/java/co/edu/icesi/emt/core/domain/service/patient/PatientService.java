@@ -38,7 +38,7 @@ public class PatientService {
 
         patients.forEach(patient -> {
             patient.setPersonalInformation(
-                    this.personalInformationService.findPreviewById(patient.getPersonalInformation().getId()));
+                    this.personalInformationService.findPreviewById(patient.getId()));
         });
         return patients;
     }
