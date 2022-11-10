@@ -46,7 +46,7 @@ const Question = ({ index }) => {
           <Col sm="12" md="6" className="mb-4">
             <Form.Control
               type="text"
-              placeholder="Pregunta"
+              placeholder="Campo"
               value={question.content}
               onChange={(e) => {
                 dispatch(
@@ -66,7 +66,7 @@ const Question = ({ index }) => {
                 );
               }}
             >
-              <option hidden>Tipo de pregunta</option>
+              <option hidden>Tipo de campo</option>
               {questionTypeOptions.map((option) => (
                 <option key={option.value} value={option.value}>
                   {option.name}
@@ -83,12 +83,12 @@ const Question = ({ index }) => {
             variant="outline-primary"
             onClick={() => dispatch(newAnswer({ index: index }))}
           >
-            <PlusLg /> Agregar respuesta
+            <PlusLg /> Agregar opción
           </Button>
         </Container>
         <hr />
         <div className="d-flex justify-content-end">
-          <span data-tip="Añadir pregunta">
+          <span data-tip="Añadir campo">
             <PlusCircle
               className="option-question-icon ms-1"
               onClick={() => {
@@ -96,7 +96,7 @@ const Question = ({ index }) => {
               }}
             ></PlusCircle>
           </span>
-          <span data-tip="Eliminar pregunta">
+          <span data-tip="Eliminar campo">
             <Trash
               className="option-question-icon ms-1"
               onClick={() => {

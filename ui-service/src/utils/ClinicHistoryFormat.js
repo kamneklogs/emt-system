@@ -1,8 +1,8 @@
 export const questionTypeOptions = [
   { name: "Desplegable", value: "SELECT" },
-  { name: "Casillas", value: "CHECKBOX" },
+  { name: "Opción Múltiple", value: "CHECKBOX" },
   { name: "Varias Opciones", value: "RADIO" },
-  { name: "Pregunta abierta", value: "STRING" },
+  { name: "Opción abierta", value: "STRING" },
 ];
 
 export const MIN_ANSWERS_PER_QUESTION = 1;

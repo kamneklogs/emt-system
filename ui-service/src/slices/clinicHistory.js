@@ -8,7 +8,7 @@ import {
 const defaultQuestion = {
   id: uuid(),
   content: "",
-  questionOrder: "",
+  questionIndex: "",
   type: "",
   answers: [
     {
@@ -31,7 +31,7 @@ const initialState = {
 
 const orderQuestionsInArray = (state) => {
   for (let i = 0; i < state.questions.length; i++) {
-    state.questions[i].questionOrder = i + 1;
+    state.questions[i].questionIndex = i + 1;
   }
 };
 const clinicHistorySlice = createSlice({
@@ -56,12 +56,12 @@ const clinicHistorySlice = createSlice({
     },
     newQuestion: (state, action) => {
       const { index } = action.payload;
-      const questionOrder =
-        state.questions[state.questions.length - 1].questionOrder + 1;
+      const questionIndex =
+        state.questions[state.questions.length - 1].questionIndex + 1;
       state.questions.splice(index + 1, 0, {
         ...defaultQuestion,
         id: uuid(),
-        questionOrder,
+        questionIndex: questionIndex,
       });
       orderQuestionsInArray(state);
     },

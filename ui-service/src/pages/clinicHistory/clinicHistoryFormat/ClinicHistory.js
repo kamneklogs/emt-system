@@ -80,9 +80,9 @@ const ClinicHistory = () => {
             <hr />
             <div className="mt-4 mb-4">
               <h6 className="note">
-                Nota: El usuario puede agarrar la pregunta y posicionarla según
-                como desee haciendo click mantenido sobre el cuadro que contiene
-                la pregunta y soltándola en la posición destino.
+                Nota: El usuario puede arrastrar la pregunta y posicionarla
+                según como desee haciendo click mantenido sobre el cuadro que
+                contiene la pregunta y soltándola en la posición destino.
               </h6>
             </div>
             <FloatingLabel

@@ -43,7 +43,7 @@ const Answer = ({ questionIndex, answerIndex }) => {
           }}
           disabled={question.type === "STRING" ? true : false}
         ></Form.Control>
-        <span data-tip="Eliminar respuesta">
+        <span data-tip="Eliminar opción">
           <Trash
             className="ms-1 delete-answer"
             onClick={() => {
