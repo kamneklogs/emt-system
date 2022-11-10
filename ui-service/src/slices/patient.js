@@ -4,6 +4,7 @@ import PatientService from "../services/patient.service";
 
 const initialState = {
   loading: false,
+  patients: [],
   patient: {
     id: "",
     personalInformation: {
@@ -70,6 +71,25 @@ export const registerPatient = createAsyncThunk(
   }
 );
 
+export const getAllPatients = createAsyncThunk(
+  "patient/getAllPatients",
+  async (thunkAPI) => {
+    try {
+      const data = await PatientService.getAllPatients();
+      return { patients: data };
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      thunkAPI.dispatch(setMessage(message));
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
 const patientSlice = createSlice({
   name: "patient",
   initialState,
@@ -81,6 +101,16 @@ const patientSlice = createSlice({
       state.loading = false;
     },
     [registerPatient.rejected]: (state, action) => {
+      state.loading = false;
+    },
+    [getAllPatients.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getAllPatients.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.patients = action.payload.patients;
+    },
+    [getAllPatients.rejected]: (state, action) => {
       state.loading = false;
     },
   },

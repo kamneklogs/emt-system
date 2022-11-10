@@ -13,6 +13,9 @@ import NavbarMenu from "./components/NavbarMenu";
 import UserDetails from "./pages/user/UserDetails";
 import PatientManagment from "./pages/pacient/PatientManagment";
 import PatientRegister from "./pages/pacient/PatientRegister";
+import ClinicHistoryManagment from "./pages/clinicHistory/ClinicHistoryManagment";
+import CreateClinicHistory from "./pages/clinicHistory/clinicHistoryFormat/CreateClinicHistory";
+import ClinicHistoryView from "./pages/clinicHistory/clinicHistoryCreatedFormats/ClinicHistoryView";
 
 function App() {
   return (
@@ -40,6 +43,16 @@ function App() {
             <Route
               path="/patients/patientRegister"
               element={<PatientRegister />}
+            ></Route>
+          </Route>
+          <Route path="/clinicHistory" element={<ClinicHistoryManagment />}>
+            <Route
+              path="/clinicHistory/createClinicHistory"
+              element={<CreateClinicHistory />}
+            ></Route>
+            <Route
+              path="/clinicHistory/clinicHistoryFormats"
+              element={<ClinicHistoryView />}
             ></Route>
           </Route>
           <Route path="/roles" element={<RoleManagment />}></Route>

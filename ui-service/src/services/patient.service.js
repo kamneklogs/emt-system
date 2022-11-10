@@ -21,7 +21,16 @@ const registerPatient = (
   );
 };
 
+const getAllPatients = () => {
+  return axios
+    .get(API_URL + API_PATIENT, { headers: authHeader() })
+    .then((response) => {
+      return response.data;
+    });
+};
+
 const patientService = {
   registerPatient,
+  getAllPatients,
 };
 export default patientService;
