@@ -7,16 +7,24 @@ const initialState = {
   patients: [],
   patient: {
     id: "",
+    creationDate: "",
     personalInformation: {
       id: "",
       firstName: "",
       lastName: "",
       email: "",
       birthDate: "",
-      genderId: "",
-      civilStatusId: "",
+      gender: {
+        id: "",
+        name: "",
+      },
+      civilStatus: {
+        id: "",
+        name: "",
+      },
       phoneNumber: "",
       address: "",
+      age: "",
     },
     diseaseHistorial: {
       firstDisease: {
@@ -36,9 +44,10 @@ const initialState = {
         name: "",
       },
     },
-    nationalityState: {
+    nationalityStateRetrievalDTO: {
       nationality: "",
       nationalityStateCode: "",
+      nationalityStateName: "",
     },
   },
 };
@@ -90,6 +99,25 @@ export const getAllPatients = createAsyncThunk(
   }
 );
 
+export const getPatientById = createAsyncThunk(
+  "patient/getPatientById",
+  async (id, thunkAPI) => {
+    try {
+      const data = await PatientService.getPatientById(id);
+      return { patient: data };
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      thunkAPI.dispatch(setMessage(message));
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
 const patientSlice = createSlice({
   name: "patient",
   initialState,
@@ -111,6 +139,16 @@ const patientSlice = createSlice({
       state.patients = action.payload.patients;
     },
     [getAllPatients.rejected]: (state, action) => {
+      state.loading = false;
+    },
+    [getPatientById.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getPatientById.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.patient = action.payload.patient;
+    },
+    [getPatientById.rejected]: (state, action) => {
       state.loading = false;
     },
   },

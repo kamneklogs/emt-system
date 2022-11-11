@@ -17,6 +17,7 @@ import * as RiIcons from "react-icons/ri";
 import ModalUser from "./ModalUser";
 import { useNavigate } from "react-router-dom";
 import UserService from "../../services/user.service";
+import ReactTooltip from "react-tooltip";
 
 const UserView = () => {
   const { usersApp } = useSelector((state) => state.user);
@@ -66,6 +67,7 @@ const UserView = () => {
         <Row className="users-table-controls">
           <Col lg={3} md={12} sm={12}>
             <span
+              data-tip="Ver información del usuario"
               onClick={() => {
                 handleViewUser(row.username);
               }}
@@ -75,6 +77,7 @@ const UserView = () => {
           </Col>
           <Col lg={3} md={12} sm={12}>
             <span
+              data-tip="Editar usuario"
               onClick={() => {
                 handleEditUser(row.username);
               }}
@@ -83,16 +86,23 @@ const UserView = () => {
             </span>
           </Col>
           <Col lg={3} md={12} sm={12}>
-            <span onClick={() => handleChangePassword(row.username)}>
+            <span
+              data-tip="Cambiar contraseña a usuario"
+              onClick={() => handleChangePassword(row.username)}
+            >
               <RiIcons.RiLockPasswordLine></RiIcons.RiLockPasswordLine>
             </span>
           </Col>
           <Col lg={3} md={12} sm={12}>
-            <span onClick={() => handleShow(row.username)}>
+            <span
+              data-tip="Eliminar usuario"
+              onClick={() => handleShow(row.username)}
+            >
               <Trash></Trash>
             </span>
           </Col>
         </Row>
+        <ReactTooltip place="left" effect="solid" />
       </Container>
     );
   };
