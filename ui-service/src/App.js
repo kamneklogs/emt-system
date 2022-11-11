@@ -16,6 +16,8 @@ import PatientRegister from "./pages/pacient/PatientRegister";
 import ClinicHistoryManagment from "./pages/clinicHistory/ClinicHistoryManagment";
 import CreateClinicHistory from "./pages/clinicHistory/clinicHistoryFormat/CreateClinicHistory";
 import ClinicHistoryView from "./pages/clinicHistory/clinicHistoryCreatedFormats/ClinicHistoryView";
+import PatientView from "./pages/pacient/PatientView";
+import PatientDetails from "./pages/pacient/PatientDetails";
 
 function App() {
   return (
@@ -43,6 +45,14 @@ function App() {
             <Route
               path="/patients/patientRegister"
               element={<PatientRegister />}
+            ></Route>
+            <Route
+              path="/patients/emtPatients"
+              element={<PatientView />}
+            ></Route>
+            <Route
+              path="/patients/patientDetails/:patientId"
+              element={<PatientDetails />}
             ></Route>
           </Route>
           <Route path="/clinicHistory" element={<ClinicHistoryManagment />}>

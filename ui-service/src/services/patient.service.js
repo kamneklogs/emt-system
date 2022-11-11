@@ -29,8 +29,16 @@ const getAllPatients = () => {
     });
 };
 
+const getPatientById = async (id) => {
+  const response = await axios.get(`${API_URL}${API_PATIENT}/${id}`, {
+    headers: authHeader(),
+  });
+  return response.data;
+};
+
 const patientService = {
   registerPatient,
   getAllPatients,
+  getPatientById,
 };
 export default patientService;
