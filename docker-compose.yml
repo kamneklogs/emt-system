@@ -24,7 +24,7 @@ services:
     ports:
       - "3000:8083"
     expose:
-      - "3000"
+      - "8083"
     deploy:
       resources:
         limits:
