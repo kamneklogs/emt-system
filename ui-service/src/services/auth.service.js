@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = "http://20.96.37.192:8080/public/auth/";
+const API_URL = "http://localhost:8080/public/auth/";
 
 const register = (username, password) => {
   console.log(username, password);
