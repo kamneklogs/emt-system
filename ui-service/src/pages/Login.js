@@ -29,7 +29,7 @@ const Login = (props) => {
     password: "",
   };
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("Este campo es requerido."),
+    username: Yup.string().required("Este campo es requeridosky."),
     password: Yup.string().required("Este campo es requerido."),
   });
   const handleLogin = (formValue) => {
