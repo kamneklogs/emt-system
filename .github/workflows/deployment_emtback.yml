@@ -17,18 +17,19 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Set up Java version
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
+          distribution: 'temurin'
 
-      - name: Build with Maven
+      - name: Build with Gradle
         run: mvn clean install
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v2
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
-          name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          arguments: build
+          path: '${{ github.workspace }}/emt-core/build/libs/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
@@ -42,6 +43,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: java-app
+          build-root-directory: emt-core
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -51,3 +53,4 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DF2DE5FF5F6F413BA2E505AFAA0C62E0 }}
           package: '*.jar'
+          build-root-directory: emt-core
