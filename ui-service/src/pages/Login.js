@@ -108,7 +108,7 @@ const Login = (props) => {
                       aria-hidden="true"
                     ></span>
                   )}
-                  <span>Iniciar Sesión con Continuos deployment</span>
+                  <span>Iniciar Sesión</span>
                 </Button>
               </Form>
             </Card.Body>
