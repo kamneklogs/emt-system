@@ -8,5 +8,4 @@ COPY settings.gradle settings.gradle
 
 RUN gradle build
 
-
 ENTRYPOINT [ "java", "-jar", "build/libs/emt-0.0.1-SNAPSHOT.jar" ]
