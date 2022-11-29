@@ -14,8 +14,8 @@ jobs:
       - name: Deploy in azure instance
         env:
             PRIVATE_KEY: ${{ secrets.AZURE_PRIVATE_KEY  }}
-            HOSTNAME : ${{ 20.96.37.192  }}
-            USER_NAME : ${{ azureuser  }}
+            HOSTNAME : "20.96.37.192"
+            USER_NAME : "azureuser"
             
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
