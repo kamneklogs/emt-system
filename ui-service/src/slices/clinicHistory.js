@@ -1,10 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { setMessage } from "./message";
 import { v4 as uuid } from "uuid";
 import {
   MIN_ANSWERS_PER_QUESTION,
   MIN_QUESTIONS_PER_CLINIC_HISTORY,
 } from "../utils/ClinicHistoryFormat";
-
+import ClinicHistoryService from "../services/clinicHistory.service";
 const defaultQuestion = {
   id: uuid(),
   content: "",
@@ -27,7 +28,55 @@ const defaultClinicHistory = {
 
 const initialState = {
   ...defaultClinicHistory,
+  loading: false,
+  clinicHistoryFormats: [],
+  clinicHistory: {
+    id: "",
+    name: "",
+    description: "",
+    enabled: "",
+    createdAt: "",
+    payload: [],
+  },
 };
+
+export const getAllClinicHistoryFormats = createAsyncThunk(
+  "clinicHistory/getAllClinicHistoryFormats",
+  async (thunkAPI) => {
+    try {
+      const data = await ClinicHistoryService.getAllClinicHistoryFormats();
+      return { clinicHistoryFormats: data };
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      thunkAPI.dispatch(setMessage(message));
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
+
+export const getClinicHistoryFormatById = createAsyncThunk(
+  "clinicHistory/getClinicHistoryFormatById",
+  async (id, thunkAPI) => {
+    try {
+      const data = await ClinicHistoryService.getClinicHistoryFormatById(id);
+      return { clinicHistory: data };
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      thunkAPI.dispatch(setMessage(message));
+      return thunkAPI.rejectWithValue();
+    }
+  }
+);
 
 const orderQuestionsInArray = (state) => {
   for (let i = 0; i < state.questions.length; i++) {
@@ -89,6 +138,31 @@ const clinicHistorySlice = createSlice({
       const [question] = state.questions.splice(source, 1);
       state.questions.splice(destination, 0, question);
       orderQuestionsInArray(state);
+    },
+  },
+  extraReducers: {
+    [getAllClinicHistoryFormats.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getAllClinicHistoryFormats.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.clinicHistoryFormats = action.payload.clinicHistoryFormats;
+    },
+    [getAllClinicHistoryFormats.rejected]: (state, action) => {
+      state.loading = false;
+    },
+    [getClinicHistoryFormatById.pending]: (state, action) => {
+      state.loading = true;
+    },
+    [getClinicHistoryFormatById.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.clinicHistory = action.payload.clinicHistory;
+      state.clinicHistory.payload = JSON.parse(
+        action.payload.clinicHistory.payload
+      );
+    },
+    [getClinicHistoryFormatById.rejected]: (state, action) => {
+      state.loading = false;
     },
   },
 });

@@ -29,6 +29,10 @@ const PatientView = () => {
   const handleViewPatient = (patientId) => {
     navigate(`/patients/patientDetails/${patientId}`);
   };
+
+  const handlePatientClinicHistory = (patientId) => {
+    navigate(`/patients/patientClinicHistory/${patientId}`);
+  };
   const patientCreationDateFormat = (cell, row, rowIndex, formatExtraData) => {
     return (
       <Container>
@@ -65,7 +69,12 @@ const PatientView = () => {
             </span>
           </Col>
           <Col lg={4} md={12} sm={12}>
-            <span data-tip="Historia clínica del paciente" onClick={() => {}}>
+            <span
+              data-tip="Historia clínica del paciente"
+              onClick={() => {
+                handlePatientClinicHistory(row.id);
+              }}
+            >
               <CgIcons.CgFileDocument></CgIcons.CgFileDocument>
             </span>
           </Col>

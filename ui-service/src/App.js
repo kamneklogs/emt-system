@@ -11,14 +11,16 @@ import EditUser from "./pages/user/EditUser";
 import UserRecoverPassword from "./pages/user/UserRecoverPassword";
 import NavbarMenu from "./components/NavbarMenu";
 import UserDetails from "./pages/user/UserDetails";
-import PatientManagment from "./pages/pacient/PatientManagment";
-import PatientRegister from "./pages/pacient/PatientRegister";
+import PatientManagment from "./pages/patient/PatientManagment";
+import PatientRegister from "./pages/patient/PatientRegister";
 import ClinicHistoryManagment from "./pages/clinicHistory/ClinicHistoryManagment";
 import CreateClinicHistory from "./pages/clinicHistory/clinicHistoryFormat/CreateClinicHistory";
 import ClinicHistoryView from "./pages/clinicHistory/clinicHistoryCreatedFormats/ClinicHistoryView";
-import PatientView from "./pages/pacient/PatientView";
-import PatientDetails from "./pages/pacient/PatientDetails";
-
+import PatientView from "./pages/patient/PatientView";
+import PatientDetails from "./pages/patient/PatientDetails";
+import ClinicHistoryDetails from "./pages/clinicHistory/clinicHistoryCreatedFormats/ClinicHistoryDetails";
+import PatientClinicHistoryFormats from "./pages/patient/pacientClinicHistory/PatientClinicHistoryFormats";
+import PatientNewClinicHistoryFormat from "./pages/patient/pacientClinicHistory/PatientNewClinicHistoryFormat";
 function App() {
   return (
     <Router>
@@ -54,6 +56,14 @@ function App() {
               path="/patients/patientDetails/:patientId"
               element={<PatientDetails />}
             ></Route>
+            <Route
+              path="/patients/patientClinicHistory/:patientId"
+              element={<PatientClinicHistoryFormats />}
+            ></Route>
+            <Route
+              path="/patients/patientNewClinicHistoryFormat/:patientId/:clinicHistoryId"
+              element={<PatientNewClinicHistoryFormat />}
+            ></Route>
           </Route>
           <Route path="/clinicHistory" element={<ClinicHistoryManagment />}>
             <Route
@@ -63,6 +73,10 @@ function App() {
             <Route
               path="/clinicHistory/clinicHistoryFormats"
               element={<ClinicHistoryView />}
+            ></Route>
+            <Route
+              path="/clinicHistory/clinicHistoryDetails/:clinicHistoryId"
+              element={<ClinicHistoryDetails />}
             ></Route>
           </Route>
           <Route path="/roles" element={<RoleManagment />}></Route>

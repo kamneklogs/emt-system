@@ -13,3 +13,30 @@ export const saveClinicHistoryModel = (data) => {
 export const getClinicHistoryWithQuestions = (uuid) => {
   return axios.get(API_URL);
 };
+
+const getAllClinicHistoryFormats = async () => {
+  const response = await axios.get(API_URL + CLINIC_HISTORY_URL, {
+    headers: authHeader(),
+  });
+  return response.data;
+};
+
+const getClinicHistoryFormatById = async (id) => {
+  const response = await axios.get(`${API_URL}${CLINIC_HISTORY_URL}/${id}`, {
+    headers: authHeader(),
+  });
+  return response.data;
+};
+
+const getClinicHFormatById = (id) => {
+  return axios.get(`${API_URL}${CLINIC_HISTORY_URL}/${id}`, {
+    headers: authHeader(),
+  });
+};
+
+const clinicHistoryService = {
+  getAllClinicHistoryFormats,
+  getClinicHistoryFormatById,
+  getClinicHFormatById,
+};
+export default clinicHistoryService;
