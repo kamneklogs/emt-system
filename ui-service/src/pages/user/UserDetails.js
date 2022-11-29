@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getUserByUsername,
@@ -10,7 +10,6 @@ import {
 } from "../../slices/user";
 import { clearMessage } from "../../slices/message";
 import UserService from "../../services/user.service";
-import { useNavigate } from "react-router-dom";
 import UserDetailsContactInformation from "./UserDetailsContactInformation";
 import UserDetailsPersonalInformation from "./UserDetailsPersonalInformation";
 import UserDetailsRoles from "./UserDetailsRoles";
