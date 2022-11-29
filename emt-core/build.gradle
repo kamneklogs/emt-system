@@ -29,7 +29,3 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
-
-plugins {
-  id "com.microsoft.azure.azurewebapp" version "1.2.0"
-}
