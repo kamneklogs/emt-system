@@ -22,11 +22,10 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
           
             #Now we have got the access of Azure VM and we will start the deploy .
-            ls -a
             cd ~/projects/emt-system &&
             git checkout deployment &&
             git fetch --all &&
             git reset --hard origin/deployment &&
             git pull origin deployment &&
-            docker-compose up -d --build 
+            docker compose up -d --build 
           '
