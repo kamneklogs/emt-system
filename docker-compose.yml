@@ -1,0 +1,37 @@
+version: '3.3'
+services:
+  emt-core:
+    image: emt/emt-core
+    container_name: emt-core
+    build:
+      dockerfile: Dockerfile
+      context: emt-core/
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    deploy:
+      resources:
+        limits:
+          memory: 500MB
+
+  ui-service:
+    image: emt/ui-service
+    container_name: ui-service
+    build:
+      dockerfile: Dockerfile
+      context: ui-service/
+    ports:
+      - "80:3000"
+    expose:
+      - "3000"
+    deploy:
+      resources:
+        limits:
+          memory: 1.5GB
+    depends_on:
+      - "emt-core"
+
+networks:
+  default:
+    name: emt-network
