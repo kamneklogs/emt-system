@@ -1,6 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `emt` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `emt`;
--- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
 -- Host: emt.mysql.database.azure.com    Database: emt
 -- ------------------------------------------------------
@@ -45,15 +43,11 @@ DROP TABLE IF EXISTS `patient`;
 CREATE TABLE `patient` (
   `id` varchar(255) NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `first_disease_code` varchar(45) DEFAULT 'N/A',
-  `second_disease_code` varchar(45) DEFAULT 'N/A',
-  `third_disease_code` varchar(45) DEFAULT 'N/A',
-  `fourth_disease_code` varchar(45) DEFAULT 'N/A',
   `nationality` varchar(45) DEFAULT 'N/A',
   `migratory_state` int(11) DEFAULT '3',
   PRIMARY KEY (`id`),
   CONSTRAINT `FKpacient150320` FOREIGN KEY (`id`) REFERENCES `personal_information` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) /*!50100 TABLESPACE `innodb_system` */ ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -134,4 +128,4 @@ CREATE TABLE `user_role` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-10 20:54:41
+-- Dump completed on 2022-12-10 21:42:12
