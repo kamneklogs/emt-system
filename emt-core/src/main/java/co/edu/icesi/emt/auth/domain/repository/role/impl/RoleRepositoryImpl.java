@@ -21,17 +21,18 @@ public class RoleRepositoryImpl implements RoleRepository {
     private static final String ROLE_FULL_TABLE_NAME = SCHEMA + "." + ROLE_TABLE;
 
     private static final String NAME = "name";
+    private static final String DOMAIN_NAME = "domain_name";
     private static final String DESCRIPTION = "description";
 
-    private static final String SELECT_ROLE_TABLE_COLUMNS = NAME + ", " + DESCRIPTION;
-    private static final String INSERT_ROLE_TABLE_COLUMNS = NAME + ", " + DESCRIPTION;
+    private static final String SELECT_ROLE_TABLE_COLUMNS = NAME + ", " + DOMAIN_NAME + ", " + DESCRIPTION;
+    private static final String INSERT_ROLE_TABLE_COLUMNS = NAME + ", " + DOMAIN_NAME + ", " + DESCRIPTION;
 
     private static final String SELECT_FROM_ROLE = "SELECT " + SELECT_ROLE_TABLE_COLUMNS + " FROM "
             + ROLE_FULL_TABLE_NAME;
     private static final String SELECT_FROM_ROLE_WHERE_NAME = SELECT_FROM_ROLE + " WHERE " + NAME + " = ?";
 
     private static final String INSERT_INTO_ROLE = "INSERT INTO " + ROLE_FULL_TABLE_NAME + " ("
-            + INSERT_ROLE_TABLE_COLUMNS + ") VALUES ( ?, ?)";
+            + INSERT_ROLE_TABLE_COLUMNS + ") VALUES ( ?, ?, ?)";
 
     private static final String DELETE_FROM_ROLE_WHERE_ID = "DELETE FROM " + ROLE_FULL_TABLE_NAME + " WHERE " + NAME
             + " = ?";
@@ -44,8 +45,8 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
-    public void save(String name, String description) {
-        jdbcTemplate.update(INSERT_INTO_ROLE, new Object[] { name, description });
+    public void save(String name, String domainName, String description) {
+        jdbcTemplate.update(INSERT_INTO_ROLE, new Object[] { name, domainName, description });
     }
 
     @Override
@@ -75,8 +76,9 @@ public class RoleRepositoryImpl implements RoleRepository {
 
     private Role parse(final ResultSet rs, final int rowNum) throws SQLException {
         String name = rs.getString(NAME);
+        String domainName = rs.getString(DOMAIN_NAME);
         String description = rs.getString(DESCRIPTION);
 
-        return new Role(name, description);
+        return new Role(name, domainName, description);
     }
 }

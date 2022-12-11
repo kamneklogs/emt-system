@@ -66,6 +66,7 @@ public class AuthenticationController {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
+        this.userService.saveLastLogin(loginRequestDTO.getUsername());
         return new ResponseEntity<LoginResponseDTO>(
                 new LoginResponseDTO(loginRequestDTO.getUsername(), jwt, userDetails.getAuthorities()),
                 HttpStatus.OK);
