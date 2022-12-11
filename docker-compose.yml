@@ -10,6 +10,10 @@ services:
       - "8080:8080"
     expose:
       - "8080"
+    environment:
+      EMT_DB_HOST: ${EMT_DB_HOST}
+      EMT_DB_USERNAME: ${EMT_DB_USERNAME}
+      EMT_DB_PASSWORD: ${EMT_DB_PASSWORD}
     deploy:
       resources:
         limits:
