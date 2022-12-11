@@ -11,12 +11,15 @@ import co.edu.icesi.emt.auth.domain.model.role.Role;
 public class RoleDTO {
 
     private final String name;
+    private final String doimainName;
     private final String description;
 
     @JsonCreator
     public RoleDTO(@JsonProperty("name") String name,
+            @JsonProperty("domainName") String domainName,
             @JsonProperty("description") String description) {
         this.name = name;
+        this.doimainName = domainName;
         this.description = description;
     }
 
@@ -24,12 +27,16 @@ public class RoleDTO {
         return name;
     }
 
+    public String getDoimainName() {
+        return doimainName;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public static RoleDTO from(Role role) {
-        return new RoleDTO(role.getName(), role.getDescription());
+        return new RoleDTO(role.getName(), role.getDomainName(), role.getDescription());
     }
 
     public static List<RoleDTO> from(List<Role> roles) {

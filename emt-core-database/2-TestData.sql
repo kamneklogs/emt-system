@@ -40,7 +40,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES ('ADMIN','ADMIN'),('administrative_staff','Personal administrativo'),('medical_staff','Personal medico'),('nursing_staff','Personal de enfermeria');
+INSERT INTO `role` VALUES ('ADMIN','Administrador','Este rol pertenece a los usuarios con permiso de administración de la plataforma EMT-SYSTEM'),('administrative_staff','Personal administrativo','Este rol pertenece al area administrativa de la IPS'),('medical_staff','Personal médico','Este rol pertenece a los profesionales de la salud que se encargan de la atención de los pacientes'),('nursing_staff','Personal de enfermería','Este rol pertenece a todo el personal de enfermería de la institución');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 

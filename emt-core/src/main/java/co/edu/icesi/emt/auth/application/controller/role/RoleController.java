@@ -42,7 +42,7 @@ public class RoleController {
         this.userAdminValidator = userAdminValidator;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<RoleDTO>> getRoles(final HttpServletRequest request)
             throws UserIsNotAdminException, UserNotFoundException {
         userAdminValidator.validate(request);
