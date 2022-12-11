@@ -21,9 +21,9 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public void save(String name, String description) {
+    public void save(String name, String domainName, String description) {
         // TODO: Add other validations
-        this.roleRepository.save(name, description);
+        this.roleRepository.save(name, domainName, description);
     }
 
     @Override

@@ -6,7 +6,7 @@ import co.edu.icesi.emt.auth.domain.model.role.Role;
 
 public interface RoleRepository {
 
-    void save(String name, String description);
+    void save(String name, String domainName, String description);
 
     Role findById(String id);
 
