@@ -26,5 +26,5 @@ jobs:
             git fetch --all &&
             git reset --hard origin/deployment &&
             git pull origin deployment &&
-            sudo docker compose up -d --build 
+            sudo -E docker compose up -d --build 
           '
