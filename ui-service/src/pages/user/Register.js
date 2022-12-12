@@ -48,6 +48,7 @@ const Register = () => {
       value: "",
     },
     birthDateYear: "",
+    professionalCard: "",
   };
 
   const handleRegister = (formValue) => {
@@ -61,6 +62,7 @@ const Register = () => {
       email,
       phoneNumber,
       address,
+      professionalCard,
     } = formValue;
     const civilStatusId = civilStatus.value;
     const genderId = genre.value;
@@ -71,6 +73,7 @@ const Register = () => {
     let birthDate = new Date(correctDateFormat);
     let username = id;
     setSuccessful(false);
+    console.log(professionalCard);
     dispatch(register({ username, password, rolesIds }));
     dispatch(
       registerPersonalInformation({
@@ -178,6 +181,25 @@ const Register = () => {
                             {formik.errors.password}
                           </Alert>
                         ) : null}
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row className="py-2">
+                    <Col lg={6} md={12} sm={12}>
+                      <Form.Group className="mb-3" controlId="professionalCard">
+                        <Form.Label>
+                          <strong>Tarjeta profesional (Opcional):</strong>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={formik.values.professionalCard}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          isInvalid={
+                            formik.errors.professionalCard &&
+                            formik.touched.professionalCard
+                          }
+                        ></Form.Control>
                       </Form.Group>
                     </Col>
                   </Row>
