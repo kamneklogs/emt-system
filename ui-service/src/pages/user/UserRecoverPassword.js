@@ -75,7 +75,7 @@ const UserRecoverPassword = () => {
   });
 
   return (
-    <Container className="me-25">
+    <Container className="me-25 mb-5">
       {/* {!successful && ( */}
       {!successful ? (
         <Row>

@@ -16,7 +16,7 @@ const PatientClinicHistoryFormats = () => {
     dispatch(getPatientById(patientId));
   }, [dispatch, patientId]);
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 mb-5">
       {!loading ? (
         <Row>
           <Col lg="10" md="10" sm="10" className="mx-auto">

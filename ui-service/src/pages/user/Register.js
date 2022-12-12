@@ -283,6 +283,7 @@ const Register = () => {
                         <Col lg={4}>
                           <Form.Group controlId="birthDateDay">
                             <Form.Control
+                              className="mb-2"
                               type="number"
                               placeholder="DD"
                               value={formik.values.birthDateDay}
@@ -306,6 +307,7 @@ const Register = () => {
                             <Form.Select
                               name="birthDateMonth.value"
                               onChange={formik.handleChange}
+                              className="mb-2"
                             >
                               <option value="">Seleccione una opción</option>
                               {userData.months.map((status, index) => (
@@ -327,6 +329,7 @@ const Register = () => {
                             <Form.Control
                               type="text"
                               placeholder="AAAA"
+                              className="mb-2"
                               value={formik.values.birthDateYear}
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
@@ -444,7 +447,7 @@ const Register = () => {
                           className="mx-2"
                           name="rolesIds"
                           value={role.name}
-                          label={`${role.name}: ${role.description} `}
+                          label={`${role.doimainName}: ${role.description} `}
                           onChange={formik.handleChange}
                         />
                       </Col>

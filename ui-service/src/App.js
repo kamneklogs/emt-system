@@ -21,72 +21,78 @@ import PatientDetails from "./pages/patient/PatientDetails";
 import ClinicHistoryDetails from "./pages/clinicHistory/clinicHistoryCreatedFormats/ClinicHistoryDetails";
 import PatientClinicHistoryFormats from "./pages/patient/pacientClinicHistory/PatientClinicHistoryFormats";
 import PatientNewClinicHistoryFormat from "./pages/patient/pacientClinicHistory/PatientNewClinicHistoryFormat";
+import { Footer } from "./components/Footer";
+import Home from "./pages/Home";
 function App() {
   return (
-    <Router>
-      <NavbarMenu />
-      <Routes>
-        <Route path="/" element={<ProtectedRoutes />}>
-          <Route path="/users" element={<UserManagment />}>
-            <Route path="/users/userRegister" element={<Register />}></Route>
-            <Route path="/users/emtUsers" element={<UserView />}></Route>
-            <Route
-              path="/users/editUser/:userId"
-              element={<EditUser />}
-            ></Route>
-            <Route
-              path="/users/userDetails/:userId"
-              element={<UserDetails />}
-            ></Route>
-            <Route
-              path="/users/recoverPassword/:userId"
-              element={<UserRecoverPassword />}
-            ></Route>
+    <div className="body">
+      <Router>
+        <NavbarMenu />
+        <Routes>
+          <Route path="/" element={<ProtectedRoutes />}>
+            <Route path="/home" element={<Home />}></Route>
+            <Route path="/users" element={<UserManagment />}>
+              <Route path="/users/userRegister" element={<Register />}></Route>
+              <Route path="/users/emtUsers" element={<UserView />}></Route>
+              <Route
+                path="/users/editUser/:userId"
+                element={<EditUser />}
+              ></Route>
+              <Route
+                path="/users/userDetails/:userId"
+                element={<UserDetails />}
+              ></Route>
+              <Route
+                path="/users/recoverPassword/:userId"
+                element={<UserRecoverPassword />}
+              ></Route>
+            </Route>
+            <Route path="/patients" element={<PatientManagment />}>
+              <Route
+                path="/patients/patientRegister"
+                element={<PatientRegister />}
+              ></Route>
+              <Route
+                path="/patients/emtPatients"
+                element={<PatientView />}
+              ></Route>
+              <Route
+                path="/patients/patientDetails/:patientId"
+                element={<PatientDetails />}
+              ></Route>
+              <Route
+                path="/patients/patientClinicHistory/:patientId"
+                element={<PatientClinicHistoryFormats />}
+              ></Route>
+              <Route
+                path="/patients/patientNewClinicHistoryFormat/:patientId/:clinicHistoryId"
+                element={<PatientNewClinicHistoryFormat />}
+              ></Route>
+            </Route>
+            <Route path="/clinicHistory" element={<ClinicHistoryManagment />}>
+              <Route
+                path="/clinicHistory/createClinicHistory"
+                element={<CreateClinicHistory />}
+              ></Route>
+              <Route
+                path="/clinicHistory/clinicHistoryFormats"
+                element={<ClinicHistoryView />}
+              ></Route>
+              <Route
+                path="/clinicHistory/clinicHistoryDetails/:clinicHistoryId"
+                element={<ClinicHistoryDetails />}
+              ></Route>
+            </Route>
+            <Route path="/roles" element={<RoleManagment />}></Route>
+            <Route path="/logout"></Route>
           </Route>
-          <Route path="/patients" element={<PatientManagment />}>
-            <Route
-              path="/patients/patientRegister"
-              element={<PatientRegister />}
-            ></Route>
-            <Route
-              path="/patients/emtPatients"
-              element={<PatientView />}
-            ></Route>
-            <Route
-              path="/patients/patientDetails/:patientId"
-              element={<PatientDetails />}
-            ></Route>
-            <Route
-              path="/patients/patientClinicHistory/:patientId"
-              element={<PatientClinicHistoryFormats />}
-            ></Route>
-            <Route
-              path="/patients/patientNewClinicHistoryFormat/:patientId/:clinicHistoryId"
-              element={<PatientNewClinicHistoryFormat />}
-            ></Route>
+          <Route path="login" element={<PublicRoutes />}>
+            <Route path="/login" element={<Login />}></Route>
           </Route>
-          <Route path="/clinicHistory" element={<ClinicHistoryManagment />}>
-            <Route
-              path="/clinicHistory/createClinicHistory"
-              element={<CreateClinicHistory />}
-            ></Route>
-            <Route
-              path="/clinicHistory/clinicHistoryFormats"
-              element={<ClinicHistoryView />}
-            ></Route>
-            <Route
-              path="/clinicHistory/clinicHistoryDetails/:clinicHistoryId"
-              element={<ClinicHistoryDetails />}
-            ></Route>
-          </Route>
-          <Route path="/roles" element={<RoleManagment />}></Route>
-          <Route path="/logout"></Route>
-        </Route>
-        <Route path="login" element={<PublicRoutes />}>
-          <Route path="/login" element={<Login />}></Route>
-        </Route>
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+      <Footer className="footer" />
+    </div>
   );
 }
 
