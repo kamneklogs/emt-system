@@ -27,6 +27,10 @@ public class AdmissionService {
         return this.admissionRepository.findLastAdmissionByPatientId(patientId);
     }
 
+    public AdmissionInformation findById(int admissionId) {
+        return this.admissionRepository.findById(admissionId);
+    }
+
     public List<AdmissionInformation> findAllAdmissionsByPatientId(String patientId) {
         return this.admissionRepository.findAllAdmissionsByPatientId(patientId);
     }

@@ -60,4 +60,17 @@ public class AdmissionController {
         return ResponseEntity.ok(AdmissionInformationRetrievalDTO.from(this.admissionService
                 .findLastAdmissionByPatientId(admissionInformation.getPatientId())));
     }
+
+    @GetMapping("/id/{admissionId}")
+    public ResponseEntity<AdmissionInformationRetrievalDTO> findById(
+            @PathVariable("admissionId") int admissionId) {
+
+        AdmissionInformation admission = this.admissionService.findById(admissionId);
+
+        if (admission == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(AdmissionInformationRetrievalDTO.from(admission));
+    }
 }

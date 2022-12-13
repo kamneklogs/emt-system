@@ -10,5 +10,7 @@ public interface AdmissionRepository {
 
     public AdmissionInformation findLastAdmissionByPatientId(String patientId);
 
+    public AdmissionInformation findById(int admissionId);
+
     public List<AdmissionInformation> findAllAdmissionsByPatientId(String patientId);
 }

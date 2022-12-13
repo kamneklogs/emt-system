@@ -42,6 +42,9 @@ public class AdmissionRepositoryImpl implements AdmissionRepository {
             + " FROM " + ADMISSION_TABLE + " WHERE " + PATIENT_ID + " = ? ORDER BY " + ADMISSION_DATE
             + " DESC LIMIT 1";
 
+    private static final String SELECT_ADMISSION_BY_ID = "SELECT " + ADMISSION_COLUMNS + " FROM "
+            + ADMISSION_TABLE + " WHERE " + ID + " = ?";
+
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -62,6 +65,16 @@ public class AdmissionRepositoryImpl implements AdmissionRepository {
         try {
             return jdbcTemplate.queryForObject(SELECT_LAST_ADMISSION_BY_PATIENT_ID,
                     this::parse, patientId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public AdmissionInformation findById(int admissionId) {
+        try {
+            return jdbcTemplate.queryForObject(SELECT_ADMISSION_BY_ID,
+                    this::parse, admissionId);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
