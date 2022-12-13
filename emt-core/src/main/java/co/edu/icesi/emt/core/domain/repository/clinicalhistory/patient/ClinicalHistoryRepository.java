@@ -10,5 +10,7 @@ public interface ClinicalHistoryRepository {
 
     ClinicalHistory findLastByPatientId(String patientId);
 
+    ClinicalHistory findById(int clinicalHistoryId);
+
     List<ClinicalHistory> findAllByPatientId(String patientId);
 }

@@ -43,6 +43,9 @@ public class ClinicalHistoryRepositoryImpl implements ClinicalHistoryRepository 
             + " FROM " + CLINICAL_HISTORY_TABLE + " WHERE " + PATIENT_ID + " = ? ORDER BY " + CREATED_AT
             + " DESC LIMIT 1";
 
+    private static final String SELECT_CLINICAL_HISTORY_BY_ID = "SELECT " + CLINICAL_HISTORY_COLUMNS
+            + " FROM " + CLINICAL_HISTORY_TABLE + " WHERE " + ID + " = ?";
+
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -63,6 +66,16 @@ public class ClinicalHistoryRepositoryImpl implements ClinicalHistoryRepository 
         try {
             return jdbcTemplate.queryForObject(SELECT_LAST_CLINICAL_HISTORY_BY_PATIENT_ID,
                     this::parse, patientId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public ClinicalHistory findById(int clinicalHistoryId) {
+        try {
+            return jdbcTemplate.queryForObject(SELECT_CLINICAL_HISTORY_BY_ID,
+                    this::parse, clinicalHistoryId);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }

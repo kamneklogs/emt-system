@@ -55,4 +55,17 @@ public class ClinicalHistoryController {
                 .ok(ClinicalHistoryRetrievalDTO
                         .from(clinicalHistoryService.findLastByPatientId(clinicalHistoryCreation.getPatientId())));
     }
+
+    @GetMapping("/id/{clinicalHistoryFormatId}")
+    public ResponseEntity<ClinicalHistoryRetrievalDTO> getClinicalHistoryByClinicalHistoryFormatId(
+            @PathVariable("clinicalHistoryFormatId") int clinicalHistoryFormatId) {
+        ClinicalHistory clinicalHistory = clinicalHistoryService
+                .findById(clinicalHistoryFormatId);
+
+        if (clinicalHistory == null)
+            return ResponseEntity.notFound().build();
+
+        return ResponseEntity
+                .ok(ClinicalHistoryRetrievalDTO.from(clinicalHistory));
+    }
 }

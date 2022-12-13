@@ -27,6 +27,10 @@ public class ClinicalHistoryService {
         return this.clinicalHistoryRepository.findLastByPatientId(patientId);
     }
 
+    public ClinicalHistory findById(int clinicalHistoryId) {
+        return this.clinicalHistoryRepository.findById(clinicalHistoryId);
+    }
+
     public List<ClinicalHistory> findAllByPatientId(String patientId) {
         return this.clinicalHistoryRepository.findAllByPatientId(patientId);
     }
