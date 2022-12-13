@@ -67,4 +67,8 @@ public class Patient {
     public AffiliationInformation getAffiliationInformation() {
         return affiliationInformation;
     }
+
+    public void setAffiliationInformation(AffiliationInformation affiliationInformation) {
+        this.affiliationInformation = affiliationInformation;
+    }
 }

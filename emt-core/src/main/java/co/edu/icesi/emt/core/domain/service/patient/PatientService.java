@@ -49,6 +49,18 @@ public class PatientService {
     }
 
     @Transactional
+    public void save(Patient patient) {
+        if (this.personalInformationService.existsById(patient.getId())) {
+            this.personalInformationService.update(patient.getPersonalInformation());
+        } else {
+            this.personalInformationService.save(patient.getPersonalInformation());
+        }
+
+        patient.setCreationDate(patient.getCreationDate() == null ? Instant.now() : patient.getCreationDate());
+        this.patientRepository.save(patient);
+    }
+
+    @Transactional
     public void save(Patient patient, AdmissionInformation admissionInformation) {
         if (this.personalInformationService.existsById(patient.getId())) {
             this.personalInformationService.update(patient.getPersonalInformation());
@@ -61,4 +73,15 @@ public class PatientService {
 
         this.admissionService.save(admissionInformation);
     }
+
+    @Transactional
+    public void update(Patient patient) {
+        if (this.personalInformationService.existsById(patient.getId())) {
+            this.personalInformationService.update(patient.getPersonalInformation());
+        } else {
+            this.personalInformationService.save(patient.getPersonalInformation());
+        }
+
+        this.patientRepository.update(patient);
+    } 
 }
