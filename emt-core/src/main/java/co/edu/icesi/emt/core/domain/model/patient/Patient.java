@@ -3,6 +3,7 @@ package co.edu.icesi.emt.core.domain.model.patient;
 import java.time.Instant;
 
 import co.edu.icesi.emt.core.domain.model.personalinformation.PersonalInformation;
+import co.edu.icesi.emt.core.domain.model.patient.affiliation.AffiliationInformation;
 import co.edu.icesi.emt.core.domain.model.patient.nationality.NationalityState;
 
 public class Patient {
@@ -11,6 +12,8 @@ public class Patient {
     private Instant creationDate;
     private PersonalInformation personalInformation;
     private NationalityState nationalityState;
+
+    private AffiliationInformation affiliationInformation;
 
     public Patient(String id, Instant creationDate) {
         this.id = id;
@@ -26,11 +29,11 @@ public class Patient {
     }
 
     public Patient(String id, PersonalInformation personalInformation,
-            NationalityState nationalityState) {
+            NationalityState nationalityState, AffiliationInformation affiliationInformation) {
         this.id = id;
         this.personalInformation = personalInformation;
-
         this.nationalityState = nationalityState;
+        this.affiliationInformation = affiliationInformation;
     }
 
     public String getId() {
@@ -59,5 +62,9 @@ public class Patient {
 
     public void setCreationDate(Instant creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public AffiliationInformation getAffiliationInformation() {
+        return affiliationInformation;
     }
 }
