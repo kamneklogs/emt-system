@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.icesi.emt.core.application.dto.patient.PatientCreationDTO;
 import co.edu.icesi.emt.core.application.dto.patient.PatientPreviewDTO;
 import co.edu.icesi.emt.core.application.dto.patient.PatientRetrievalDTO;
+import co.edu.icesi.emt.core.application.dto.patient.admission.AdmissionInformationDTO;
 import co.edu.icesi.emt.core.domain.model.patient.Patient;
 import co.edu.icesi.emt.core.domain.model.patient.PatientPreview;
 import co.edu.icesi.emt.core.domain.service.patient.PatientService;
@@ -48,7 +49,8 @@ public class PatientController {
     @PostMapping
     public ResponseEntity<PatientRetrievalDTO> save(@RequestBody PatientCreationDTO patientCreationDTO) {
 
-        this.patientService.save(PatientCreationDTO.fromDTO(patientCreationDTO));
+        this.patientService.save(PatientCreationDTO.fromDTO(patientCreationDTO),
+                AdmissionInformationDTO.fromDTO(patientCreationDTO.getAdmissionInformation()));
 
         return ResponseEntity.ok(PatientRetrievalDTO.from(this.patientService.findById(patientCreationDTO.getId())));
     }
