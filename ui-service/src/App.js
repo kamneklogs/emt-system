@@ -23,6 +23,7 @@ import PatientClinicHistoryFormats from "./pages/patient/pacientClinicHistory/Pa
 import PatientNewClinicHistoryFormat from "./pages/patient/pacientClinicHistory/PatientNewClinicHistoryFormat";
 import { Footer } from "./components/Footer";
 import Home from "./pages/Home";
+import PatientClinicHistoryView from "./pages/patient/pacientClinicHistory/PatientClinicHistoryView";
 function App() {
   return (
     <div className="body">
@@ -67,6 +68,10 @@ function App() {
               <Route
                 path="/patients/patientNewClinicHistoryFormat/:patientId/:clinicHistoryId"
                 element={<PatientNewClinicHistoryFormat />}
+              ></Route>
+              <Route
+                path="/patients/patientNewClinicHistoryView/123446678/:5"
+                element={<PatientClinicHistoryView />}
               ></Route>
             </Route>
             <Route path="/clinicHistory" element={<ClinicHistoryManagment />}>
