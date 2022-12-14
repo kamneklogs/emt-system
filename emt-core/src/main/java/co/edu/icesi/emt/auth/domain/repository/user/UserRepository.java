@@ -5,7 +5,7 @@ import java.util.List;
 import co.edu.icesi.emt.auth.domain.model.user.User;
 
 public interface UserRepository {
-    void save(String username, String password);
+    void save(String username, String password, String professionalCard);
 
     User findByUsername(String username);
 

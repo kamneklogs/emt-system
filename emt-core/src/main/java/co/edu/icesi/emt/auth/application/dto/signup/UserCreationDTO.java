@@ -10,12 +10,16 @@ public class UserCreationDTO {
 
     private final String[] roles;
 
+    private final String professionalCard;
+
     @JsonCreator
     public UserCreationDTO(@JsonProperty("username") String username,
-            @JsonProperty("password") String password, @JsonProperty("rolesIds") String[] roles) {
+            @JsonProperty("password") String password, @JsonProperty("rolesIds") String[] roles,
+            @JsonProperty("professionalCard") String professionalCard) {
         this.username = username;
         this.password = password;
         this.roles = roles;
+        this.professionalCard = professionalCard;
     }
 
     public String getUsername() {
@@ -28,6 +32,10 @@ public class UserCreationDTO {
 
     public String[] getRoles() {
         return roles;
+    }
+
+    public String getProfessionalCard() {
+        return professionalCard;
     }
 
     @Override

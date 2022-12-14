@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void save(String username, String password, String[] roles) {
-        this.userRepository.save(username, password);
+    public void save(String username, String password, String[] roles, String professionalCard) {
+        this.userRepository.save(username, password, professionalCard);
         if (roles != null && roles.length > 0) {
             this.userRoleService.save(userRepository.findByUsername(username), roles);
         }
