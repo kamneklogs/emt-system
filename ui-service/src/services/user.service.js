@@ -38,10 +38,10 @@ const getAllRoles = () => {
     });
 };
 
-const register = (username, password, rolesIds) => {
+const register = (username, password, rolesIds, professionalCard) => {
   return axios.post(
     API_URL + API_USER,
-    { username, password, rolesIds },
+    { username, password, rolesIds, professionalCard },
     { headers: authHeader() }
   );
 };

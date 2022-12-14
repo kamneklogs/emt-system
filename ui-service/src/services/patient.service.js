@@ -2,20 +2,23 @@ import axios from "axios";
 import authHeader from "./auth-header";
 const API_URL = "http://20.96.37.192:8080/";
 const API_PATIENT = "patient";
+const API_ADMISSION = "admission";
 
 const registerPatient = (
   id,
   personalInformation,
-  diseaseHistorial,
-  nationalityState
+  nationalityState,
+  affiliationInformation,
+  admissionInformation
 ) => {
   return axios.post(
     API_URL + API_PATIENT,
     {
       id,
       personalInformation,
-      diseaseHistorial,
       nationalityState,
+      affiliationInformation,
+      admissionInformation,
     },
     { headers: authHeader() }
   );
@@ -36,9 +39,16 @@ const getPatientById = async (id) => {
   return response.data;
 };
 
+const getAllAdmissionsOfPatient = async (id) => {
+  const response = await axios.get(`${API_URL}${API_ADMISSION}/${id}`, {
+    headers: authHeader(),
+  });
+  return response.data;
+};
 const patientService = {
   registerPatient,
   getAllPatients,
   getPatientById,
+  getAllAdmissionsOfPatient,
 };
 export default patientService;

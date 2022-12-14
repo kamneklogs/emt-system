@@ -73,8 +73,7 @@ const Register = () => {
     let birthDate = new Date(correctDateFormat);
     let username = id;
     setSuccessful(false);
-    console.log(professionalCard);
-    dispatch(register({ username, password, rolesIds }));
+    dispatch(register({ username, password, rolesIds, professionalCard }));
     dispatch(
       registerPersonalInformation({
         id,
@@ -109,7 +108,7 @@ const Register = () => {
     address: Yup.string().required("Este campo es requerido"),
     birthDateDay: Yup.number()
       .positive()
-      .lessThan(32)
+      .lessThan(32, "Este campo debe ser menor a 31")
       .moreThan(0)
       .required("Este campo es requerido"),
     birthDateYear: Yup.number()

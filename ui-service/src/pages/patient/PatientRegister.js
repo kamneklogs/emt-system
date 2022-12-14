@@ -67,7 +67,7 @@ const PatientRegister = () => {
     const civilStatusId = civilStatus.value;
     const genderId = genre.value;
     const email = "";
-    const phoneNumber = "";
+    const phoneNumber = formValue;
     const personalInformation = {
       id,
       firstName,
@@ -87,6 +87,7 @@ const PatientRegister = () => {
     };
 
     let { medicalEntity, healthRegime, benefitPlan, socialStratum } = formValue;
+    healthRegime = healthRegime.value;
     const affiliationInformation = {
       medicalEntity,
       healthRegime,
@@ -100,23 +101,21 @@ const PatientRegister = () => {
     let correctDateFormatForAdmission = `${admissionYear}/${admissionMonth.value}/${admissionDay}`;
     let admissionDate = new Date(correctDateFormatForAdmission);
     let { caretaker, caretakerPhoneNumber } = formValue;
+    let { medicalConsultationReason } = formValue;
     const admissionInformation = {
       caretaker,
       caretakerPhoneNumber,
       admissionDate,
-    };
-    let { medicalConsultationReason } = formValue;
-    const medicalConsultation = {
       medicalConsultationReason,
     };
-    console.log(medicalConsultation);
-    console.log(admissionInformation);
-    console.log(affiliationInformation);
+
     dispatch(
       registerPatient({
         id,
         personalInformation,
         nationalityState,
+        affiliationInformation,
+        admissionInformation,
       })
     );
     setSuccessful(true);
@@ -138,7 +137,6 @@ const PatientRegister = () => {
       .moreThan(0, "Este campo debe ser mayor o igual a 1")
       .required("Este campo es requerido"),
     medicalEntity: Yup.string().required("Este campo es requerido"),
-    healthRegime: Yup.string().required("Este campo es requerido"),
     benefitPlan: Yup.string().required("Este campo es requerido"),
     socialStratum: Yup.string().required("Este campo es requerido"),
     admissionDay: Yup.number()
@@ -146,7 +144,7 @@ const PatientRegister = () => {
       .lessThan(32, "Este campo debe ser menor o igual a 31")
       .moreThan(0)
       .required("Este campo es requerido"),
-    admissionMonth: Yup.number()
+    admissionYear: Yup.number()
       .positive()
       .moreThan(0, "Este campo debe ser mayor o igual a 1")
       .required("Este campo es requerido"),
