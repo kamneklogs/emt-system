@@ -3,6 +3,7 @@ import { Button, Card, Col, Container, Row, Tab, Tabs } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { getPatientById } from "../../../slices/patient";
+import PatientClincHistoryList from "./PatientClinicHistoryList";
 import PatientCreateNewClinicHistory from "./PatientCreateNewClinicHistory";
 
 const PatientClinicHistoryFormats = () => {
@@ -40,7 +41,9 @@ const PatientClinicHistoryFormats = () => {
                   <Tab
                     eventKey="patientClinicHistorySummary"
                     title="Historias clínicas del paciente"
-                  ></Tab>
+                  >
+                    <PatientClincHistoryList patient={patient} />
+                  </Tab>
                   <Tab
                     eventKey="patientNewClinicHistory"
                     title="Nueva historia clínica para el paciente"
