@@ -8,7 +8,7 @@ import co.edu.icesi.emt.auth.domain.model.user.User;
 import co.edu.icesi.emt.common.exception.model.UserNotFoundException;
 
 public interface UserService {
-    void save(String username, String password, String[] roles);
+    void save(String username, String password, String[] roles, String professionalCard);
 
     User findByUsername(String username) throws UserNotFoundException;
 

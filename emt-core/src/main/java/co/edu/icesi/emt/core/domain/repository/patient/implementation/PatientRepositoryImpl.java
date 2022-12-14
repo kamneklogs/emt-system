@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import co.edu.icesi.emt.core.domain.model.patient.Patient;
 import co.edu.icesi.emt.core.domain.model.patient.PatientPreview;
+import co.edu.icesi.emt.core.domain.model.patient.affiliation.AffiliationInformation;
 import co.edu.icesi.emt.core.domain.model.patient.nationality.MigratoryState;
 import co.edu.icesi.emt.core.domain.model.patient.nationality.NationalityState;
 import co.edu.icesi.emt.core.domain.repository.patient.PatientRepository;
@@ -27,17 +28,25 @@ public class PatientRepositoryImpl implements PatientRepository {
     private static final String NATIONALITY = "nationality";
     private static final String MIGRATORY_STATE = "migratory_state";
 
+    private static final String MEDICAL_ENTITY = "medical_entity";
+    private static final String HEALTH_REGIME = "health_regime";
+    private static final String BENEFIT_PLAN = "benefit_plan";
+    private static final String SOCIAL_STRATUM = "social_stratum";
+
     private static final String PATIENT_COLUMNS = ID + ", " + CREATION_DATE + ", " + NATIONALITY + ", "
-            + MIGRATORY_STATE;
+            + MIGRATORY_STATE + ", " + MEDICAL_ENTITY + ", " + HEALTH_REGIME + ", " + BENEFIT_PLAN + ", "
+            + SOCIAL_STRATUM;
 
     private static final String SELECT_ALL = "SELECT " + PATIENT_COLUMNS + " FROM " + PATIENT_TABLE;
     private static final String SELECT_BY_ID = SELECT_ALL + " WHERE " + ID + " = ?";
 
     private static final String INSERT = "INSERT INTO " + PATIENT_TABLE + " (" + PATIENT_COLUMNS
-            + ") VALUES (?, ?, ?, ?)";
+            + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE = "UPDATE " + PATIENT_TABLE + " SET " + NATIONALITY + " = ?, "
-            + MIGRATORY_STATE + " = ? WHERE " + ID + " = ?";
+            + MIGRATORY_STATE + " = ?, " + MEDICAL_ENTITY + " = ?, " + HEALTH_REGIME + " = ?, " + BENEFIT_PLAN
+            + " = ?, "
+            + SOCIAL_STRATUM + " = ? WHERE " + ID + " = ?";
 
     private static final String EXIST_BY_ID = "SELECT EXISTS(SELECT 1 FROM " + PATIENT_TABLE + " WHERE " + ID + " = ?)";
 
@@ -65,7 +74,11 @@ public class PatientRepositoryImpl implements PatientRepository {
         } else {
             jdbcTemplate.update(INSERT, patient.getId(), patient.getCreationDate(),
                     patient.getNationalityState().getNationality(),
-                    patient.getNationalityState().getMigratoryState().getId());
+                    patient.getNationalityState().getMigratoryState().getId(),
+                    patient.getAffiliationInformation().getMedicalEntity(),
+                    patient.getAffiliationInformation().getHealthRegime(),
+                    patient.getAffiliationInformation().getBenefitPlan(),
+                    patient.getAffiliationInformation().getSocialStratum());
         }
     }
 
@@ -79,6 +92,10 @@ public class PatientRepositoryImpl implements PatientRepository {
         jdbcTemplate.update(UPDATE,
                 patient.getNationalityState().getNationality(),
                 patient.getNationalityState().getMigratoryState().getId(),
+                patient.getAffiliationInformation().getMedicalEntity(),
+                patient.getAffiliationInformation().getHealthRegime(),
+                patient.getAffiliationInformation().getBenefitPlan(),
+                patient.getAffiliationInformation().getSocialStratum(),
                 patient.getId());
     }
 
@@ -109,6 +126,13 @@ public class PatientRepositoryImpl implements PatientRepository {
 
         patient.setNationalityState(nationalityState);
 
+        AffiliationInformation affiliationInformation = new AffiliationInformation(
+                rs.getString(MEDICAL_ENTITY),
+                rs.getString(HEALTH_REGIME),
+                rs.getString(BENEFIT_PLAN),
+                rs.getString(SOCIAL_STRATUM));
+
+        patient.setAffiliationInformation(affiliationInformation);
         return patient;
     }
 

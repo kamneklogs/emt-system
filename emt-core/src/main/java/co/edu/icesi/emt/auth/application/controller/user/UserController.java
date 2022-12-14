@@ -94,7 +94,7 @@ public class UserController {
         userNotExistValidator.validate(userCreationDTO.getUsername());
 
         userService.save(userCreationDTO.getUsername(), passwordEncoder.encode(userCreationDTO.getPassword()),
-                userCreationDTO.getRoles());
+                userCreationDTO.getRoles(), userCreationDTO.getProfessionalCard());
 
         return new ResponseEntity<String>(
                 "User created: " + userService.findByUsername(userCreationDTO.getUsername()).toString(),

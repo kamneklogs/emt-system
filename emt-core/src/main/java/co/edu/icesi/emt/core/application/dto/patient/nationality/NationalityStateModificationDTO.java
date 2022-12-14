@@ -10,12 +10,15 @@ public class NationalityStateModificationDTO {
 
     private final String nationality;
     private final int nationalityStateCode;
+    private final String nationalityStateName;
 
     @JsonCreator
     public NationalityStateModificationDTO(@JsonProperty("nationality") String nationality,
-            @JsonProperty("nationalityStateCode") int nationalityStateCode) {
+            @JsonProperty("nationalityStateCode") int nationalityStateCode,
+            @JsonProperty("nationalityStateName") String nationalityStateName) {
         this.nationality = nationality;
         this.nationalityStateCode = nationalityStateCode;
+        this.nationalityStateName = nationalityStateName;
     }
 
     public String getNationality() {
@@ -24,6 +27,10 @@ public class NationalityStateModificationDTO {
 
     public int getNationalityStateCode() {
         return nationalityStateCode;
+    }
+
+    public String getNationalityStateName() {
+        return nationalityStateName;
     }
 
     public static NationalityState fromDTO(NationalityStateModificationDTO nationalityState) {

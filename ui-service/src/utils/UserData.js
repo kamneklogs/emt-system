@@ -34,10 +34,17 @@ const migratoryState = [
   { value: 3, name: "No aplica" },
 ];
 
+const healthRegime = [
+  { value: 1, name: "Régimen Contributivo" },
+  { value: 2, name: "Régimen Subsidiado" },
+  { value: 3, name: "No aplica" },
+];
+
 const userData = {
   civilStatus,
   gender,
   months,
   migratoryState,
+  healthRegime,
 };
 export default userData;

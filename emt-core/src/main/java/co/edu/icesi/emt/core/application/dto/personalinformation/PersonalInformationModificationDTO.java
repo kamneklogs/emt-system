@@ -22,7 +22,8 @@ public class PersonalInformationModificationDTO {
     private final String address;
 
     @JsonCreator
-    public PersonalInformationModificationDTO(@JsonProperty("id") String id, @JsonProperty("firstName") String firstName,
+    public PersonalInformationModificationDTO(@JsonProperty("id") String id,
+            @JsonProperty("firstName") String firstName,
             @JsonProperty("lastName") String lastName, @JsonProperty("email") String email,
             @JsonProperty("birthDate") Instant birthDate,
             @JsonProperty("genderId") int genderId, @JsonProperty("civilStatusId") int civilStatusId,
@@ -36,6 +37,8 @@ public class PersonalInformationModificationDTO {
         this.civilStatusId = civilStatusId;
         this.phoneNumber = phoneNumber;
         this.address = address;
+
+        System.out.println(genderId);
     }
 
     public String getId() {

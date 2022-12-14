@@ -28,7 +28,6 @@ const Register = () => {
   }, [setRoles]);
   const dispatch = useDispatch();
   const initialValues = {
-    username: "",
     email: "",
     password: "",
     id: "",
@@ -49,10 +48,12 @@ const Register = () => {
       value: "",
     },
     birthDateYear: "",
+    professionalCard: "",
   };
 
   const handleRegister = (formValue) => {
-    const { username, password, rolesIds } = formValue;
+    const { id, password, rolesIds } = formValue;
+
     const {
       civilStatus,
       genre,
@@ -61,6 +62,7 @@ const Register = () => {
       email,
       phoneNumber,
       address,
+      professionalCard,
     } = formValue;
     const civilStatusId = civilStatus.value;
     const genderId = genre.value;
@@ -69,8 +71,9 @@ const Register = () => {
     let { birthDateYear } = formValue;
     let correctDateFormat = `${birthDateYear}/${birthDateMonth.value}/${birthDateDay}`;
     let birthDate = new Date(correctDateFormat);
-    let id = username;
+    let username = id;
     setSuccessful(false);
+    console.log(professionalCard);
     dispatch(register({ username, password, rolesIds }));
     dispatch(
       registerPersonalInformation({
@@ -95,7 +98,6 @@ const Register = () => {
   };
 
   const validationSchema = Yup.object({
-    username: Yup.string().required("Este campo es requerido"),
     email: Yup.string()
       .email("Formato inválido de email")
       .required("Este campo es requerido"),
@@ -137,7 +139,7 @@ const Register = () => {
 
                 <Form onSubmit={formik.handleSubmit}>
                   <Row className="py-2">
-                    <Col lg={12} md={12} sm={12}>
+                    <Col lg={6} md={12} sm={12}>
                       <Form.Group className="mb-3" controlId="email">
                         <Form.Label>
                           <strong>Correo electrónico:</strong>
@@ -155,30 +157,6 @@ const Register = () => {
                         {formik.errors.email && formik.touched.email ? (
                           <Alert className="mt-3" variant="danger">
                             {formik.errors.email}
-                          </Alert>
-                        ) : null}
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col lg={6} md={12} sm={12}>
-                      <Form.Group className="mb-3" controlId="username">
-                        <Form.Label>
-                          <strong>Usuario (Número de identificación):</strong>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          placheholder="e.g JohnDoe19"
-                          value={formik.values.username}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          isInvalid={
-                            formik.errors.username && formik.touched.username
-                          }
-                        ></Form.Control>
-                        {formik.errors.username && formik.touched.username ? (
-                          <Alert className="mt-3" variant="danger">
-                            {formik.errors.username}
                           </Alert>
                         ) : null}
                       </Form.Group>
@@ -206,6 +184,26 @@ const Register = () => {
                       </Form.Group>
                     </Col>
                   </Row>
+                  <Row className="py-2">
+                    <Col lg={6} md={12} sm={12}>
+                      <Form.Group className="mb-3" controlId="professionalCard">
+                        <Form.Label>
+                          <strong>Tarjeta profesional (Opcional):</strong>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={formik.values.professionalCard}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          isInvalid={
+                            formik.errors.professionalCard &&
+                            formik.touched.professionalCard
+                          }
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
                   <hr />
                   <h4 className="text-primary">Información personal</h4>
                   <Row className="py-2">
@@ -283,6 +281,7 @@ const Register = () => {
                         <Col lg={4}>
                           <Form.Group controlId="birthDateDay">
                             <Form.Control
+                              className="mb-2"
                               type="number"
                               placeholder="DD"
                               value={formik.values.birthDateDay}
@@ -306,6 +305,7 @@ const Register = () => {
                             <Form.Select
                               name="birthDateMonth.value"
                               onChange={formik.handleChange}
+                              className="mb-2"
                             >
                               <option value="">Seleccione una opción</option>
                               {userData.months.map((status, index) => (
@@ -327,6 +327,7 @@ const Register = () => {
                             <Form.Control
                               type="text"
                               placeholder="AAAA"
+                              className="mb-2"
                               value={formik.values.birthDateYear}
                               onChange={formik.handleChange}
                               onBlur={formik.handleBlur}
@@ -444,7 +445,7 @@ const Register = () => {
                           className="mx-2"
                           name="rolesIds"
                           value={role.name}
-                          label={`${role.name}: ${role.description} `}
+                          label={`${role.doimainName}: ${role.description} `}
                           onChange={formik.handleChange}
                         />
                       </Col>

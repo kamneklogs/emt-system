@@ -6,12 +6,22 @@ public class User {
 
     private String username;
     private String password;
+    private String professionalCard;
     private Instant lastLogin;
     private boolean enabled;
+
+    public User(String username, String password, String professionalCard, Instant lastLogin, boolean enabled) {
+        this.username = username;
+        this.password = password;
+        this.professionalCard = professionalCard;
+        this.lastLogin = lastLogin;
+        this.enabled = enabled;
+    }
 
     public User(String username, String password, Instant lastLogin, boolean enabled) {
         this.username = username;
         this.password = password;
+        this.professionalCard = "";
         this.lastLogin = lastLogin;
         this.enabled = enabled;
     }
@@ -30,6 +40,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getProfessionalCard() {
+        return professionalCard;
+    }
+
+    public void setProfessionalCard(String professionalCard) {
+        this.professionalCard = professionalCard;
     }
 
     public Instant getLastLogin() {

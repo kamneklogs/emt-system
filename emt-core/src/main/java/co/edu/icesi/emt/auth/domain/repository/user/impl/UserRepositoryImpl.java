@@ -24,19 +24,21 @@ public class UserRepositoryImpl implements UserRepository {
 
     private static final String ID = "id";
     private static final String PASSWORD = "password";
+    private static final String PROFESSIONAL_CARD = "professional_card";
     private static final String LAST_LOGIN = "last_login";
     private static final String IS_ENABLED = "is_enabled";
 
-    private static final String SELECT_USER_TABLE_COLUMNS = ID + ", " + PASSWORD + ", " + LAST_LOGIN + ", "
+    private static final String SELECT_USER_TABLE_COLUMNS = ID + ", " + PASSWORD + ", " + PROFESSIONAL_CARD + ", "
+            + LAST_LOGIN + ", "
             + IS_ENABLED;
-    private static final String INSERT_USER_TABLE_COLUMNS = ID + ", " + PASSWORD;
+    private static final String INSERT_USER_TABLE_COLUMNS = ID + ", " + PASSWORD + ", " + PROFESSIONAL_CARD;
 
     private static final String SELECT_FROM_USER = "SELECT " + SELECT_USER_TABLE_COLUMNS + " FROM "
             + USER_FULL_TABLE_NAME;
     private static final String SELECT_FROM_USER_WHERE_USERNAME = SELECT_FROM_USER + " WHERE " + ID + " = ?";
 
     private static final String INSERT_INTO_USER = "INSERT INTO " + USER_FULL_TABLE_NAME + " ("
-            + INSERT_USER_TABLE_COLUMNS + ") VALUES ( ?, ?)";
+            + INSERT_USER_TABLE_COLUMNS + ") VALUES ( ?, ?, ?)";
 
     private static final String DELETE_FROM_USER_WHERE_USERNAME = "DELETE FROM " + USER_FULL_TABLE_NAME + " WHERE "
             + ID
@@ -62,8 +64,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void save(String username, String password) {
-        jdbcTemplate.update(INSERT_INTO_USER, new Object[] { username, password });
+    public void save(String username, String password, String professionalCard) {
+        jdbcTemplate.update(INSERT_INTO_USER, new Object[] { username, password, professionalCard });
     }
 
     @Override
@@ -94,10 +96,11 @@ public class UserRepositoryImpl implements UserRepository {
     private User parse(final ResultSet rs, final int rowNum) throws SQLException {
         String username = rs.getString(ID);
         String password = rs.getString(PASSWORD);
+        String professionalCard = rs.getString(PROFESSIONAL_CARD);
         Instant lastLogin = rs.getTimestamp(LAST_LOGIN).toInstant();
         boolean isEnabled = rs.getBoolean(IS_ENABLED);
 
-        return new User(username, password, lastLogin, isEnabled);
+        return new User(username, password, professionalCard, lastLogin, isEnabled);
     }
 
     @Override

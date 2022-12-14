@@ -26,28 +26,24 @@ const initialState = {
       address: "",
       age: "",
     },
-    diseaseHistorial: {
-      firstDisease: {
-        code: "",
-        name: "",
-      },
-      secondDisease: {
-        code: "",
-        name: "",
-      },
-      thirdDisease: {
-        code: "",
-        name: "",
-      },
-      fourthDisease: {
-        code: "",
-        name: "",
-      },
-    },
-    nationalityStateRetrievalDTO: {
+    nationalityState: {
       nationality: "",
       nationalityStateCode: "",
       nationalityStateName: "",
+    },
+    affiliationInformation: {
+      medicalEntity: "",
+      healthRegime: "",
+      benefitPlan: "",
+      socialStratum: "",
+    },
+    admissionInformation: {
+      caretaker: "",
+      caretakerPhoneNumber: "",
+      admissionDate: "",
+    },
+    medicalConsultation: {
+      medicalConsultationReason: "",
     },
   },
 };
